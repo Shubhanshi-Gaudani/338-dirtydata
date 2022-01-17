@@ -1,15 +1,8 @@
 import pandas as pd
 import numpy as np
+from .utilities import can_be_float
 
 _NUM_STDS = 4
-
-def can_be_float(s):
-    """Returns whether the string can be cast as a float without error."""
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
 
 def is_outlier(cell_str, column):
     """Takes the string version of the cell and returns whether it is an outlier.
