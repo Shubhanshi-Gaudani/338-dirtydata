@@ -17,7 +17,7 @@ class Column:
         raise NotImplementedError
 
     def get_median(self, col):
-        raise NotImplementedError
+        return np.median(col)
 
     def get_mode(self, col):
         raise NotImplementedError
