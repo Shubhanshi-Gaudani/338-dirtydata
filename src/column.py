@@ -14,7 +14,8 @@ class Column:
         raise NotImplementedError
     
     def get_stddev(self, col):
-        raise NotImplementedError
+        std = np.std(col)
+        return std;
 
     def get_median(self, col):
         return np.median(col)
@@ -23,4 +24,9 @@ class Column:
         raise NotImplementedError
 
     def get_col_type(self, col):
-        raise NotImplementedError
+        """returns the most common column type - either 'num' or 'alpha'."""
+        al_num_counts = [0, 0]
+        for row in range(col.shape[0]):
+            al_num_counts[int(can_be_float(col[row]))] += 1
+        typs = ['alpha', 'num']
+        return typs[np.argmax(al_num_counts)]

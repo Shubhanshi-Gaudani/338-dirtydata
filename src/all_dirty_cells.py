@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from .num_outliers import is_outlier
 from ._column_temp import Column
-from .utilities import can_be_float
 
 def all_dirty_cells(csv_mat):
     preds = [is_outlier]
