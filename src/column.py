@@ -14,7 +14,8 @@ class Column:
         raise NotImplementedError
     
     def get_stddev(self, col):
-        raise NotImplementedError
+        std = np.std(col)
+        return std;
 
     def get_median(self, col):
         raise NotImplementedError
