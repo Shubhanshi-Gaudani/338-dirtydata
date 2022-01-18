@@ -18,7 +18,7 @@ class Column:
         return std;
 
     def get_median(self, col):
-        return np.median(col)
+        return np.nanmedian(col)
 
     def get_mode(self, col):
         raise NotImplementedError
