@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import scipy as sp
 from .utilities import can_be_float
 
 class Column:
@@ -45,9 +46,6 @@ class Column:
         Returns:
             median (float) : the median of the numeric cells in col
         """
-        return np.median(col)
-
-    def get_median(self, col):
         return np.nanmedian(col)
 
     def get_mode(self, col):
@@ -60,7 +58,7 @@ class Column:
         Returns:
             mode (float) : the mode of the numeric cells in col
         """
-        raise NotImplementedError
+        return sp.mode(col, nan_policy = "omit")
 
     def get_col_type(self, col):
         """Returns the most common column type - either 'num' or 'alpha'.
