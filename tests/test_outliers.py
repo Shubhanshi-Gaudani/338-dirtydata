@@ -1,4 +1,3 @@
-from termios import CR0
 from src import is_outlier, Column, can_be_float
 
 def test_outliers():
