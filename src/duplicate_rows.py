@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-from .utilities import can_be_float
 
 def duplicate_row(data):
     """Takes a whole dataset, returns which rows if any are duplicates.
