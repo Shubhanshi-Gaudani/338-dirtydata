@@ -2,17 +2,27 @@ import numpy as np
 import pandas as pd
 from .num_outliers import is_outlier
 from .Column import Column
+import multiprocessing as mp
+
+_NPROCS = 8
+_ALL_PREDS = [is_outlier]
 
 def all_dirty_cells(csv_mat):
-    preds = [is_outlier]
-    dirty = []
+    is_dirty = np.zeros(csv_mat.shape, dtype = bool)
     columns = list(map(Column, csv_mat.T))
 
-    for row in range(csv_mat.shape[0]):
-        for col in range(csv_mat.shape[1]):
-            for pred in preds:
-                if pred(csv_mat[row, col], columns[col]):
-                    dirty.append((row, col, pred))
-                    break
-    
-    return dirty
+    nprocs = min(_NPROCS, csv_mat.shape[0])
+    args = [ (row, columns) for row in csv_mat ]
+
+    with mp.Pool(min(_NPROCS, csv_mat.shape[0])):
+        is_dirty = np.array(mp.starmap(_dirty_row, args), dtype = bool)
+    return np.where(is_dirty)
+
+def _dirty_row(row, cols):
+    row = np.zeros(row.shape[0], dtype = bool)
+    for col in range(row.shape[0]):
+        for pred in _ALL_PREDS:
+            if pred(row[col], cols[col]):
+                row[col] = True
+                break
+    return row

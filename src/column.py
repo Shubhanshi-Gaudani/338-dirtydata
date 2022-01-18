@@ -45,9 +45,6 @@ class Column:
         Returns:
             median (float) : the median of the numeric cells in col
         """
-        return np.median(col)
-
-    def get_median(self, col):
         return np.nanmedian(col)
 
     def get_mode(self, col):
@@ -58,7 +55,7 @@ class Column:
                 numeric, some of which might not
                 
         Returns:
-            mode (float) : the mode of the numeric cells in col
+            mode (float) : the mode of the cells in col
         """
         raise NotImplementedError
 
