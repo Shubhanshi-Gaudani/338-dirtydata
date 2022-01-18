@@ -1,6 +1,3 @@
-import pandas as pd
-import numpy as np
-
 def is_na(cell_str, column):
     """Takes the string version of the cell and returns whether it is a wrongly formatted NA.
     Args:
