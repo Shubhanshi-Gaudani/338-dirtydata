@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import scipy as sp
 from .utilities import can_be_float
 
 class Column:
@@ -57,7 +58,7 @@ class Column:
         Returns:
             mode (float) : the mode of the cells in col
         """
-        raise NotImplementedError
+        return sp.mode(col, nan_policy = "omit")
 
     def get_col_type(self, col):
         """Returns the most common column type - either 'num' or 'alpha'.

@@ -1,7 +1,7 @@
 import pandas as pd
 
 def csvToMatrix(csv_name):
-    """Takes the file name of the csv file and returns the 2D matrix version of the file.
+    """Takes the name of the csv file and returns the 2D matrix version of the file.
     Args:
         csv_name (str) : the name of the csv file
     Returns:
