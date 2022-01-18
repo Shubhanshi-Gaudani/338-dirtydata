@@ -11,7 +11,7 @@ class Column:
         self.column_type = self.get_col_type(col)
 
     def get_mean(self, col):
-        raise NotImplementedError
+        return np.nanmean(col)
     
     def get_stddev(self, col):
         std = np.nanstd(col)
