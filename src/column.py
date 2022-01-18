@@ -14,7 +14,7 @@ class Column:
         raise NotImplementedError
     
     def get_stddev(self, col):
-        std = np.std(col)
+        std = np.nanstd(col)
         return std;
 
     def get_median(self, col):

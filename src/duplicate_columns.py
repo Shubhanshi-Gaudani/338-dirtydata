@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def duplicate_row(data):
+def duplicate_columns(data):
     """Takes a whole dataset, returns which columns if any are redundant.
 
     Args:
