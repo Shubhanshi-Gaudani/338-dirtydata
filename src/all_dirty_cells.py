@@ -14,7 +14,7 @@ def all_dirty_cells(csv_mat):
     nprocs = min(_NPROCS, csv_mat.shape[0])
     args = [ (row, columns) for row in csv_mat ]
 
-    with mp.Pool(min(_NPROCS, csv_mat.shape[0])):
+    with mp.Pool(nprocs):
         is_dirty = np.array(mp.starmap(_dirty_row, args), dtype = bool)
     return np.where(is_dirty)
 
