@@ -12,3 +12,14 @@ def can_be_float(s):
         return True
     except ValueError:
         return False
+
+def is_float_char(c):
+    """Returns whether the given character could be in a valid float string
+    
+    Args:
+        c (str) : a single character
+    
+    Returns:
+        could_be (bool) : whether the character could be in a valid float
+    """
+    return c.isnumeric() or c == '.'
