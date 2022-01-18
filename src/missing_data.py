@@ -1,6 +1,7 @@
 #Import necessary libraries 
 import numpy as np 
 import pandas as pd
+import _column_temp
 
 def missing_data(cell_str, column, replace_with):
     """Takes the string version of the cell and returns whether it is an outlier
