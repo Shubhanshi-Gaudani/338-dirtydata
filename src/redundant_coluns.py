@@ -5,7 +5,7 @@ def duplicate_row(data):
     """Takes a whole dataset, returns which columns if any are redundant.
 
     Args:
-        data (pd) : a panda datafrae
+        data (pd) : a panda dataframe
 
     Returns:
         dup_columns (list) : list with names of redundant columns
