@@ -47,6 +47,9 @@ class Column:
         """
         return np.median(col)
 
+    def get_median(self, col):
+        return np.nanmedian(col)
+
     def get_mode(self, col):
         """Returns the mode of the column.
         
