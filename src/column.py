@@ -5,6 +5,11 @@ from .utilities import can_be_float
 
 class Column:
     def __init__(self, col):
+        """A container class for a bunch of information specific to a column of data.
+        
+        Args:
+            col (np.array) : a numpy array of strings containing the data
+        """
         self.mean = self.get_mean(col)
         self.stddev = self.get_stddev(col)
         self.median = self.get_median(col)

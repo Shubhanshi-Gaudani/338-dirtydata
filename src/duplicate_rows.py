@@ -5,7 +5,7 @@ def duplicate_row(data):
     """Takes a whole dataset, returns which rows if any are duplicates.
 
     Args:
-        data (pd) : a panda datafrae
+        data (pd) : a panda dataframe
 
     Returns:
         dup_rows (pd) : dataframe of duplicate rows

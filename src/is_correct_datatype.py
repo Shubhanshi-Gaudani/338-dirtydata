@@ -1,8 +1,4 @@
-from .Column import Column
-from .utilities import can_be_float
-
-def isCorrectDataType(cell_str, col):
-
+def isIncorrectDataType(cell_str, col):
     if col.column_type == 'alpha':
         typ = str
     else:
@@ -12,10 +8,10 @@ def isCorrectDataType(cell_str, col):
             typ = int
     
     if not (isinstance(cell_str, typ)):
-        incorrect_ind = col.index(cell_str)
-        print('Datatype mismatch for element found at index ',incorrect_ind)
-        return False
+        # incorrect_ind = col.index(cell_str)
+        # print('Datatype mismatch for element found at index ',incorrect_ind)
+        return True
     
-    return True
+    return False
     
 
