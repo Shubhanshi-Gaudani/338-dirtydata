@@ -7,6 +7,6 @@ def csvToMatrix(csv_name):
     Returns:
         result_mat (2d array) : Matrix version of the csv file
     """
-    df = pd.read_csv(csv_name)
-    result_mat = df.to_numpy()
+    df = pd.read_csv(csv_name, dtype = str)
+    result_mat = df.to_numpy(dtype = str)
     return result_mat

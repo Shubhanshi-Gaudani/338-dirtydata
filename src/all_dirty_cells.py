@@ -32,12 +32,12 @@ def all_dirty_cells(csv_mat, header = 0):
     with mp.Pool(nprocs) as pool:
         is_dirty = np.array(pool.starmap(_dirty_row, args), dtype = object)
     not_none = is_dirty != None
-    return np.argwhere(not_none), np.where(not_none, is_dirty)
+    return np.argwhere(not_none), is_dirty[not_none]
 
 def _dirty_row(row, cols):
     """Worker function for all_dirty_cells"""
     row = []
-    for col in range(row.shape[0]):
+    for col in range(len(row)):
         row.append(None)
         for pred in _ALL_PREDS:
             if pred(row[col], cols[col]):

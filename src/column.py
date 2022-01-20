@@ -3,6 +3,7 @@ import pandas as pd
 import scipy.stats as sp
 import math as math
 from .utilities import can_be_float, can_be_int
+from .handle_na import is_na
 
 class Column:
     def __init__(self, col):
@@ -48,7 +49,7 @@ class Column:
         sd = 0
         num = 0
         for row in range(col.shape[0]):
-            if can_be_float(col[row]):
+            if can_be_float(col[row]) and not np.isnan(float(col[row])):
                 sd += (float(col[row]) - self.mean) ** 2
                 num += 1
         if num == 0: return 0
@@ -81,9 +82,16 @@ class Column:
                 numeric, some of which might not
                 
         Returns:
-            mode (float) : the mode of the cells in col
+            mode (any) : the mode of the cells in col
         """
-        return sp.mode(col, nan_policy = "omit")[0]
+        counts = {}
+        for el in col:
+            if not is_na(el, None):
+                if el in counts:
+                    counts[el] += 1
+                else:
+                    counts[el] = 1
+        return max(counts, key = counts.__getitem__)
 
     def get_col_type(self, col):
         """Returns the most common column type - either 'num' or 'alpha'.
@@ -98,7 +106,7 @@ class Column:
         for row in range(col.shape[0]):
             if can_be_int(col[row]):
                 al_num_counts[1] += 1
-            if can_be_float(col[row]):
+            elif can_be_float(col[row]):
                 al_num_counts[2] += 1
             else:
                 al_num_counts[0] += 1

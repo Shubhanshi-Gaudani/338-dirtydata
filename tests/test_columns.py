@@ -3,7 +3,7 @@ import numpy as np
 
 def _array_args():
     return [np.array(['0.0', '1', '1.0', '-1.0']),
-            np.array(['1', '2', '3', '4', '5']),
+            np.array(['1', '2', '3', '4', '5', 'nan']),
             np.array([' ', 'na', '2', 'string', '1', '-100', 'more string'])]
 
 def test_col_mean():
