@@ -6,7 +6,7 @@ def is_na(cell_str, column):
     Returns:
         is_na (bool) : whether that cell is a wrongly typed NA 
     """
-    missing_values = ["n/a", "na", "--", "-"]
+    missing_values = ["n/a", "na", "--", "-","nan","NaN"]
     if cell_str in missing_values: 
         return True
     else:
