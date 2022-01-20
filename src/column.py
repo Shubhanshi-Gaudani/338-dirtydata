@@ -57,7 +57,13 @@ class Column:
         Returns:
             median (float) : the median of the numeric cells in col
         """
-        return np.nanmedian(col)
+        nums = []
+        for row in col:
+            try:
+                nums.append(float(row))
+            except ValueError:
+                pass
+        return np.nanmedian(nums)
 
     def get_mode(self, col):
         """Returns the mode of the column.
