@@ -27,7 +27,13 @@ class Column:
         Returns:
             mean (float) : the mean of the numeric cells in col
         """
-        return np.nanmean(col)
+        nums = []
+        for row in col:
+            try:
+                nums.append(float(row))
+            except ValueError:
+                pass
+        return np.nanmean(nums)
     
     def get_stddev(self, col):
         """Returns the standard deviation of the column.
