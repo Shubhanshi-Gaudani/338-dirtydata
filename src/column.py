@@ -45,12 +45,11 @@ class Column:
         Returns:
             stddev (float) : the standard deviation of the numeric cells in col
         """
-        mean  = self.get_mean(col)
         sd = 0
         num = 0
         for row in range(col.shape[0]):
             if can_be_float(col[row]):
-                sd += (col[row] - mean)^2
+                sd += (col[row] - self.mean) ** 2
                 num += 1
         sd = math.sqrt(sd/num)
         return sd

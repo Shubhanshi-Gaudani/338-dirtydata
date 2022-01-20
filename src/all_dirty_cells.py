@@ -40,7 +40,8 @@ def _dirty_row(row, cols):
     for col in range(row.shape[0]):
         row.append(None)
         for pred in _ALL_PREDS:
-            if pred(row[col], cols[col]):
+            if (not (cols[col].column_type == 'alpha' and pred == is_outlier) and 
+                pred(row[col], cols[col])):
                 row[col] = pred
                 break
     return row
