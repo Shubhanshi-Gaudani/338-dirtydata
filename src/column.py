@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import scipy as sp
+import math as math
 from .utilities import can_be_float
 
 class Column:
@@ -38,8 +39,15 @@ class Column:
         Returns:
             stddev (float) : the standard deviation of the numeric cells in col
         """
-        std = np.std(col)
-        return std
+        mean  = self.get_mean(col)
+        sd = 0
+        num = 0
+        for row in range(col.shape[0]):
+            if can_be_float(col[row]):
+                sd += (col[row] - mean)^2
+                num += 1
+        sd = math.sqrt(sd/num)
+        return sd
 
     def get_median(self, col):
         """Returns the median of the column.
