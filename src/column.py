@@ -14,9 +14,9 @@ class Column:
         """
         self.mean = self.get_mean(col)
         self.stddev = self.get_stddev(col)
-        self.median = self.get_median(col)
+        self._quants = self.get_quants(col)
+        self.median = self.quantile(0.5)
         self.mode = self.get_mode(col)
-        self.quants = self.get_quants(col)
         self.column_type = self.get_col_type(col)
 
     def get_mean(self, col):
@@ -113,9 +113,21 @@ class Column:
                     nums.append(float(row))
             except ValueError:
                 pass
-        if len(nums) == 0: return np.nan
         qs = np.array([0, 0.25, 0.5, 0.75, 1])
+        if len(nums) == 0: return [np.nan] * qs.shape[0]
         return [ np.quantile(nums, q) for q in qs ]
+
+    def quantile(self, q):
+        """Returns the qth quantile. Quantile must be in [0, 0.25, 0.5, 0.75, 1].
+        
+        Args:
+            q (float) : the quantile to return. Must be one of 0, 0.25, 0.5, 0.75, 1
+
+        Returns:
+            quant (float) : the qth quantile of the column
+        """
+        assert q in {0, 0.25, 0.5, 0.75, 1}, f'unsupported value for quantile : {q}'
+        return self._quants[int(4 * q)]
 
     def get_col_type(self, col):
         """Returns the most common column type - either 'num' or 'alpha'.

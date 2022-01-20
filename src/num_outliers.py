@@ -20,7 +20,7 @@ def is_outlier(cell_str, col):
     except ValueError:
         return False
 
-    iqr = col.quants[3] - col.quants[1]
-    return (f < col.quants[1] - _QUANT_SCALE * iqr or
-            f > col.quants[3] + _QUANT_SCALE * iqr)
+    iqr = col.quantile(0.75) - col.quantile(0.25)
+    return (f < col.quantile(0.25) - _QUANT_SCALE * iqr or
+            f > col.quantile(0.75) + _QUANT_SCALE * iqr)
     

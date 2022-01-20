@@ -48,6 +48,6 @@ def test_quants():
     true_quants = np.array([[-1, -0.25, 0.5, 1, 1],
                             [1, 2, 3, 4, 5],
                             [-100, -49.5, 1, 1.5, 2]])
-    quants = list(map(lambda c: c.quants, cols))
+    quants = list(map(lambda c: c._quants, cols))
     assert np.allclose(true_quants, quants)
         
