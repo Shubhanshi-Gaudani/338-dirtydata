@@ -1,13 +1,14 @@
 [
   "tests/test_columns.py::test_col_mean",
   "tests/test_columns.py::test_col_stddev",
+  "tests/test_columns.py::test_col_type",
   "tests/test_columns.py::test_median",
   "tests/test_columns.py::test_mode",
-  "tests/test_columns.py::test_col_type",
   "tests/test_driver.py::test_dirty_cells",
-  "tests/test_rules.py::test_outliers",
-  "tests/test_rules.py::test_na",
   "tests/test_rules.py::test_correct_dtype",
   "tests/test_rules.py::test_missing",
-  "tests/test_utils.py::test_can_be_float"
+  "tests/test_rules.py::test_na",
+  "tests/test_rules.py::test_outliers",
+  "tests/test_utils.py::test_can_be_float",
+  "tests/test_utils.py::test_can_be_int"
 ]

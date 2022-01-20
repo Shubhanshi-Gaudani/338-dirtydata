@@ -1,12 +1,3 @@
 {
-  "tests/test_columns.py::test_col_mean": true,
-  "tests/test_columns.py::test_col_stddev": true,
-  "tests/test_columns.py::test_col_type": true,
-  "tests/test_columns.py::test_median": true,
-  "tests/test_columns.py::test_mode": true,
-  "tests/test_driver.py::test_dirty_cells": true,
-  "tests/test_rules.py::test_correct_dtype": true,
-  "tests/test_rules.py::test_missing": true,
-  "tests/test_rules.py::test_na": true,
-  "tests/test_rules.py::test_outliers": true
+  "tests/test_driver.py::test_dirty_cells": true
 }

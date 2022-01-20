@@ -1,17 +1,18 @@
+from .utilities import can_be_float, can_be_int
+
 def isIncorrectDataType(cell_str, col):
-    if col.column_type == 'alpha':
-        typ = str
-    else:
-        if "." in cell_str:
-            typ = float
-        else:
-            typ = int
-    
-    if not (isinstance(cell_str, typ)):
-        # incorrect_ind = col.index(cell_str)
-        # print('Datatype mismatch for element found at index ',incorrect_ind)
-        return True
-    
-    return False
-    
+    """Returns whether cell_str's type does not match with col's type.
+
+    Args:
+        cell_str (str) : the raw text of that cell
+        column (Column) : container for generic info about the column of that cell
+
+    Returns:
+        is_incorrect (bool) : whether that cell is the wrong type
+    """
+    if can_be_int(cell_str):
+        return col.column_type != 'int'
+    if can_be_float(cell_str):
+        return col.column_type != 'float'
+    return col.column_type != 'alpha'    
 

@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-import scipy as sp
+import scipy.stats as sp
 import math as math
-from .utilities import can_be_float
+from .utilities import can_be_float, can_be_int
 
 class Column:
     def __init__(self, col):
@@ -49,8 +49,9 @@ class Column:
         num = 0
         for row in range(col.shape[0]):
             if can_be_float(col[row]):
-                sd += (col[row] - self.mean) ** 2
+                sd += (float(col[row]) - self.mean) ** 2
                 num += 1
+        if num == 0: return 0
         sd = math.sqrt(sd/num)
         return sd
 
@@ -82,7 +83,7 @@ class Column:
         Returns:
             mode (float) : the mode of the cells in col
         """
-        return sp.mode(col, nan_policy = "omit")
+        return sp.mode(col, nan_policy = "omit")[0]
 
     def get_col_type(self, col):
         """Returns the most common column type - either 'num' or 'alpha'.
@@ -93,8 +94,13 @@ class Column:
         Returns:
             type (string) : either 'num' or 'alpha'
         """
-        al_num_counts = [0, 0]
+        al_num_counts = [0, 0, 0]
         for row in range(col.shape[0]):
-            al_num_counts[int(can_be_float(col[row]))] += 1
-        typs = ['alpha', 'num']
+            if can_be_int(col[row]):
+                al_num_counts[1] += 1
+            if can_be_float(col[row]):
+                al_num_counts[2] += 1
+            else:
+                al_num_counts[0] += 1
+        typs = ['alpha', 'int', 'float']
         return typs[np.argmax(al_num_counts)]

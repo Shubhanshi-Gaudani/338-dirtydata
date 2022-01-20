@@ -23,3 +23,18 @@ def is_float_char(c):
         could_be (bool) : whether the character could be in a valid float
     """
     return c.isnumeric() or c == '.'
+
+def can_be_int(s):
+    """Returns whether s can be cast as a int without exception.
+    
+    Args:
+        s (str) : a string to check
+        
+    Returns:
+        is_int (bool) : whether the string can be cast as a int
+    """
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False

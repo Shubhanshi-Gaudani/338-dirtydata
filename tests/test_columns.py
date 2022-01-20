@@ -2,15 +2,15 @@ from src import Column
 import numpy as np
 
 def _array_args():
-    return [np.array(['0', '1', '1.0', '-1.0']),
+    return [np.array(['0.0', '1', '1.0', '-1.0']),
             np.array(['1', '2', '3', '4', '5']),
             np.array([' ', 'na', '2', 'string', '1', '-100', 'more string'])]
 
 def test_col_mean():
     cols = map(Column, _array_args())
-    true_means = [0.25, 3, -32.333]
+    true_means = [0.25, 3.0, -32.3333333]
     means = list(map(lambda c: c.mean, cols))
-    assert np.allclose(means, true_means)
+    assert np.allclose(means, true_means), f'{means} != {true_means}'
 
 def test_col_stddev():
     cols = map(Column, _array_args())
@@ -31,14 +31,15 @@ def test_mode():
     cols = [Column(np.array(['0', '2', '-1', '2', '0', '2'])),
             Column(np.array(['1', 'na', ' ', '1', '2', 'string'])),
             Column(np.array(['-1', '-100', '1lbs', '-100']))]
-    true_modes = [2, 1, -100]
-    modes = list(map(lambda c: c.mode, cols))
-    assert np.allclose(true_modes, modes)
+    true_modes = ['2', '1', '-100']
+    for i in range(len(true_modes)):
+        assert cols[i].mode == true_modes[i]
 
 def test_col_type():
     cols = map(Column, _array_args())
-    true_types = ['num', 'num', 'alpha']
+    true_types = ['float', 'int', 'alpha']
     types = list(map(lambda c: c.column_type, cols))
-    for i in range(len(cols)):
+    for i in range(len(types)):
         assert true_types[i] == types[i], f'{true_types} != {types}'
+    assert Column(np.array(['string'])).column_type == 'alpha'
         

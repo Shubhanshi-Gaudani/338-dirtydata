@@ -1,6 +1,6 @@
 from .num_outliers import is_outlier
 from .column import Column
-from .utilities import can_be_float, is_float_char
+from .utilities import can_be_float, is_float_char, can_be_int
 from .handle_na import is_na
 from .is_correct_datatype import isIncorrectDataType
 from .missing_data import missing_data
