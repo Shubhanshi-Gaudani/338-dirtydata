@@ -49,7 +49,7 @@ class Column:
         num = 0
         for row in range(col.shape[0]):
             if can_be_float(col[row]):
-                sd += (col[row] - self.mean) ** 2
+                sd += (float(col[row]) - self.mean) ** 2
                 num += 1
         sd = math.sqrt(sd/num)
         return sd
