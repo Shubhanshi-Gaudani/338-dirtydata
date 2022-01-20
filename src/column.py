@@ -16,6 +16,7 @@ class Column:
         self.stddev = self.get_stddev(col)
         self.median = self.get_median(col)
         self.mode = self.get_mode(col)
+        self.quants = self.get_quants(col)
         self.column_type = self.get_col_type(col)
 
     def get_mean(self, col):
@@ -34,6 +35,7 @@ class Column:
                 nums.append(float(row))
             except ValueError:
                 pass
+        if len(nums) == 0: return np.nan
         return np.nanmean(nums)
     
     def get_stddev(self, col):
@@ -72,6 +74,7 @@ class Column:
                 nums.append(float(row))
             except ValueError:
                 pass
+        if len(nums) == 0: return np.nan
         return np.nanmedian(nums)
 
     def get_mode(self, col):
@@ -93,6 +96,27 @@ class Column:
                     counts[el] = 1
         return max(counts, key = counts.__getitem__)
 
+    def get_quants(self, col):
+        """Returns the 0th, 0.25th, 0.5th, 0.75th, and 1st quantile of the column.
+        
+        Args:
+            col (np.array) : an array of strings, some of which might be
+                numeric, some of which might not
+                
+        Returns:
+            quants (float) : the IQR of the numeric cells in col
+        """
+        nums = []
+        for row in col:
+            try:
+                if not is_na(row, None):
+                    nums.append(float(row))
+            except ValueError:
+                pass
+        if len(nums) == 0: return np.nan
+        qs = np.array([0, 0.25, 0.5, 0.75, 1])
+        return [ np.quantile(nums, q) for q in qs ]
+
     def get_col_type(self, col):
         """Returns the most common column type - either 'num' or 'alpha'.
         
@@ -103,12 +127,13 @@ class Column:
             type (string) : either 'num' or 'alpha'
         """
         al_num_counts = [0, 0, 0]
-        for row in range(col.shape[0]):
-            if can_be_int(col[row]):
-                al_num_counts[1] += 1
-            elif can_be_float(col[row]):
-                al_num_counts[2] += 1
-            else:
-                al_num_counts[0] += 1
+        for row in col:
+            if not is_na(row, None):
+                if can_be_int(row):
+                    al_num_counts[1] += 1
+                elif can_be_float(row):
+                    al_num_counts[2] += 1
+                else:
+                    al_num_counts[0] += 1
         typs = ['alpha', 'int', 'float']
         return typs[np.argmax(al_num_counts)]

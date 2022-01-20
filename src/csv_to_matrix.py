@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 def csvToMatrix(csv_name):
     """Takes the name of the csv file and returns the 2D matrix version of the file.
@@ -7,6 +8,12 @@ def csvToMatrix(csv_name):
     Returns:
         result_mat (2d array) : Matrix version of the csv file
     """
-    df = pd.read_csv(csv_name, dtype = str)
-    result_mat = df.to_numpy(dtype = str)
-    return result_mat
+    # df = pd.read_csv(csv_name, dtype = str)
+    # result_mat = df.to_numpy(dtype = str)
+    # return result_mat
+    # unfortunately pandas does not handle empty cells well
+    mat = []
+    with open(csv_name, 'r') as sheet:
+        for line in sheet:
+            mat.append(line.split(','))
+    return np.array(mat, dtype = str)

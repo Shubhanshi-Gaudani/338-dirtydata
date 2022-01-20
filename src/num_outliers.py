@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
-from .utilities import can_be_float
 
-_NUM_STDS = 4
+_QUANT_SCALE = 2
 
 def is_outlier(cell_str, col):
     """Takes the string version of the cell and returns whether it is an outlier.
@@ -16,6 +15,12 @@ def is_outlier(cell_str, col):
     Returns:
         is_outlier (bool) : whether that cell is an outlier numerically
     """
-    if not can_be_float(cell_str): return False
-    return abs(col.mean - float(cell_str)) > _NUM_STDS * col.stddev
+    try:
+        f = float(cell_str)
+    except ValueError:
+        return False
+
+    iqr = col.quants[3] - col.quants[1]
+    return (f < col.quants[1] - _QUANT_SCALE * iqr or
+            f > col.quants[3] + _QUANT_SCALE * iqr)
     

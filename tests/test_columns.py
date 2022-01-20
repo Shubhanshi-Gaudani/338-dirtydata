@@ -42,4 +42,12 @@ def test_col_type():
     for i in range(len(types)):
         assert true_types[i] == types[i], f'{true_types} != {types}'
     assert Column(np.array(['string'])).column_type == 'alpha'
+
+def test_quants():
+    cols = map(Column, _array_args())
+    true_quants = np.array([[-1, -0.25, 0.5, 1, 1],
+                            [1, 2, 3, 4, 5],
+                            [-100, -49.5, 1, 1.5, 2]])
+    quants = list(map(lambda c: c.quants, cols))
+    assert np.allclose(true_quants, quants)
         

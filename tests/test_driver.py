@@ -5,21 +5,36 @@ import numpy as np
 
 def test_dirty_cells():
     mat = csvToMatrix('tests/test_sheet_1.csv')
+    has_zero = False
+    for row in mat:
+        for col in row:
+            if col == '':
+                has_zero = True
+                break
+        else:
+            continue
+        break
+    assert has_zero
+
     inds, reasons = all_dirty_cells(mat, header = 1)
-    assert inds.shape == (7, 2)
-    assert reasons.shape == (7,)
-    assert np.all(inds[0] == [0, 1])
-    assert reasons[0] == missing_data
-    assert np.all(inds[1] == [1, 6])
-    assert reasons[1] == isIncorrectDataType
-    assert np.all(inds[2] == [3, 4])
-    assert reasons[2] == isIncorrectDataType
-    assert np.all(inds[3] == [3, 6])
-    assert reasons[3] == is_na
-    assert np.all(inds[4] == [4, 3])
-    assert reasons[4] == missing_data
-    assert np.all(inds[5] == [5, 3])
-    assert reasons[5] == missing_data
-    assert np.all(inds[6] == [5, 6])
-    assert reasons[6] == is_outlier
+    right_inds = np.array([[0, 1],
+                           [0, 2],
+                           [0, 7],
+                           [1, 6],
+                           [4, 3],
+                           [5, 3],
+                           [5, 6]])
+    right_reasons = [missing_data, 
+                     is_outlier,
+                     is_outlier,
+                     isIncorrectDataType,
+                     is_na,
+                     missing_data,
+                     is_outlier]
+    assert np.all(inds == right_inds)
+    assert np.all(reasons == right_reasons)
+
+    seq_inds, seq_reasons = all_dirty_cells(mat, header = 1, parallel = False)
+    assert np.all(inds == seq_inds)
+    assert np.all(reasons == seq_reasons)
     
