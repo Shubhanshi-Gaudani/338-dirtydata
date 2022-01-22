@@ -3,11 +3,11 @@ import numpy as np
 
 _QUANT_SCALE = 2
 
-def _num_is_outlier(x, perc25, perc75):
+def _num_is_outlier(x, perc25, perc75, quant_scale = _QUANT_SCALE):
     """Takes a number and returns if it's an outlier."""
     iqr = perc75 - perc25
-    return (x < perc25 - _QUANT_SCALE * iqr or
-            x > perc75 + _QUANT_SCALE * iqr)
+    return (x < perc25 - quant_scale * iqr or
+            x > perc75 + quant_scale * iqr)
 
 def is_outlier(cell_str, col):
     """Takes the string version of the cell and returns whether it is an outlier.

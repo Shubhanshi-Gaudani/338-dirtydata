@@ -48,7 +48,8 @@ def test_missing():
     assert not missing_data('0', c)
 
 def test_str_outliers():
-    assert str_outlier('string', Column(np.array(['a', 'b', 'c'])))
-    assert not str_outlier('d', Column(np.array(['a', 'b', 'c'])))
+    col = Column(np.array(['abbcc', 'baccd', 'abdcc']))
+    assert str_outlier('string', col)
+    assert not str_outlier('d', col)
     assert str_outlier('1/21/2022', Column(np.array(['1-21-2022', '1-20-2022', '4-16-2021'])))
     assert not str_outlier('1/21/2022', Column(np.array(['1/21/2022', '1/20/2022', '4/16/2021'])))

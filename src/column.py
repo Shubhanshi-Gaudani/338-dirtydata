@@ -4,7 +4,7 @@ import scipy.stats as sp
 import math as math
 from .utilities import can_be_float, can_be_int
 from .handle_na import is_na
-from scipy.spatial.distance import hamming
+from Levenshtein import distance
 
 class Column:
     def __init__(self, col):
@@ -20,7 +20,7 @@ class Column:
         self.mode = self.get_mode(col)
         self.column_type = self.get_col_type(col)
         self.str_els = self.get_str_els(col)
-        self.ham_quants = self.get_ham_quants(col)
+        self.lev_quants = self.get_lev_quants(col)
 
     def get_str_els(self, col):
         """Returns all the non-numerical elements in col.
@@ -37,7 +37,7 @@ class Column:
                              count = col.shape[0])
         return col[np.invert(is_str)]
 
-    def get_ham_quants(self, col):
+    def get_lev_quants(self, col):
         """Returns all the average pairwise hamming distance in col.
         
         Args:
@@ -47,16 +47,15 @@ class Column:
         Returns:
             avg_ham (float) : the average hamming distance
         """
-        hams = np.empty(self.str_els.shape[0] ** 2)
-        i = 0
-        for row in self.str_els:
-            for row2 in self.str_els:
-                hams[i] = hamming(row, row2)
-                i += 1
+        levs = []
+        for row in range(self.str_els.shape[0]):
+            for row2 in range(1 + row, self.str_els.shape[0]):
+                levs.append(distance(self.str_els[row],
+                                     self.str_els[row2]))
         
         qs = np.array([0, 0.25, 0.5, 0.75, 1])
-        if len(hams) == 0: return [np.nan] * qs.shape[0]
-        return [ np.quantile(hams, q) for q in qs ]
+        if len(levs) == 0: return [np.nan] * qs.shape[0]
+        return [ np.quantile(levs, q) for q in qs ]
 
     def get_mean(self, col):
         """Returns the mean of the column.
