@@ -32,8 +32,10 @@ class Column:
         Returns:
             str_els (np.array) : the non-numerical elements
         """
-        is_str = np.fromiter(map(can_be_float, col), count = col.shape[0])
-        return col[is_str]
+        is_str = np.fromiter(map(can_be_float, col), 
+                             dtype = bool, 
+                             count = col.shape[0])
+        return col[np.invert(is_str)]
 
     def get_ham_quants(self, col):
         """Returns all the average pairwise hamming distance in col.

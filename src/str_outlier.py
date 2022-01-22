@@ -21,3 +21,4 @@ def str_outlier(cell_str, col):
     return _num_is_outlier(total / col.str_els.shape[0], 
                            col.ham_quants[1], 
                            col.ham_quants[3])
+                           
