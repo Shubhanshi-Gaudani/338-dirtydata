@@ -50,4 +50,11 @@ def test_quants():
                             [-100, -49.5, 1, 1.5, 2]])
     quants = list(map(lambda c: c._quants, cols))
     assert np.allclose(true_quants, quants)
+
+def test_str_cols():
+    cols = map(Column, _array_args())
+    true_strs = [[], [], [' ', 'na', 'string', 'more string']]
+    strs = list(map(lambda c: c.str_els, cols))
+    for i in range(len(strs)):
+        assert np.all(np.array(true_strs[i], dtype = str) == strs[i]), f'{true_strs} != {strs}'
         
