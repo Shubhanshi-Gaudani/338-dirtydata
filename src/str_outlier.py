@@ -1,6 +1,8 @@
-from scipy.spatial.distance import hamming
+from Levenshtein import distance
 from .num_outliers import _num_is_outlier
 from .utilities import can_be_float
+
+_QUANT_SCALE = 2
 
 def str_outlier(cell_str, col):
     """Takes the string version of the cell and returns whether it is inconsistent with other cells.
@@ -17,8 +19,9 @@ def str_outlier(cell_str, col):
     if can_be_float(cell_str): return False
     total = 0
     for row in col.str_els:
-        total += hamming(cell_str, row)
+        total += distance(cell_str, row)
     return _num_is_outlier(total / col.str_els.shape[0], 
-                           col.ham_quants[1], 
-                           col.ham_quants[3])
+                           col.lev_quants[1], 
+                           col.lev_quants[3],
+                           _QUANT_SCALE)
                            
