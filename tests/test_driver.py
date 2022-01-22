@@ -4,7 +4,7 @@ from src import missing_data, isIncorrectDataType, is_outlier, is_na
 import numpy as np
 
 def test_dirty_cells():
-    mat = csvToMatrix('tests/test_sheet_1.csv')
+    mat = csvToMatrix("test_sheet_1.csv")
     has_zero = False
     for row in mat:
         for col in row:

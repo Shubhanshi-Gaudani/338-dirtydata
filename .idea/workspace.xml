@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f2d8cef1-4392-426a-81d0-affcdae14641" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/column.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/column.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/338-dirtydata.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/duplicate_columns.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/duplicate_columns.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_driver.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_driver.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +75,8 @@
       <option name="presentableId" value="Default" />
       <updated>1642526448419</updated>
       <workItem from="1642526452395" duration="3456000" />
-      <workItem from="1642699700370" duration="895000" />
+      <workItem from="1642699700370" duration="1432000" />
+      <workItem from="1642806950851" duration="3300000" />
     </task>
     <task id="LOCAL-00001" summary="Added duplicate rows function">
       <created>1642527470434</created>
@@ -144,24 +152,24 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="227" y="57" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1642700452481" />
-    <state width="1398" height="279" key="GridCell.Tab.0.bottom" timestamp="1642700706420">
+    <state width="1398" height="205" key="GridCell.Tab.0.bottom" timestamp="1642807262140">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="279" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1642700706420" />
-    <state width="1398" height="279" key="GridCell.Tab.0.center" timestamp="1642700706420">
+    <state width="1398" height="205" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1642807262140" />
+    <state width="1398" height="205" key="GridCell.Tab.0.center" timestamp="1642807262139">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="279" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1642700706420" />
-    <state width="1398" height="279" key="GridCell.Tab.0.left" timestamp="1642700706419">
+    <state width="1398" height="205" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1642807262139" />
+    <state width="1398" height="205" key="GridCell.Tab.0.left" timestamp="1642807262139">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="279" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1642700706419" />
-    <state width="1398" height="279" key="GridCell.Tab.0.right" timestamp="1642700706420">
+    <state width="1398" height="205" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1642807262139" />
+    <state width="1398" height="205" key="GridCell.Tab.0.right" timestamp="1642807262140">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1398" height="279" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1642700706420" />
+    <state width="1398" height="205" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1642807262140" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/338_dirtydata$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1642700706409" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/338_dirtydata$pytest_in_tests.coverage" NAME="pytest in tests Coverage Results" MODIFIED="1642807262118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
