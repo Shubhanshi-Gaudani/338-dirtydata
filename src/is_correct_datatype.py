@@ -11,7 +11,7 @@ def isIncorrectDataType(cell_str, col):
         is_incorrect (bool) : whether that cell is the wrong type
     """
     if can_be_int(cell_str):
-        return col.column_type != 'int'
+        return col.column_type != 'int' and col.column_type != 'float'
     if can_be_float(cell_str):
         return col.column_type != 'float'
     return col.column_type != 'alpha'    

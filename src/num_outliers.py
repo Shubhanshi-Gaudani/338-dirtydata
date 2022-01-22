@@ -3,6 +3,12 @@ import numpy as np
 
 _QUANT_SCALE = 2
 
+def _num_is_outlier(x, perc25, perc75):
+    """Takes a number and returns if it's an outlier."""
+    iqr = perc75 - perc25
+    return (x < perc25 - _QUANT_SCALE * iqr or
+            x > perc75 + _QUANT_SCALE * iqr)
+
 def is_outlier(cell_str, col):
     """Takes the string version of the cell and returns whether it is an outlier.
 
@@ -19,8 +25,5 @@ def is_outlier(cell_str, col):
         f = float(cell_str)
     except ValueError:
         return False
-
-    iqr = col.quantile(0.75) - col.quantile(0.25)
-    return (f < col.quantile(0.25) - _QUANT_SCALE * iqr or
-            f > col.quantile(0.75) + _QUANT_SCALE * iqr)
     
+    return _num_is_outlier(f, col.quantile(0.25), col.quantile(0.75))

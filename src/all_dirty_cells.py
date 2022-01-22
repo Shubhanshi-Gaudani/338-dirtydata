@@ -7,9 +7,11 @@ from .is_correct_datatype import isIncorrectDataType
 from .missing_data import missing_data
 import multiprocessing as mp
 from itertools import starmap
+from .str_outlier import str_outlier
 
 _NPROCS = 8
-_ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier]
+# predicates are called in order so order matters
+_ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier, str_outlier]
 
 def all_dirty_cells(csv_mat, header = 0, parallel = True):
     """Uses each predicate rule to find all dirty cells.

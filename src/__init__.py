@@ -8,3 +8,4 @@ from .all_dirty_cells import all_dirty_cells
 from .csv_to_matrix import csvToMatrix
 from .duplicate_columns import duplicate_columns
 from .duplicate_rows import duplicate_row
+from .str_outlier import str_outlier
