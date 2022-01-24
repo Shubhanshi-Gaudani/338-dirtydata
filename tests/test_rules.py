@@ -53,3 +53,36 @@ def test_str_outliers():
     assert not str_outlier('d', col)
     assert str_outlier('1/21/2022', Column(np.array(['1-21-2022', '1-20-2022', '4-16-2021'])))
     assert not str_outlier('1/21/2022', Column(np.array(['1/21/2022', '1/20/2022', '4/16/2021'])))
+
+
+def test_is_email():
+    from src.email_syntax import is_email
+    col = Column(np.array(['simran@gmail.com', 'yamini@u.northwestern.edu', 'simg@u.northwestern.edu']))
+    assert is_email('abc@gmail.com', col)
+    assert not is_email('123', col )
+    assert not is_email('random_string', col)
+    assert is_email('s@nu.northwestern.edu', col)
+    assert not is_email('27.5', col)
+    assert not is_email('hello@xx', col)
+
+
+def test_whitesp():
+    #this is terribly written code, sorry 🙈
+    from src.strip_whitespaces import clean_whitespaces
+    col = Column(np.array(['   string', 'hello', '    what da dog doin   ']))
+    x = np.array(['   string', 'hello', '    what da dog doin   '])
+    y = np.array(['123', '  twentytwo', 'hi my name is  Bob'])
+    l = []
+    m = []
+    for i in x:
+        l.append(clean_whitespaces(i, col))
+    l = np.array(l)
+
+    for j in y:
+        m.append(clean_whitespaces(j,col))
+    m = np.array(m)
+
+    assert np.array_equal(l,np.array(['string', 'hello', 'what da dog doin']))
+    assert np.array_equal(m, np.array(['123', 'twentytwo', 'hi my name is Bob']))
+
+
