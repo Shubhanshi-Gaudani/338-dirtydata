@@ -8,12 +8,14 @@
   "tests/test_columns.py::test_quants",
   "tests/test_columns.py::test_str_cols",
   "tests/test_driver.py::test_dirty_cells",
+  "tests/test_driver.py::test_with_nfl",
   "tests/test_rules.py::test_correct_dtype",
   "tests/test_rules.py::test_is_email",
   "tests/test_rules.py::test_missing",
   "tests/test_rules.py::test_na",
   "tests/test_rules.py::test_outliers",
   "tests/test_rules.py::test_str_outliers",
+  "tests/test_rules.py::test_whitesp",
   "tests/test_utils.py::test_can_be_float",
   "tests/test_utils.py::test_can_be_int"
 ]
