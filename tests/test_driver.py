@@ -42,3 +42,10 @@ def test_dirty_cells():
     assert np.all(inds == seq_inds)
     assert np.all(reasons == seq_reasons)
     
+def test_with_nfl():
+    mat = csvToMatrix('tests/nfl_data.txt')
+    inds, reasons = all_dirty_cells(mat)
+    assert np.any(reasons == str_outlier)
+    for r in range(reasons.shape[0]):
+        if r == str_outlier:
+            print(inds[tuple(reasons[r])])

@@ -16,4 +16,5 @@ def csvToMatrix(csv_name):
     with open(csv_name, 'r') as sheet:
         for line in sheet:
             mat.append(line.split(','))
+            assert len(mat[-1]) == len(mat[0]), len(mat) - 1
     return np.array(mat, dtype = str)
