@@ -1,5 +1,4 @@
-import csv
-from src import all_dirty_cells, csvToMatrix
+from src import all_dirty_cells, csvToMatrix, _ALL_PREDS
 from src import missing_data, isIncorrectDataType, is_outlier, is_na, str_outlier
 import numpy as np
 
@@ -16,17 +15,17 @@ def test_dirty_cells():
         break
     assert has_zero
 
-    inds, reasons = all_dirty_cells(mat, header = 1)
-    right_inds = np.array([[0, 0],
-                           [0, 1],
+    inds, reasons = all_dirty_cells(mat, 
+                                    header = 1,
+                                    preds = _ALL_PREDS[:-1])
+    right_inds = np.array([[0, 1],
                            [0, 2],
                            [0, 7],
                            [1, 6],
                            [4, 3],
                            [5, 3],
                            [5, 6]])
-    right_reasons = [str_outlier,
-                     missing_data, 
+    right_reasons = [missing_data, 
                      is_outlier,
                      is_outlier,
                      isIncorrectDataType,
@@ -36,7 +35,10 @@ def test_dirty_cells():
     assert np.all(inds == right_inds)
     assert np.all(reasons == right_reasons)
 
-    seq_inds, seq_reasons = all_dirty_cells(mat, header = 1, parallel = False)
+    seq_inds, seq_reasons = all_dirty_cells(mat, 
+                                            header = 1, 
+                                            parallel = False,
+                                            preds = _ALL_PREDS[:-1])
     assert np.all(inds == seq_inds)
     assert np.all(reasons == seq_reasons)
     

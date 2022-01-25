@@ -1,4 +1,1 @@
-{
-  "tests/test_driver.py::test_dirty_cells": true,
-  "tests/test_rules.py::test_str_outliers": true
-}
+{}

@@ -13,7 +13,7 @@ _NPROCS = 8
 # predicates are called in order so order matters
 _ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier, str_outlier]
 
-def all_dirty_cells(csv_mat, header = 0, parallel = True):
+def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None):
     """Uses each predicate rule to find all dirty cells.
 
     Args:
@@ -29,11 +29,12 @@ def all_dirty_cells(csv_mat, header = 0, parallel = True):
         reasons (np.array) : an array of functions that the cells in 
             dirty failed. reasons[i] is the reason why dirty[i] failed
     """
+    preds = _ALL_PREDS if preds is None else preds
     csv_mat = csv_mat[header:]
     columns = list(map(Column, csv_mat.T))
 
     nprocs = min(_NPROCS, csv_mat.shape[0])
-    args = [ (row, columns) for row in csv_mat ]
+    args = [ (row, columns, preds) for row in csv_mat ]
 
     if parallel:
         with mp.Pool(nprocs) as pool:
@@ -44,11 +45,11 @@ def all_dirty_cells(csv_mat, header = 0, parallel = True):
     not_none = is_dirty != None
     return np.argwhere(not_none), is_dirty[not_none]
 
-def _dirty_row(row, cols):
+def _dirty_row(row, cols, preds):
     """Worker function for all_dirty_cells"""
     new_row = [None] * len(row)
     for col in range(len(row)):
-        for pred in _ALL_PREDS:
+        for pred in preds:
             if pred(row[col], cols[col]):
                 new_row[col] = pred
                 break
