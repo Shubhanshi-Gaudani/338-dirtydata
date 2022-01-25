@@ -31,13 +31,17 @@ def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None):
     """
     preds = _ALL_PREDS if preds is None else preds
     csv_mat = csv_mat[header:]
-    columns = list(map(Column, csv_mat.T))
 
-    nprocs = min(_NPROCS, csv_mat.shape[0])
+    if parallel:
+        with mp.Pool(min(_NPROCS, csv_mat.shape[1])) as pool:
+            columns = pool.map(Column, csv_mat.T)
+    else:
+        columns = list(map(Column, csv_mat.T))
+
     args = [ (row, columns, preds) for row in csv_mat ]
 
     if parallel:
-        with mp.Pool(nprocs) as pool:
+        with mp.Pool(min(_NPROCS, csv_mat.shape[0])) as pool:
             is_dirty = np.array(pool.starmap(_dirty_row, args), dtype = object)
     else:
         is_dirty = np.array(list(starmap(_dirty_row, args)), dtype = object)

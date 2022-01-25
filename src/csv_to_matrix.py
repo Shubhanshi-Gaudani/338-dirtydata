@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-def csvToMatrix(csv_name):
+def csvToMatrix(csv_name, delimiter = ','):
     """Takes the name of the csv file and returns the 2D matrix version of the file.
     Args:
         csv_name (str) : the name of the csv file
@@ -15,6 +15,8 @@ def csvToMatrix(csv_name):
     mat = []
     with open(csv_name, 'r') as sheet:
         for line in sheet:
-            mat.append(line.split(','))
-            assert len(mat[-1]) == len(mat[0]), len(mat) - 1
+            mat.append(line.split(delimiter))
+            if len(mat[-1]) != len(mat[0]):
+                raise ValueError(f'row {len(mat)} of the spreadsheet does not ' +
+                                 f'have the right length, which is {len(mat[0])}.')
     return np.array(mat, dtype = str)
