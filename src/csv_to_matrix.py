@@ -17,6 +17,7 @@ def csvToMatrix(csv_name, delimiter = ','):
         for line in sheet:
             mat.append(line.split(delimiter))
             if len(mat[-1]) != len(mat[0]):
-                raise ValueError(f'row {len(mat)} of the spreadsheet does not ' +
-                                 f'have the right length, which is {len(mat[0])}.')
+                raise ValueError(f'row {len(mat)} of the spreadsheet has ' +
+                                 f'length {len(mat[-1])} instead of the correct ' +
+                                 f'length {len(mat[0])}.')
     return np.array(mat, dtype = str)

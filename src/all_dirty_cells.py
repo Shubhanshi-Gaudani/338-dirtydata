@@ -11,7 +11,7 @@ from .str_outlier import str_outlier
 
 _NPROCS = 8
 # predicates are called in order so order matters
-_ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier, str_outlier]
+_ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier]
 
 def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None):
     """Uses each predicate rule to find all dirty cells.

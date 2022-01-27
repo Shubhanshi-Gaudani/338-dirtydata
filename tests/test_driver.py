@@ -44,7 +44,7 @@ def test_dirty_cells():
     
 def test_with_nfl():
     mat = csvToMatrix('tests/nfl_data.txt')
-    inds, reasons = all_dirty_cells(mat)
+    inds, reasons = all_dirty_cells(mat, parallel = False)
     assert np.any(reasons == str_outlier)
     for r in range(reasons.shape[0]):
         if r == str_outlier:
