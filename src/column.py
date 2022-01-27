@@ -19,8 +19,8 @@ class Column:
         self.median = self.quantile(0.5)
         self.mode = self.get_mode(col)
         self.column_type = self.get_col_type(col)
-        self.str_els = self.get_str_els(col)
-        self.lev_quants = self.get_lev_quants(col)
+        # self.str_els = self.get_str_els(col)
+        # self.lev_quants = self.get_lev_quants(col)
 
     def get_str_els(self, col):
         """Returns all the non-numerical elements in col.

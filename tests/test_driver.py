@@ -16,8 +16,7 @@ def test_dirty_cells():
     assert has_zero
 
     inds, reasons = all_dirty_cells(mat, 
-                                    header = 1,
-                                    preds = _ALL_PREDS[:-1])
+                                    header = 1)
     right_inds = np.array([[0, 1],
                            [0, 2],
                            [0, 7],
@@ -38,14 +37,11 @@ def test_dirty_cells():
     seq_inds, seq_reasons = all_dirty_cells(mat, 
                                             header = 1, 
                                             parallel = False,
-                                            preds = _ALL_PREDS[:-1])
+                                            preds = _ALL_PREDS)
     assert np.all(inds == seq_inds)
     assert np.all(reasons == seq_reasons)
     
 def test_with_nfl():
     mat = csvToMatrix('tests/nfl_data.txt')
     inds, reasons = all_dirty_cells(mat, parallel = False)
-    assert np.any(reasons == str_outlier)
-    for r in range(reasons.shape[0]):
-        if r == str_outlier:
-            print(inds[tuple(reasons[r])])
+    

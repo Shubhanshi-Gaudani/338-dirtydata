@@ -27,3 +27,18 @@ def is_outlier(cell_str, col):
         return False
     
     return _num_is_outlier(f, col.quantile(0.25), col.quantile(0.75))
+
+def outlier_message(cell_str, col):
+    """Returns a user-friendly message for why the cell is dirty.
+    
+    Args:
+        cell_str (str) : the string version of the cell
+        col (Column) : a container class with information about the column
+
+    Returns:
+        message (str) : a readable reason why the string was dirty
+    """
+    med = col.quantile(0.5)
+    above = 'above' if float(cell_str) > med else 'below'
+    return f'This cell was way {above} the median, which was {med}.'
+    
