@@ -1,1 +1,3 @@
-{}
+{
+  "tests/test_cleaner.py::test_cleaner": true
+}
