@@ -1,4 +1,4 @@
-from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier
+from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier, is_email
 import numpy as np
 
 def _def_col():
@@ -56,7 +56,6 @@ def test_str_outliers():
         assert not str_outlier('1/21/2022', Column(np.array(['1/21/2022', '1/20/2022', '4/16/2021'])))
 
 def test_is_email():
-    from src.email_syntax import is_email
     col = Column(np.array(['simran@gmail.com', 'yamini@u.northwestern.edu', 'simg@u.northwestern.edu']))
     assert is_email('abc@gmail.com', col)
     assert not is_email('123', col )

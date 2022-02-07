@@ -1,13 +1,13 @@
 import numpy as np
 import pandas as pd
-from .num_outliers import is_outlier
+from .rules import is_outlier
 from .column import Column
-from .handle_na import is_na
-from .is_correct_datatype import isIncorrectDataType
-from .missing_data import missing_data
+from .rules import is_na
+from .rules import isIncorrectDataType
+from .rules import missing_data
 import multiprocessing as mp
 from itertools import starmap
-from .str_outlier import str_outlier
+from .rules import str_outlier
 
 _NPROCS = 8
 # predicates are called in order so order matters

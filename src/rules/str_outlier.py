@@ -1,6 +1,6 @@
 from Levenshtein import distance
 from .num_outliers import _num_is_outlier
-from .utilities import can_be_float
+from ..utilities import can_be_float
 
 _QUANT_SCALE = 1.5
 

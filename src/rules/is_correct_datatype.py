@@ -1,4 +1,4 @@
-from .utilities import can_be_float, can_be_int
+from ..utilities import can_be_float, can_be_int
 
 def isIncorrectDataType(cell_str, col):
     """Returns whether cell_str's type does not match with col's type.

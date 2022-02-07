@@ -3,7 +3,7 @@ import pandas as pd
 import scipy.stats as sp
 import math as math
 from .utilities import can_be_float, can_be_int
-from .handle_na import is_na
+from .rules import is_na
 from Levenshtein import distance
 
 class Column:
