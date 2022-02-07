@@ -22,7 +22,7 @@ def is_float_char(c):
     Returns:
         could_be (bool) : whether the character could be in a valid float
     """
-    return c.isnumeric() or c == '.'
+    return c.isnumeric() or c == '.' or c == '-'
 
 def can_be_int(s):
     """Returns whether s can be cast as a int without exception.

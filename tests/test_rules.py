@@ -1,6 +1,8 @@
 from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier, is_email
 import numpy as np
 
+ENABLED_STR_OUTLIER = False
+
 def _def_col():
     return Column(np.array(['0', '1', '-1']))
 
@@ -48,7 +50,7 @@ def test_missing():
     assert not missing_data('0', c)
 
 def test_str_outliers():
-    if False:
+    if ENABLED_STR_OUTLIER:
         col = Column(np.array(['abbcc', 'baccd', 'abdcc']))
         assert str_outlier('string', col)
         assert not str_outlier('d', col)
