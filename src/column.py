@@ -19,7 +19,8 @@ class Column:
         self.median = self.quantile(0.5)
         self.mode = self.get_mode(col)
         self.column_type = self.get_col_type(col)
-        # self.str_els = self.get_str_els(col)
+        self.str_els = self.get_str_els(col)
+        self.num_els = self.get_num_els(col)
         # self.lev_quants = self.get_lev_quants(col)
 
     def get_str_els(self, col):
@@ -32,10 +33,19 @@ class Column:
         Returns:
             str_els (np.array) : the non-numerical elements
         """
-        is_str = np.fromiter(map(can_be_float, col), 
-                             dtype = bool, 
-                             count = col.shape[0])
-        return col[np.invert(is_str)]
+        return [ el for el in col if not can_be_float(el) ]
+
+    def get_num_els(self, col):
+        """Returns all numerical elements in col.
+        
+        Args:
+            col (np.array) : an array of strings, some of which might be
+                numeric, some of which might not
+                
+        Returns:
+            num_els (np.array) : the numerical elements, all cast as float      
+        """
+        return np.array([ float(el) for el in col if can_be_float(el) ])
 
     def get_lev_quants(self, col):
         """Returns all the average pairwise hamming distance in col.

@@ -39,8 +39,8 @@ def clean_cell(sheet, inds, col, model_type = 'auto'):
     global _COL_MODELS, _FITTED_MODELS
     xs = np.append(sheet[:, :inds[1]], sheet[:, inds[1] + 1:], axis = 1)
     if _COL_MODELS is None:
-        _COL_MODELS = np.empty(sheet.shape[1], dtype = object)
-        _FITTED_MODELS = np.zeros(sheet.shape[1], dtype = bool)
+        set_models(np.zeros(sheet.shape[1], dtype = bool),
+                   np.empty(sheet.shape[1], dtype = object))
     if _FITTED_MODELS[inds[1]]:
         model = _COL_MODELS[inds[1]]
     else:
