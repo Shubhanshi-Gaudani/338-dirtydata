@@ -12,4 +12,3 @@ from .rules import str_outlier
 from .rules import user_message
 from .clean_cells import clean_cell, get_models, set_models
 from .rules import is_email
-from .rules import rule_messages
