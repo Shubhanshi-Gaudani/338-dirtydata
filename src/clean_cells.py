@@ -7,6 +7,7 @@ from keras import layers
 from keras import models
 from keras import losses
 from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
 
 _FITTED_MODELS = None
 _COL_MODELS = None
@@ -45,23 +46,24 @@ def clean_cell(sheet, inds, col, model_type = 'auto'):
         model = _COL_MODELS[inds[1]]
     else:
         # people who are better with neural nets, feel free to change me!
-        dl_model = models.Sequential([layers.Dense(16, activation = 'relu'),
-                                      layers.Dense(128, activation = 'relu'),
-                                      layers.Dense(64, activation = 'relu'),
-                                      layers.Dense(1, activation = 'relu')])
-        dl_model.compile(optimizer = 'adam',
-                         loss = losses.MeanSquaredError(),
-                         metrics = ['mae'])
-        untrained = {'knn' : KNeighborsRegressor(),
-                     'deep' : dl_model,
-                     'deep learning' : dl_model,
-                     'naive bayes' : GaussianNB()}
+        # dl_model = models.Sequential([layers.Dense(16, activation = 'relu'),
+        #                               layers.Dense(128, activation = 'relu'),
+        #                               layers.Dense(64, activation = 'relu'),
+        #                               layers.Dense(1, activation = 'relu')])
+        # dl_model.compile(optimizer = 'adam',
+        #                  loss = losses.MeanSquaredError(),
+        #                  metrics = ['mae'])
+        # untrained = {'knn' : KNeighborsRegressor(),
+        #              'deep' : dl_model,
+        #              'deep learning' : dl_model,
+        #              'naive bayes' : GaussianNB()}
+        untrained = {'forest' : RandomForestClassifier()}
         if model_type == 'auto':
             if (col.column_type == 'alpha' or
                 sheet.shape[0] < 2_000):
                 model = untrained['knn']
             else:
-                model = untrained['deep']
+                model = untrained['forest']
         else:
             model = untrained[model_type]
 
