@@ -1,5 +1,5 @@
 from src import all_dirty_cells, csvToMatrix, _ALL_PREDS
-from src import missing_data, isIncorrectDataType, is_outlier, is_na, str_outlier, wrong_cat, has_typo
+from src import MissingData, IsIncorrectDataType, NumOutlier, IsNA, WrongCategory, HasTypo
 import numpy as np
 
 ENABLE_NFL = False
@@ -28,15 +28,15 @@ def test_dirty_cells():
                            [4, 3],
                            [5, 3],
                            [5, 6]])
-    right_reasons = [missing_data, 
-                     is_outlier,
-                     is_outlier,
-                     has_typo,
-                     isIncorrectDataType,
-                     wrong_cat,
-                     is_na,
-                     missing_data,
-                     is_outlier]
+    right_reasons = [MissingData, 
+                     NumOutlier,
+                     NumOutlier,
+                     HasTypo,
+                     IsIncorrectDataType,
+                     WrongCategory,
+                     IsNA,
+                     MissingData,
+                     NumOutlier]
     assert np.all(inds == right_inds), (inds.shape[0], right_inds.shape[0])
     assert np.all(reasons == right_reasons)
 

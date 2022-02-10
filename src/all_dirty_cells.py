@@ -1,19 +1,19 @@
+from ast import Num
 import numpy as np
 import pandas as pd
-from .rules import is_outlier
+from .rules import NumOutlier
 from .column import Column
-from .rules import is_na
-from .rules import isIncorrectDataType
-from .rules import missing_data
+from .rules import IsNA
+from .rules import IsIncorrectDataType
+from .rules import MissingData
 import multiprocessing as mp
 from itertools import starmap
-from .rules import str_outlier
-from .rules import wrong_cat
-from .rules import has_typo
+from .rules import WrongCategory
+from .rules import HasTypo
 
 _NPROCS = 8
 # predicates are called in order so order matters
-_ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier, has_typo, wrong_cat]
+_ALL_PREDS = [MissingData, IsNA, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
 def analyze_cols(csv_mat, parallel = True):
     """Analyzes each column into Column objects.
@@ -71,7 +71,7 @@ def _dirty_row(row, cols, preds):
     new_row = [None] * len(row)
     for col in range(len(row)):
         for pred in preds:
-            if pred(row[col], cols[col]):
+            if pred().is_dirty(row[col], cols[col]):
                 new_row[col] = pred
                 break
     return new_row

@@ -1,42 +1,18 @@
 #Import necessary libraries 
 import numpy as np 
 import pandas as pd
+from .rule_base import RuleBaseClass
 
-def missing_data(cell_str, column):
-    """Takes the string version of the cell and returns whether it is empty or not
+class MissingData (RuleBaseClass):
+    """Checks if cells are missing/empty."""
+    def is_dirty(self, cell_str, col):
+        if (cell_str.strip() == ""): 
+            return True
+        else:
+            return False
 
-    Args: 
-        cell_str (str): the raw text of the cell
-        column (column): contianer for generic in"fo about the container of that cell
-    
-    Returns: 
-        output (bool) : returns True if empty, and False if not
+    def message(self, cell_str, col):
+        return 'The cell is empty.'
 
-    """
-    if (cell_str.strip() == ""): 
-        return True
-    else:
-        return False
-    
-def missing_message(cell_str, col):
-    """Returns a user-friendly message for why the cell is dirty.
-    
-    Args:
-        cell_str (str) : the string version of the cell
-        col (Column) : a container class with information about the column
-
-    Returns:
-        message (str) : a readable reason why the string was dirty
-    """
-    return 'The cell is empty.'
-
-def clean_missing(col):
-    """Returns the desired imputed value based on data from col.
-    
-    Args:
-        col (Column) : a container class with information about the cell's column
-
-    Returns:
-        prediction (str) : what the model predicts should go in that cell
-    """
-    return str(col.mode)
+    def clean(self, col):
+        return str(col.mode)

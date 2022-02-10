@@ -1,4 +1,4 @@
-from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier, is_email, wrong_cat, has_typo
+from src import NumOutlier, Column, IsNA, IsIncorrectDataType, MissingData, WrongCategory, HasTypo, is_email
 import numpy as np
 
 ENABLED_STR_OUTLIER = False
@@ -8,53 +8,49 @@ def _def_col():
 
 def test_outliers():
     c = _def_col()
-    assert is_outlier('10', c)
-    assert is_outlier('10.0', c)
-    assert not is_outlier('aa', c)
-    assert not is_outlier('0', c)
-    assert not is_outlier('0.0', c)
-    assert is_outlier('-10', c)
-    assert not is_outlier('-1', c)
+    rule = NumOutlier()
+    assert rule.is_dirty('10', c)
+    assert rule.is_dirty('10.0', c)
+    assert not rule.is_dirty('aa', c)
+    assert not rule.is_dirty('0', c)
+    assert not rule.is_dirty('0.0', c)
+    assert rule.is_dirty('-10', c)
+    assert not rule.is_dirty('-1', c)
 
 def test_na():
     c = _def_col()
+    rule = IsNA()
     assert c.mean == 0
-    assert is_na('na', c)
-    assert is_na('Na', c)
-    assert is_na('N/A', c)
-    assert is_na('n/a', c)
-    assert is_na('not applicable', c)
-    assert not is_na('real text', c)
-    assert is_na('nan', c)
-    assert not is_na('1', c)
-    assert not is_na('0.0', c)
+    assert rule.is_dirty('na', c)
+    assert rule.is_dirty('Na', c)
+    assert rule.is_dirty('N/A', c)
+    assert rule.is_dirty('n/a', c)
+    assert rule.is_dirty('not applicable', c)
+    assert not rule.is_dirty('real text', c)
+    assert rule.is_dirty('nan', c)
+    assert not rule.is_dirty('1', c)
+    assert not rule.is_dirty('0.0', c)
 
 def test_correct_dtype():
     c = _def_col()
+    rule = IsIncorrectDataType()
     assert c.column_type == 'int'
-    assert isIncorrectDataType('string', c)
-    assert isIncorrectDataType('1.0', Column(np.array(['string'])))
-    assert not isIncorrectDataType('s', Column(np.array(['string'])))
-    assert not isIncorrectDataType('1', c)
-    assert isIncorrectDataType('1.0', c)
-    assert isIncorrectDataType('-1.0', c)
-    assert not isIncorrectDataType('1.0', Column(np.array(['0.0', '1.0'])))
+    assert rule.is_dirty('string', c)
+    assert rule.is_dirty('1.0', Column(np.array(['string'])))
+    assert not rule.is_dirty('s', Column(np.array(['string'])))
+    assert not rule.is_dirty('1', c)
+    assert rule.is_dirty('1.0', c)
+    assert rule.is_dirty('-1.0', c)
+    assert not rule.is_dirty('1.0', Column(np.array(['0.0', '1.0'])))
 
 def test_missing():
     c = _def_col()
-    assert missing_data('', c)
-    assert missing_data(' ', c)
-    assert missing_data('\t', c)
-    assert not missing_data('hello', c)
-    assert not missing_data('0', c)
-
-def test_str_outliers():
-    if ENABLED_STR_OUTLIER:
-        col = Column(np.array(['abbcc', 'baccd', 'abdcc']))
-        assert str_outlier('string', col)
-        assert not str_outlier('d', col)
-        assert str_outlier('1/21/2022', Column(np.array(['1-21-2022', '1-20-2022', '4-16-2021'])))
-        assert not str_outlier('1/21/2022', Column(np.array(['1/21/2022', '1/20/2022', '4/16/2021'])))
+    rule = MissingData()
+    assert rule.is_dirty('', c)
+    assert rule.is_dirty(' ', c)
+    assert rule.is_dirty('\t', c)
+    assert not rule.is_dirty('hello', c)
+    assert not rule.is_dirty('0', c)
 
 def test_is_email():
     col = Column(np.array(['simran@gmail.com', 'yamini@u.northwestern.edu', 'simg@u.northwestern.edu']))
@@ -86,13 +82,15 @@ def test_whitesp():
 
 def test_wrong_cat():
     col = Column(np.array(['yes', 'no', 'yes', 'yes', 'no', 'no', 'n', 'y', 'yes']))
-    assert wrong_cat('y', col)
-    assert wrong_cat('n', col)
-    assert not wrong_cat('yes', col)
-    assert not wrong_cat('no', col)
+    rule = WrongCategory()
+    assert rule.is_dirty('y', col)
+    assert rule.is_dirty('n', col)
+    assert not rule.is_dirty('yes', col)
+    assert not rule.is_dirty('no', col)
 
 def test_has_typo():
-    assert has_typo('cmptr', None)
-    assert has_typo('my cmptr', None)
-    assert not has_typo('computer', None)
-    assert not has_typo('my computer is great', None)
+    rule = HasTypo()
+    assert rule.is_dirty('cmptr', None)
+    assert rule.is_dirty('my cmptr', None)
+    assert not rule.is_dirty('computer', None)
+    assert not rule.is_dirty('my computer is great', None)
