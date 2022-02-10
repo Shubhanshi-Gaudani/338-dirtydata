@@ -1,5 +1,5 @@
 from src import user_message, Column
-from src import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory, HasTypo
+from src import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory, HasTypo, EmailChecker
 import numpy as np
 
 def test_messages():
@@ -12,4 +12,5 @@ def test_messages():
     assert user_message('10', num_col, NumOutlier) == NumOutlier().message('10', num_col)
     assert user_message(cell_str, col, WrongCategory) == WrongCategory().message(cell_str, col)
     assert user_message('hllo', col, HasTypo) == HasTypo().message('hllo', col)
+    assert user_message(cell_str, col, EmailChecker) == EmailChecker().message(cell_str, col)
     

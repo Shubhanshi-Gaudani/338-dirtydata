@@ -7,7 +7,7 @@ from .rules import duplicate_row
 from .rules import str_outlier
 from .rules import user_message
 from .clean_cells import clean_cell, get_models, set_models
-from .rules import is_email
+from .rules import EmailChecker
 from .dumb_cleaner import clean_cell_dumb
 from .rules import NumOutlier
 from .rules import IsNA

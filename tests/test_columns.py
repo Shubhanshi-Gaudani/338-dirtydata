@@ -45,6 +45,8 @@ def test_col_type():
     for i in range(len(types)):
         assert true_types[i] == types[i], f'{true_types} != {types}'
     assert Column(np.array(['string'])).column_type == 'alpha'
+    col2 = Column(np.array(['not email', 'michael@gmail.com', 'michael@u.northwestern.edu']))
+    assert col2.column_type == 'email'
 
 def test_quants():
     cols = map(Column, _array_args())

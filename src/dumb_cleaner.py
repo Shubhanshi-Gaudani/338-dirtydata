@@ -1,5 +1,5 @@
 import numpy as np
-from .rules import MissingData, IsNA, IsIncorrectDataType, NumOutlier, WrongCategory, HasTypo
+from .rules import HasTypo
 
 def clean_cell_dumb(cell_str, col, reason):
     """Uses a dumber but simpler model for imputing cell type.

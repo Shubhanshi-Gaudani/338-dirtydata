@@ -1,19 +1,14 @@
 from ast import Num
 import numpy as np
 import pandas as pd
-from .rules import NumOutlier
 from .column import Column
-from .rules import IsNA
-from .rules import IsIncorrectDataType
-from .rules import MissingData
 import multiprocessing as mp
 from itertools import starmap
-from .rules import WrongCategory
-from .rules import HasTypo
+from .rules import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory, HasTypo, EmailChecker
 
 _NPROCS = 8
 # predicates are called in order so order matters
-_ALL_PREDS = [MissingData, IsNA, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
+_ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
 def analyze_cols(csv_mat, parallel = True):
     """Analyzes each column into Column objects.

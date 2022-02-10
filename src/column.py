@@ -3,7 +3,7 @@ import pandas as pd
 import scipy.stats as sp
 import math as math
 from .utilities import can_be_float, can_be_int
-from .rules import IsNA
+from .rules import IsNA, EmailChecker
 from Levenshtein import distance
 
 _COUNT_PER_100_LINES = 3
@@ -173,16 +173,21 @@ class Column:
         return self._quants[int(4 * q)]
 
     def get_col_type(self, col):
-        """Returns the most common column type - either 'int', 'float', or 'alpha'.
+        """Returns the most common column type - either 'int', 'float', 'email', or 'alpha'.
         
         Args:
             col (np.array) : an array of strings
             
         Returns:
-            type (string) : either 'int', 'float', or 'alpha'
+            type (string) : either 'int', 'float', 'email', or 'alpha'
         """
         if self.str_els.shape[0] >= self.num_els.shape[0]:
-            return 'alpha'
+            counts = [0, 0]
+            email = EmailChecker()
+            for el in col:
+                counts[int(email._is_email(el))] += 1
+            typs = ['alpha', 'email']
+            return typs[np.argmax(counts)]
         counts = [0, 0]
         for el in col:
             if can_be_int(el):

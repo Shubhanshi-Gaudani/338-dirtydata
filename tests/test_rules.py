@@ -1,4 +1,4 @@
-from src import NumOutlier, Column, IsNA, IsIncorrectDataType, MissingData, WrongCategory, HasTypo, is_email
+from src import NumOutlier, Column, IsNA, IsIncorrectDataType, MissingData, WrongCategory, HasTypo, EmailChecker
 import numpy as np
 
 ENABLED_STR_OUTLIER = False
@@ -53,13 +53,16 @@ def test_missing():
     assert not rule.is_dirty('0', c)
 
 def test_is_email():
-    col = Column(np.array(['simran@gmail.com', 'yamini@u.northwestern.edu', 'simg@u.northwestern.edu']))
-    assert is_email('abc@gmail.com', col)
-    assert not is_email('123', col )
-    assert not is_email('random_string', col)
-    assert is_email('s@nu.northwestern.edu', col)
-    assert not is_email('27.5', col)
-    assert not is_email('hello@xx', col)
+    cols = [Column(np.array(['simran@gmail.com', 'yamini@u.northwestern.edu', 'simg@u.northwestern.edu'])),
+            Column(np.array(['email1@gmail.com', 'not an email', 'def not an email']))]
+    for col in range(len(cols)):
+        rule = EmailChecker()
+        assert col == rule.is_dirty('abc@gmail.com', cols[col])
+        assert col != rule.is_dirty('123', cols[col])
+        assert col != rule.is_dirty('random_string', cols[col])
+        assert col == rule.is_dirty('s@nu.northwestern.edu', cols[col])
+        assert col != rule.is_dirty('27.5', cols[col])
+        assert col != rule.is_dirty('hello@xx', cols[col])
 
 def test_whitesp():
     #this is terribly written code, sorry 🙈
