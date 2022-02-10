@@ -1,5 +1,6 @@
 [
   "tests/test_cleaner.py::test_cleaner",
+  "tests/test_cleaner.py::test_dumb_cleaner",
   "tests/test_columns.py::test_col_mean",
   "tests/test_columns.py::test_col_stddev",
   "tests/test_columns.py::test_col_type",

@@ -27,8 +27,8 @@ def clean_cell(sheet, inds, col, model_type = 'auto'):
     
     Args:
         sheet (np.array) : a 2D array of strings from the input spreadsheet
-        inds (np.array) : an [y, x] pair for indexing into the sheet
-        cols (Column) : a Column object with information about the cell's column
+        inds (np.array) : a [y, x] pair for indexing into the sheet
+        col (Column) : a Column object with information about the cell's column
         model_type (str) : what ML model to use to predict the cell. One of 'auto',
             'knn', 'deep', 'deep learning', 'naive bayes'. If 'auto' (the default),
             the model type will be chosen by this function based on the spreadsheet

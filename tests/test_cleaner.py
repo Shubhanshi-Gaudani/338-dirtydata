@@ -1,6 +1,9 @@
-from src import clean_cell, csvToMatrix, all_dirty_cells, get_models, set_models
+from src import clean_cell, csvToMatrix, all_dirty_cells
+from src import get_models, set_models, clean_cell_dumb
+from src import is_na
+import numpy as np
 
-ENABLED = True
+ENABLED = False
 
 def test_cleaner():
     # TODO : how tf do we handle mixed string and numeric data?
@@ -20,3 +23,12 @@ def test_cleaner():
                 col_models, fitted_models = get_models()
                 assert fitted_models[inds[pair, 1]]
                 assert col_models is not None
+
+def test_dumb_cleaner():
+    mat = csvToMatrix('tests/test_sheet_1.csv')[1:]
+    inds, reasons, cols = all_dirty_cells(mat, return_cols = True)
+    for pair in range(inds.shape[0]):
+        sugg = clean_cell_dumb(cols[inds[pair, 1]], reasons[pair])
+        assert type(sugg) == str
+        if reasons[pair] != is_na:
+            assert not reasons[pair](sugg, cols[inds[pair, 1]])
