@@ -14,6 +14,7 @@
   "tests/test_driver.py::test_with_nfl",
   "tests/test_messages.py::test_messages",
   "tests/test_rules.py::test_correct_dtype",
+  "tests/test_rules.py::test_has_typo",
   "tests/test_rules.py::test_is_email",
   "tests/test_rules.py::test_missing",
   "tests/test_rules.py::test_na",

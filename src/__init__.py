@@ -14,3 +14,4 @@ from .clean_cells import clean_cell, get_models, set_models
 from .rules import is_email
 from .dumb_cleaner import clean_cell_dumb
 from .rules import wrong_cat, wrong_cat_message
+from .rules import has_typo, typo_message

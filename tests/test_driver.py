@@ -1,6 +1,8 @@
 from src import all_dirty_cells, csvToMatrix, _ALL_PREDS
-from src import missing_data, isIncorrectDataType, is_outlier, is_na, str_outlier, wrong_cat
+from src import missing_data, isIncorrectDataType, is_outlier, is_na, str_outlier, wrong_cat, has_typo
 import numpy as np
+
+ENABLE_NFL = False
 
 def test_dirty_cells():
     mat = csvToMatrix("tests/test_sheet_1.csv")
@@ -20,6 +22,7 @@ def test_dirty_cells():
     right_inds = np.array([[0, 1],
                            [0, 2],
                            [0, 7],
+                           [1, 4],
                            [1, 6],
                            [1, 8],
                            [4, 3],
@@ -28,6 +31,7 @@ def test_dirty_cells():
     right_reasons = [missing_data, 
                      is_outlier,
                      is_outlier,
+                     has_typo,
                      isIncorrectDataType,
                      wrong_cat,
                      is_na,
@@ -44,6 +48,7 @@ def test_dirty_cells():
     assert np.all(reasons == seq_reasons)
     
 def test_with_nfl():
-    mat = csvToMatrix('tests/nfl_data.txt')
-    inds, reasons = all_dirty_cells(mat, parallel = False)
+    if ENABLE_NFL:
+        mat = csvToMatrix('tests/nfl_data.txt')
+        inds, reasons = all_dirty_cells(mat, parallel = False)
     

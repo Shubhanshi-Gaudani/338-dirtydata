@@ -9,3 +9,4 @@ from .rule_messages import *
 from .str_outlier import *
 from .validdate import *
 from .wrong_category import *
+from .spellcheck import *

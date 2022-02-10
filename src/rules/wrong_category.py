@@ -1,5 +1,4 @@
 import numpy as np
-from pyparsing import col
 
 _COUNT_PER_100_LINES = 2
 _NUM_CATS_PER_100 = 2

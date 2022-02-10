@@ -1,4 +1,4 @@
-from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier, is_email, wrong_cat
+from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier, is_email, wrong_cat, has_typo
 import numpy as np
 
 ENABLED_STR_OUTLIER = False
@@ -90,3 +90,9 @@ def test_wrong_cat():
     assert wrong_cat('n', col)
     assert not wrong_cat('yes', col)
     assert not wrong_cat('no', col)
+
+def test_has_typo():
+    assert has_typo('cmptr', None)
+    assert has_typo('my cmptr', None)
+    assert not has_typo('computer', None)
+    assert not has_typo('my computer is great', None)

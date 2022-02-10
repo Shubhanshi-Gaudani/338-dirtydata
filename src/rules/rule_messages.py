@@ -3,6 +3,7 @@ from .handle_na import is_na, na_message
 from .is_correct_datatype import isIncorrectDataType, incorrect_dtype_message
 from .missing_data import missing_data, missing_message
 from .wrong_category import wrong_cat, wrong_cat_message
+from .spellcheck import has_typo, typo_message
 
 def user_message(cell_str, col, reason):
     """Returns a user-friendly message for why the cell is dirty.
@@ -19,6 +20,7 @@ def user_message(cell_str, col, reason):
              is_na : na_message,
              isIncorrectDataType : incorrect_dtype_message,
              missing_data : missing_message,
-             wrong_cat : wrong_cat_message}
+             wrong_cat : wrong_cat_message,
+             has_typo : typo_message}
     return funcs[reason](cell_str, col)
     
