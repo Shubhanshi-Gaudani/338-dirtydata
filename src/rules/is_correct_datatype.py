@@ -1,4 +1,6 @@
 from ..utilities import can_be_float, can_be_int
+from .missing_data import clean_missing
+from .num_outliers import clean_outlier
 
 def isIncorrectDataType(cell_str, col):
     """Returns whether cell_str's type does not match with col's type.
@@ -38,3 +40,19 @@ def incorrect_dtype_message(cell_str, col):
         true_type = 'decimal numbers'
     return (f'The cell {cell_str} was interpreted as {interp_type}, in contrast ' +
             f"to the column's most common datatype, {true_type}.")
+
+def clean_wrong_dtype(col):
+    """Returns the desired imputed value based on data from col.
+    
+    Args:
+        col (Column) : a container class with information about the cell's column
+
+    Returns:
+        prediction (str) : what the model predicts should go in that cell
+    """
+    if col.column_type == 'alpha':
+        return clean_missing(col)
+    i = clean_outlier(col)
+    if col.column_type == 'int':
+        return str(int(float(i))) # this is so dumb
+    return i

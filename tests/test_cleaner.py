@@ -7,6 +7,7 @@ ENABLED = False
 
 def test_cleaner():
     # TODO : how tf do we handle mixed string and numeric data?
+    # all our data will be dirty. We need tolerant models
     if ENABLED:
         mat = csvToMatrix('tests/test_sheet_1.csv')[1:]
         inds, reasons, cols = all_dirty_cells(mat, return_cols = True)
@@ -30,5 +31,4 @@ def test_dumb_cleaner():
     for pair in range(inds.shape[0]):
         sugg = clean_cell_dumb(cols[inds[pair, 1]], reasons[pair])
         assert type(sugg) == str
-        if reasons[pair] != is_na:
-            assert not reasons[pair](sugg, cols[inds[pair, 1]])
+        assert not reasons[pair](sugg, cols[inds[pair, 1]])

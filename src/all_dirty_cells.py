@@ -8,10 +8,11 @@ from .rules import missing_data
 import multiprocessing as mp
 from itertools import starmap
 from .rules import str_outlier
+from .rules import wrong_cat
 
 _NPROCS = 8
 # predicates are called in order so order matters
-_ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier]
+_ALL_PREDS = [missing_data, is_na, isIncorrectDataType, is_outlier, wrong_cat]
 
 def analyze_cols(csv_mat, parallel = True):
     """Analyzes each column into Column objects.

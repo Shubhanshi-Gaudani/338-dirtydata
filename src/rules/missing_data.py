@@ -29,3 +29,14 @@ def missing_message(cell_str, col):
         message (str) : a readable reason why the string was dirty
     """
     return 'The cell is empty.'
+
+def clean_missing(col):
+    """Returns the desired imputed value based on data from col.
+    
+    Args:
+        col (Column) : a container class with information about the cell's column
+
+    Returns:
+        prediction (str) : what the model predicts should go in that cell
+    """
+    return str(col.mode)

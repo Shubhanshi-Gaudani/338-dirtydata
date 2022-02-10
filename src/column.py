@@ -6,6 +6,8 @@ from .utilities import can_be_float, can_be_int
 from .rules import is_na
 from Levenshtein import distance
 
+_COUNT_PER_100_LINES = 3
+
 class Column:
     def __init__(self, col):
         """A container class for a bunch of information specific to a column of data.
@@ -13,15 +15,34 @@ class Column:
         Args:
             col (np.array) : a numpy array of strings containing the data
         """
+        self.length = col.shape[0]
+        self.str_els = self.get_str_els(col)
+        self.num_els = self.get_num_els(col)
+        self.by_count = self.get_by_count(col)
+        self.counts_over_thresh = self.get_counts_over_thresh(col)
         self.mean = self.get_mean(col)
         self.stddev = self.get_stddev(col)
         self._quants = self.get_quants(col)
         self.median = self.quantile(0.5)
         self.mode = self.get_mode(col)
         self.column_type = self.get_col_type(col)
-        self.str_els = self.get_str_els(col)
-        self.num_els = self.get_num_els(col)
-        # self.lev_quants = self.get_lev_quants(col)
+
+    def get_counts_over_thresh(self, col):
+        """Returns the number of elements in col with more than _COUNTS_PER_100_LINES occurences per 100 lines.
+        
+        Args:
+            col (np.array) : an array of strings
+
+        Returns:
+            num_over (int) : the number of categories in col
+        """
+        res = 0
+        for el in self.by_count:
+            count = self.by_count[el]
+            if self.length > 100:
+                count = 100 * count / self.length
+            res += int(count >= _COUNT_PER_100_LINES)
+        return res
 
     def get_str_els(self, col):
         """Returns all the non-numerical elements in col.
@@ -33,7 +54,7 @@ class Column:
         Returns:
             str_els (np.array) : the non-numerical elements
         """
-        return [ el for el in col if not can_be_float(el) ]
+        return np.array([ el for el in col if not can_be_float(el) ], dtype = str)
 
     def get_num_els(self, col):
         """Returns all numerical elements in col.
@@ -45,7 +66,7 @@ class Column:
         Returns:
             num_els (np.array) : the numerical elements, all cast as float      
         """
-        return np.array([ float(el) for el in col if can_be_float(el) ])
+        return np.array([ float(el) for el in col if can_be_float(el) and not np.isnan(float(el)) ])
 
     def get_lev_quants(self, col):
         """Returns all the average pairwise hamming distance in col.
@@ -77,14 +98,8 @@ class Column:
         Returns:
             mean (float) : the mean of the numeric cells in col
         """
-        nums = []
-        for row in col:
-            try:
-                nums.append(float(row))
-            except ValueError:
-                pass
-        if len(nums) == 0: return np.nan
-        return np.nanmean(nums)
+        if self.num_els.shape[0] == 0: return np.nan
+        return np.mean(self.num_els)
     
     def get_stddev(self, col):
         """Returns the standard deviation of the column.
@@ -96,15 +111,8 @@ class Column:
         Returns:
             stddev (float) : the standard deviation of the numeric cells in col
         """
-        sd = 0
-        num = 0
-        for row in range(col.shape[0]):
-            if can_be_float(col[row]) and not np.isnan(float(col[row])):
-                sd += (float(col[row]) - self.mean) ** 2
-                num += 1
-        if num == 0: return 0
-        sd = math.sqrt(sd/num)
-        return sd
+        if self.num_els.shape[0] == 0: return np.nan
+        return np.std(self.num_els)
 
     def get_median(self, col):
         """Returns the median of the column.
@@ -116,14 +124,8 @@ class Column:
         Returns:
             median (float) : the median of the numeric cells in col
         """
-        nums = []
-        for row in col:
-            try:
-                nums.append(float(row))
-            except ValueError:
-                pass
-        if len(nums) == 0: return np.nan
-        return np.nanmedian(nums)
+        if self.num_els.shape[0] == 0: return np.nan
+        return np.median(self.num_els)
 
     def get_mode(self, col):
         """Returns the mode of the column.
@@ -152,18 +154,11 @@ class Column:
                 numeric, some of which might not
                 
         Returns:
-            quants (float) : the IQR of the numeric cells in col
+            quants (list) : a list of floats corresponding to different quantiles
         """
-        nums = []
-        for row in col:
-            try:
-                if not is_na(row, None):
-                    nums.append(float(row))
-            except ValueError:
-                pass
         qs = np.array([0, 0.25, 0.5, 0.75, 1])
-        if len(nums) == 0: return [np.nan] * qs.shape[0]
-        return [ np.quantile(nums, q) for q in qs ]
+        if self.num_els.shape[0] == 0: return [np.nan] * qs.shape[0]
+        return [ np.quantile(self.num_els, q) for q in qs ]
 
     def quantile(self, q):
         """Returns the qth quantile. Quantile must be in [0, 0.25, 0.5, 0.75, 1].
@@ -178,22 +173,36 @@ class Column:
         return self._quants[int(4 * q)]
 
     def get_col_type(self, col):
-        """Returns the most common column type - either 'num' or 'alpha'.
+        """Returns the most common column type - either 'int', 'float', or 'alpha'.
         
         Args:
             col (np.array) : an array of strings
             
         Returns:
-            type (string) : either 'num' or 'alpha'
+            type (string) : either 'int', 'float', or 'alpha'
         """
-        al_num_counts = [0, 0, 0]
-        for row in col:
-            if not is_na(row, None):
-                if can_be_int(row):
-                    al_num_counts[1] += 1
-                elif can_be_float(row):
-                    al_num_counts[2] += 1
-                else:
-                    al_num_counts[0] += 1
-        typs = ['alpha', 'int', 'float']
-        return typs[np.argmax(al_num_counts)]
+        if self.str_els.shape[0] >= self.num_els.shape[0]:
+            return 'alpha'
+        counts = [0, 0]
+        for el in col:
+            if can_be_int(el):
+                counts[0] += 1
+            elif can_be_float(el):
+                counts[1] += 1
+        typs = ['int', 'float']
+        return typs[np.argmax(counts)]
+
+    def get_by_count(self, col):
+        """Returns a dictionary mapping the elements in col to how often they occur in col.
+        
+        Args:
+            col (np.array) : an array of strings
+
+        Returns:
+            by_count (dict) : a mapping from string element to the count of that element in col
+        """
+        res = {}
+        for el in col:
+            res[el] = res[el] + 1 if el in res else 1
+
+        return res

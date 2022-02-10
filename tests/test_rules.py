@@ -1,4 +1,4 @@
-from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier, is_email
+from src import is_outlier, Column, is_na, isIncorrectDataType, missing_data, str_outlier, is_email, wrong_cat
 import numpy as np
 
 ENABLED_STR_OUTLIER = False
@@ -20,7 +20,6 @@ def test_na():
     c = _def_col()
     assert c.mean == 0
     assert is_na('na', c)
-    assert is_na('NA', c)
     assert is_na('Na', c)
     assert is_na('N/A', c)
     assert is_na('n/a', c)
@@ -85,4 +84,9 @@ def test_whitesp():
     assert np.array_equal(l,np.array(['string', 'hello', 'what da dog doin']))
     assert np.array_equal(m, np.array(['123', 'twentytwo', 'hi my name is Bob']))
 
-
+def test_wrong_cat():
+    col = Column(np.array(['yes', 'no', 'yes', 'yes', 'no', 'no', 'n', 'y', 'yes']))
+    assert wrong_cat('y', col)
+    assert wrong_cat('n', col)
+    assert not wrong_cat('yes', col)
+    assert not wrong_cat('no', col)

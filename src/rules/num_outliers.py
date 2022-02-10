@@ -42,3 +42,14 @@ def outlier_message(cell_str, col):
     above = 'above' if float(cell_str) > med else 'below'
     return f'This cell was way {above} the median, which was {med}.'
     
+def clean_outlier(col):
+    """Returns the desired imputed value based on data from col.
+    
+    Args:
+        col (Column) : a container class with information about the cell's column
+
+    Returns:
+        prediction (str) : what the model predicts should go in that cell
+    """
+    return str(col.quantile(0.5))
+    

@@ -1,5 +1,8 @@
+from os import dup
 from src import Column
 import numpy as np
+
+ENABLED_STR_COLS = True
 
 def _array_args():
     return [np.array(['0.0', '1', '1.0', '-1.0']),
@@ -52,10 +55,19 @@ def test_quants():
     assert np.allclose(true_quants, quants)
 
 def test_str_cols():
-    if False:
+    if ENABLED_STR_COLS:
         cols = map(Column, _array_args())
         true_strs = [[], [], [' ', 'na', 'string', 'more string']]
         strs = list(map(lambda c: c.str_els, cols))
         for i in range(len(strs)):
             assert np.all(np.array(true_strs[i], dtype = str) == strs[i]), f'{true_strs} != {strs}'
         
+def test_by_count():
+    cols = map(Column, _array_args())
+    for c in cols:
+        for el in c.by_count:
+            assert c.by_count[el] == 1
+
+    dup_col = Column(np.array(['1', '2', '3', '3', '2', '1']))
+    for el in dup_col.by_count:
+        assert dup_col.by_count[el] == 2
