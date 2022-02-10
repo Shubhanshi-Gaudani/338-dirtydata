@@ -7,7 +7,6 @@ def _typo_word(s):
 
 def _clean_word(s):
     """Returns the most likely word the user meant based on s."""
-    # return str(TextBlob(s.lower()).correct())
     spell = SpellChecker()
     return spell.correction(s)
 
