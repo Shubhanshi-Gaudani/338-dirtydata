@@ -22,8 +22,6 @@ def incorrect_dtype_message(cell_str, col):
     Args:
         cell_str (str) : the string version of the cell
         col (Column) : a container class with information about the column
-        reason (function) : a function representing the reason why the cell
-            was dirty.
 
     Returns:
         message (str) : a readable reason why the string was dirty
