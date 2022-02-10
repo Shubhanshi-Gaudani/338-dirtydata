@@ -3,7 +3,7 @@ import pandas as pd
 import scipy.stats as sp
 import math as math
 from .utilities import can_be_float, can_be_int
-from .rules import is_na
+from .rules import IsNA
 from Levenshtein import distance
 
 _COUNT_PER_100_LINES = 3
@@ -139,7 +139,7 @@ class Column:
         """
         counts = {}
         for el in col:
-            if not is_na(el, None):
+            if not IsNA().is_dirty(el, None):
                 if el in counts:
                     counts[el] += 1
                 else:

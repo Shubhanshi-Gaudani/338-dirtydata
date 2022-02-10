@@ -1,6 +1,5 @@
 from src import clean_cell, csvToMatrix, all_dirty_cells
 from src import get_models, set_models, clean_cell_dumb
-from src import is_na
 import numpy as np
 
 ENABLED = False
@@ -33,4 +32,4 @@ def test_dumb_cleaner():
                                cols[inds[pair, 1]], 
                                reasons[pair])
         assert type(sugg) == str
-        assert not reasons[pair](sugg, cols[inds[pair, 1]])
+        assert not reasons[pair]().is_dirty(sugg, cols[inds[pair, 1]])
