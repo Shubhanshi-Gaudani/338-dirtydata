@@ -2,9 +2,11 @@ from .rule_base import RuleBaseClass
 
 class IsNA (RuleBaseClass):
     """Checks is cells are 'na'."""
+    def __init__(self):
+        self.nas = {"n/a", "na", "--", "-", "nan", "NaN", "not applicable"}
+
     def is_dirty(self, cell_str, col):
-        missing_values = {"n/a", "na", "--", "-","nan","NaN", "not applicable"}
-        if cell_str.lower() in missing_values and cell_str != 'NA': 
+        if cell_str.lower() in self.nas and cell_str != 'NA': 
             return True
         else:
             return False

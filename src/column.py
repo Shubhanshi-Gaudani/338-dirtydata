@@ -138,8 +138,9 @@ class Column:
             mode (any) : the mode of the cells in col
         """
         counts = {}
+        na = IsNA()
         for el in col:
-            if not IsNA().is_dirty(el, None):
+            if not na.is_dirty(el, None):
                 if el in counts:
                     counts[el] += 1
                 else:

@@ -1,4 +1,3 @@
-from ast import Num
 import numpy as np
 import pandas as pd
 from .column import Column
@@ -64,9 +63,10 @@ def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None, return_c
 def _dirty_row(row, cols, preds):
     """Worker function for all_dirty_cells"""
     new_row = [None] * len(row)
+    checkers = [ pred() for pred in preds ]
     for col in range(len(row)):
-        for pred in preds:
-            if pred().is_dirty(row[col], cols[col]):
-                new_row[col] = pred
+        for pred in range(len(checkers)):
+            if checkers[pred].is_dirty(row[col], cols[col]):
+                new_row[col] = preds[pred]
                 break
     return new_row

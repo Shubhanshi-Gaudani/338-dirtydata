@@ -4,14 +4,16 @@ from .rule_base import RuleBaseClass
 
 class HasTypo (RuleBaseClass):
     """Checks if a cell has a typo in it."""
+    def __init__(self):
+        self.checker = SpellChecker()
+
     def _typo_word(self, s):
         """Returns whether s is likely to be a typo."""
         return self._clean_word(s) != s
 
     def _clean_word(self, s):
         """Returns the most likely word the user meant based on s."""
-        spell = SpellChecker()
-        return spell.correction(s)
+        return self.checker.correction(s)
 
     def is_dirty(self, cell_str, col):
         words = cell_str.split(' ')

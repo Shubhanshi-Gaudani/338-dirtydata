@@ -1,4 +1,3 @@
-from os import dup
 from src import Column
 import numpy as np
 
