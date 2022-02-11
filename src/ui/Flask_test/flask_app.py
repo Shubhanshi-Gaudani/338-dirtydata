@@ -13,8 +13,7 @@ def homepage():
 def about():
     return "<h1>About Page</h1>"
 
-
-if __name__ == '__main__':
+def launch_server():
     app.run(debug=True)
     wait_for_data()
     inds, reasons, cols = all_dirty_cells(csvToMatrix(data_path()),
