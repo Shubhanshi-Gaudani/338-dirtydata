@@ -23,7 +23,7 @@ class HasTypo (RuleBaseClass):
         words = cell_str.split(' ')
         for word in words:
             if self._typo_word(word):
-                return f'{word} appears to be a typo. Did you mean {self.clean(word)}?'
+                return f'{word} appears to be a typo. Did you mean {self._clean_word(word)}?'
         raise ValueError(f'No typo present in {cell_str}.')
 
     def clean(self, cell_str):

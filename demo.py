@@ -1,4 +1,4 @@
-from src import all_dirty_cells, user_message, csvToMatrix
+from src import all_dirty_cells, user_message, csvToMatrix, clean_cell_dumb
 
 if __name__ == '__main__':
     mat = csvToMatrix('tests/test_sheet_1.csv')
@@ -9,4 +9,4 @@ if __name__ == '__main__':
               user_message(mat[true_inds], 
                            cols[true_inds[1]], 
                            reasons[i]) +
-              '\n')
+              f'\nSuggested: {clean_cell_dumb(mat[true_inds], cols[true_inds[1]], reasons[i])}\n')
