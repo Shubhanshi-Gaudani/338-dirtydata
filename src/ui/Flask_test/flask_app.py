@@ -1,4 +1,6 @@
 from flask import Flask,render_template
+from .wait_for_csv import wait_for_data, data_path
+from src import all_dirty_cells, csvToMatrix
 
 app = Flask(__name__)
 
@@ -14,4 +16,7 @@ def about():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
+    wait_for_data()
+    inds, reasons, cols = all_dirty_cells(csvToMatrix(data_path()),
+                                          parallel = True,
+                                          return_cols = True)
