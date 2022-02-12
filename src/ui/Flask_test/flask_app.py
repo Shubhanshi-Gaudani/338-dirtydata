@@ -14,13 +14,13 @@ def homepage():
 def about():
     return "<h1>About Page</h1>"
 
-def run_app():
-    app.run(debug=True)
-
-def launch_server():
-    runner = mp.Process(target = run_app, args = tuple())
-    runner.start()
+def start_waiter():
     wait_for_data()
     inds, reasons, cols = all_dirty_cells(csvToMatrix(data_path()),
                                           parallel = True,
                                           return_cols = True)
+
+def launch_server():
+    waiter = mp.Process(target = start_waiter, args = tuple())
+    waiter.start()
+    app.run(debug=True)
