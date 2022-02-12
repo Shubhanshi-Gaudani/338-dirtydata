@@ -24,3 +24,4 @@ def launch_server():
     waiter = mp.Process(target = start_waiter, args = tuple())
     waiter.start()
     app.run(debug=True)
+    waiter.join()
