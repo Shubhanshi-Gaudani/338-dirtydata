@@ -1,6 +1,7 @@
 from flask import Flask,render_template
 from .wait_for_csv import wait_for_data, data_path
 from src import all_dirty_cells, csvToMatrix
+import multiprocessing as mp
 
 app = Flask(__name__)
 
@@ -13,9 +14,14 @@ def homepage():
 def about():
     return "<h1>About Page</h1>"
 
-def launch_server():
-    app.run(debug=True)
+def start_waiter():
     wait_for_data()
     inds, reasons, cols = all_dirty_cells(csvToMatrix(data_path()),
                                           parallel = True,
                                           return_cols = True)
+
+def launch_server():
+    waiter = mp.Process(target = start_waiter, args = tuple())
+    waiter.start()
+    app.run(debug=True)
+    waiter.join()
