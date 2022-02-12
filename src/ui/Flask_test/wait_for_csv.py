@@ -2,6 +2,7 @@ from os.path import exists
 from time import sleep
 
 def data_path():
+    """Returns the path at which the user's database should be saved."""
     return 'src/ui/Flask_test/data/data.csv'
 
 def wait_for_data():
