@@ -4,9 +4,10 @@ from src import all_dirty_cells, csvToMatrix
 import multiprocessing as mp
 import os
 from flask import Flask, flash, request, redirect, url_for
+from flask import send_from_directory
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = ''
+UPLOAD_FOLDER = data_path()
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
 
 app = Flask(__name__)
@@ -33,8 +34,13 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return "<h1>About Page</h1>"#redirect(url_for('download_file', name=filename))
+            return "<h1>Upload Succesful</h1>"#redirect(url_for('download_file', name=filename)) 
     return render_template('home.html')
+
+# idk how to get this user download part to work yet
+@app.route('/uploads/<name>')
+def download_file(name):
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
 
 @app.route("/about")
 def about():
@@ -51,5 +57,5 @@ def launch_server():
     """Launches the server UI."""
     waiter = mp.Process(target = start_waiter, args = tuple())
     waiter.start()
-    app.run(debug=True)
+    app.run(debug=False)
     waiter.join()
