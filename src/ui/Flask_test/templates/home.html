@@ -18,11 +18,10 @@
         <p> Click on the button bellow to upload your dataset and begin cleaning!</p>
         <br>
 
-        <!-- <button id="upload_btn">Upload</button> -->
-        <!-- <input id='fileid' type='file' hidden/> -->
-        <input id='fileUpload' type='file' />
-        <input id='upload' type='button' value='Upload' onclick="Upload()"/>
-    
+        <form method=post enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+          </form>
     </div>
 
         <div id="dvCSV"></div>
