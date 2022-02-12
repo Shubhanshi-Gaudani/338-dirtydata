@@ -5,6 +5,7 @@ import math as math
 from .utilities import can_be_float, can_be_int
 from .rules import IsNA, EmailChecker
 from Levenshtein import distance
+from .imputation import KNearestNeighbors
 
 _COUNT_PER_100_LINES = 3
 
@@ -26,6 +27,7 @@ class Column:
         self.median = self.quantile(0.5)
         self.mode = self.get_mode(col)
         self.column_type = self.get_col_type(col)
+        self.predictor = None
 
     def get_counts_over_thresh(self, col):
         """Returns the number of elements in col with more than _COUNTS_PER_100_LINES occurences per 100 lines.
@@ -212,3 +214,25 @@ class Column:
             res[el] = res[el] + 1 if el in res else 1
 
         return res
+
+    def generic_clean(self, inds, sheet):
+        """Returns a reason-independent prediction for what go in the cell at inds.
+        
+        Args:
+            inds (np.array) : a [y, x] pair indicating which cell to clean
+            sheet (np.array) : a 2D matrix
+
+        Returns:
+            pred (str) : what should go in that cell
+        """
+        if self.predictor is None:
+            self.predictor = KNearestNeighbors(5)
+            posed = sheet.T.tolist()
+            feats = posed[inds[1]:]
+            if inds[1] < sheet.shape[1] - 1:
+                feats += posed[:inds[1] + 1]
+            feats = np.array(feats, dtype = 'U128').T
+            targs = np.array(posed[inds[1]], dtype = 'U128')
+            self.predictor.fit(feats, targs)
+
+        return str(self.predictor._pred_one_row(sheet[inds[0]]))

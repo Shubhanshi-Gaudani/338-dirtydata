@@ -15,5 +15,5 @@ class IsNA (RuleBaseClass):
         return (f'This cell "{cell_str}" was interpreted as a variation of "NA". ' +
                 'We suggest standardizing all such cells to "NA".')
 
-    def clean(self, col):
+    def clean(self, inds, sheet, col):
         return 'NA'

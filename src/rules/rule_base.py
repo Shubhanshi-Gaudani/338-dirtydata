@@ -31,10 +31,12 @@ class RuleBaseClass:
         """
         raise NotImplementedError
 
-    def clean(self, col):
+    def clean(self, inds, sheet, col):
         """Returns what to put in the dirty cell based on col.
         
         Args:
+            inds (np.array) : a [y, x] pair indicating which cell to clean
+            sheet (np.array) : a 2D matrix of strings
             col (Column) : information about the dirty cell's column
 
         Returns:

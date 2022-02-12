@@ -56,7 +56,11 @@ def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None, return_c
         is_dirty = np.array(list(starmap(_dirty_row, args)), dtype = object)
 
     not_none = is_dirty != None
-    tup = np.argwhere(not_none), is_dirty[not_none]
+    inds = np.argwhere(not_none)
+    reasons = is_dirty[not_none]
+    for i in range(inds.shape[0]):
+        inds[i, 0] += header
+    tup = inds, reasons
     if return_cols: tup += (columns,)
     return tup
 

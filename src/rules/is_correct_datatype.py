@@ -26,10 +26,5 @@ class IsIncorrectDataType (RuleBaseClass):
         return (f'The cell {cell_str} was interpreted as {interp_type}, in contrast ' +
                 f"to the column's most common datatype, {true_type}.")
 
-    def clean(self, col):
-        if col.column_type == 'alpha':
-            return MissingData().clean(col)
-        i = NumOutlier().clean(col)
-        if col.column_type == 'int':
-            return str(int(float(i))) # this is so dumb
-        return i
+    def clean(self, inds, sheet, col):
+        return col.generic_clean(inds, sheet)

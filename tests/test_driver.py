@@ -19,15 +19,15 @@ def test_dirty_cells():
 
     inds, reasons = all_dirty_cells(mat, 
                                     header = 1)
-    right_inds = np.array([[0, 1],
-                           [0, 2],
-                           [0, 7],
-                           [1, 4],
-                           [1, 6],
-                           [1, 8],
-                           [4, 3],
+    right_inds = np.array([[1, 1],
+                           [1, 2],
+                           [1, 7],
+                           [2, 4],
+                           [2, 6],
+                           [2, 8],
                            [5, 3],
-                           [5, 6]])
+                           [6, 3],
+                           [6, 6]])
     right_reasons = [MissingData, 
                      NumOutlier,
                      NumOutlier,

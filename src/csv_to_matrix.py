@@ -20,4 +20,4 @@ def csvToMatrix(csv_name, delimiter = ','):
                 raise ValueError(f'row {len(mat)} of the spreadsheet has ' +
                                  f'length {len(mat[-1])} instead of the correct ' +
                                  f'length {len(mat[0])}.')
-    return np.array(mat, dtype = str)
+    return np.array(mat, dtype = 'U128')

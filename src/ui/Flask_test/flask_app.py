@@ -19,8 +19,8 @@ def start_waiter():
     """Starts the backend code to process the data after it is saved by .js code."""
     wait_for_data()
     inds, reasons, cols = all_dirty_cells(csvToMatrix(data_path()),
-                                        parallel = True,
-                                        return_cols = True)
+                                          parallel = True,
+                                          return_cols = True)
     os.remove(data_path())
 
 def launch_server():
