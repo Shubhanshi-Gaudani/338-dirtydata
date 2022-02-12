@@ -2,10 +2,10 @@ import numpy as np
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from sklearn.neighbors import KNeighborsRegressor
-from tensorflow import keras
-from keras import layers
-from keras import models
-from keras import losses
+# from tensorflow import keras
+# from keras import layers
+# from keras import models
+# from keras import losses
 from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 
