@@ -4,21 +4,20 @@ import numpy as np
 def duplicate_columns(data):
     """Takes a whole dataset, returns which columns if any are redundant.
     Args:
-        data (pd) : a panda dataframe
+        data (np.array) : a 2D array of strings
 
     Returns:
-        duplicate_column_names (list) : list with names of redundant columns
+        duplicate_column_names (list) : list of column indices which are duplicates
     """
-    duplicate_column_names = set()
-
-    for x in range(data.shape[1]):
-        col = data.iloc[:, x]
-        for y in range(x + 1, data.shape[1]):
-            otherCol = data.iloc[:, y]
-            # Check if two columns at x & y index are equal or not
-            if col.equals(otherCol):
-                duplicate_column_names.add(data.columns.values[y])
-    return list(duplicate_column_names)
+    cols = set()
+    dupes = []
+    posed = data.T
+    for col in range(posed.shape[0]):
+        if posed[col] in cols:
+            dupes.append(col)
+        else:
+            cols.add(posed[col])
+    return dupes
 
 # code from https://www.geeksforgeeks.org/how-to-find-drop-duplicate-columns-in-a-pandas-dataframe/
 
