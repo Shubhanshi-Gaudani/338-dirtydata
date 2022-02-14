@@ -9,8 +9,11 @@ from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = data_path()
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
+ROOT_PATH = 'src/ui/Flask_test'
 
-app = Flask('main ui', template_folder = 'src/ui/Flask_test/templates')
+app = Flask('main ui', 
+            template_folder = ROOT_PATH + '/templates',
+            static_folder = ROOT_PATH + '/static')
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
