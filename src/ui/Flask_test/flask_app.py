@@ -1,5 +1,5 @@
 from flask import Flask,render_template
-from .wait_for_csv import wait_for_data, data_path
+from .wait_for_csv import wait_for_data, data_path, file_path
 from src import all_dirty_cells, csvToMatrix
 import multiprocessing as mp
 import os
@@ -10,7 +10,7 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = data_path()
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
 
-app = Flask('main ui')
+app = Flask('main ui', template_folder = 'src/ui/Flask_test/templates')
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -49,10 +49,10 @@ def about():
 def start_waiter():
     """Starts the backend code to process the data after it is saved by .js code."""
     wait_for_data()
-    inds, reasons, cols = all_dirty_cells(csvToMatrix(data_path()),
+    inds, reasons, cols = all_dirty_cells(csvToMatrix(file_path()),
                                           parallel = True,
                                           return_cols = True)
-    os.remove(data_path())
+    os.remove(file_path())
 
 def launch_server():
     """Launches the server UI."""
