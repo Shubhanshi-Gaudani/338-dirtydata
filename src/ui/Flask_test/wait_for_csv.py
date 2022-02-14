@@ -3,7 +3,7 @@ from time import sleep
 
 def data_path():
     """Returns the path at which the user's database should be saved."""
-    return 'src/ui/Flask_test/data/data.csv'
+    return 'src/ui/Flask_test/data/'
 
 def wait_for_data():
     """Waits for data to be placed in data/data.csv by javascript."""
