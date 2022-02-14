@@ -12,11 +12,12 @@ def duplicate_columns(data):
     cols = set()
     dupes = []
     posed = data.T
-    for col in range(posed.shape[0]):
-        if posed[col] in cols:
+    tups = list(map(tuple, posed))
+    for col in range(len(tups)):
+        if tups[col] in cols:
             dupes.append(col)
         else:
-            cols.add(posed[col])
+            cols.add(tups[col])
     return dupes
 
 # code from https://www.geeksforgeeks.org/how-to-find-drop-duplicate-columns-in-a-pandas-dataframe/

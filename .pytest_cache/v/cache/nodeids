@@ -13,6 +13,8 @@
   "tests/test_distance.py::test_euc",
   "tests/test_driver.py::test_dirty_cells",
   "tests/test_driver.py::test_with_nfl",
+  "tests/test_dupes.py::test_dupe_cols",
+  "tests/test_dupes.py::test_dupe_rows",
   "tests/test_imputation.py::test_knn",
   "tests/test_messages.py::test_messages",
   "tests/test_rules.py::test_correct_dtype",

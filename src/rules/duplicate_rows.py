@@ -12,9 +12,10 @@ def duplicate_row(data):
     """
     rows = set()
     dupes = []
-    for row in range(data.shape[0]):
-        if data[row] in rows:
+    tups = list(map(tuple, data))
+    for row in range(len(tups)):
+        if tups[row] in rows:
             dupes.append(row)
         else:
-            rows.add(data[row])
+            rows.add(tups[row])
     return dupes
