@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = data_path()
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
-ROOT_PATH = 'src/ui/Flask_test'
+ROOT_PATH = 'src/ui/Flask'
 
 app = Flask('main ui', 
             template_folder = ROOT_PATH + '/templates',
@@ -50,7 +50,7 @@ def about():
     return "<h1>About Page</h1>"
 
 def start_waiter():
-    """Starts the backend code to process the data after it is saved by .js code."""
+    """Starts the backend code to process the data after it is saved by Flask."""
     wait_for_data()
     inds, reasons, cols = all_dirty_cells(csvToMatrix(file_path()),
                                           parallel = True,
