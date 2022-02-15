@@ -9,7 +9,7 @@ from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = data_path()
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
-ROOT_PATH = 'src/ui/Flask'
+ROOT_PATH = 'src/ui/Flask_test'
 
 app = Flask('main ui', 
             template_folder = ROOT_PATH + '/templates',
@@ -20,6 +20,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+@app.route("/config", methods=['GET', 'POST'])
+def config():
+    return render_template('config.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -37,7 +41,6 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            start_processing()
             return "<h1>Upload Succesful</h1>"#redirect(url_for('download_file', name=filename)) 
     return render_template('home.html')
 
@@ -50,8 +53,9 @@ def download_file(name):
 def about():
     return "<h1>About Page</h1>"
 
-def start_processing():
-    """Starts the backend code to process the data after it is saved by Flask."""
+def start_waiter():
+    """Starts the backend code to process the data after it is saved by .js code."""
+    wait_for_data()
     inds, reasons, cols = all_dirty_cells(csvToMatrix(file_path()),
                                           parallel = True,
                                           return_cols = True)
@@ -59,4 +63,7 @@ def start_processing():
 
 def launch_server():
     """Launches the server UI."""
+    waiter = mp.Process(target = start_waiter, args = tuple())
+    waiter.start()
     app.run(debug=True, use_reloader=False)
+    waiter.join()
