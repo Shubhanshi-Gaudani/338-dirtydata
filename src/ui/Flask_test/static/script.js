@@ -40,8 +40,23 @@ function RetrieveConfigCheckboxes() {
 
     const values = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
         .map(item => item.value)
-        .join(',');
+        .join(','); 
+    });
 
-    console.log(values);
-});
+    //Making a separate folder: 
+    const folderName = '/config'
+    try {
+        if (!fs.existsSync(folderName)) {
+        fs.mkdirSync(folderName)}
+    }   catch (err) {
+        console.error(err)
+    }
+    //Writing the variable values to a separate file in the folder config
+    fs.writeFile('/config/config.txt', values, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+        //file written successfully
+      })
 }
