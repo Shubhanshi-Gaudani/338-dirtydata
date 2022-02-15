@@ -12,7 +12,7 @@ UPLOAD_FOLDER = data_path()
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
 ROOT_PATH = 'src/ui/Flask'
 
-app = Flask('main ui', 
+app = Flask('main ui',
             template_folder = ROOT_PATH + '/templates',
             static_folder = ROOT_PATH + '/static')
 
@@ -40,13 +40,13 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             start_processing()
-            return "<h1>Upload Succesful</h1>"#redirect(url_for('download_file', name=filename)) 
+            return redirect(url_for('download_file', name=filename))  #"<h1>Upload Succesful</h1>" #
     return render_template('home.html')
 
 # idk how to get this user download part to work yet
 @app.route('/uploads/<name>')
 def download_file(name):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name, as_attachment=True)
 
 @app.route("/about")
 def about():
@@ -62,9 +62,9 @@ def start_processing():
                                           header = has_header(mat))
     suggs = np.empty(inds.shape[0], dtype = 'U128')
     for i in range(suggs.shape[0]):
-        suggs[i] = clean_cell(inds[i], 
-                              mat, 
-                              cols[inds[i, 1]], 
+        suggs[i] = clean_cell(inds[i],
+                              mat,
+                              cols[inds[i, 1]],
                               reasons[i])
     for i in range(suggs.shape[0]):
         mat[tuple(inds[i])] = suggs[i]
