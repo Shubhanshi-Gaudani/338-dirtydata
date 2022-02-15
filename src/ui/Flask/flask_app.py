@@ -1,11 +1,12 @@
 from flask import Flask,render_template
 from .wait_for_csv import wait_for_data, data_path, file_path
-from src import all_dirty_cells, csvToMatrix
+from src import all_dirty_cells, csvToMatrix, clean_cell, has_header
 import multiprocessing as mp
 import os
 from flask import Flask, flash, request, redirect, url_for
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
+import numpy as np
 
 UPLOAD_FOLDER = data_path()
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
@@ -53,9 +54,18 @@ def about():
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
-    inds, reasons, cols = all_dirty_cells(csvToMatrix(file_path()),
+    mat = csvToMatrix(file_path())
+    inds, reasons, cols = all_dirty_cells(mat,
                                           parallel = True,
-                                          return_cols = True)
+                                          return_cols = True,
+                                          header = has_header(mat))
+    suggs = np.empty(inds.shape[0], dtype = 'U128')
+    for i in range(suggs.shape[0]):
+        suggs[i] = clean_cell(inds[i], 
+                              mat, 
+                              cols[inds[i, 1]], 
+                              reasons[i])
+    print('Processing complete.', suggs)
     os.remove(file_path())
 
 def launch_server():
