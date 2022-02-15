@@ -16,6 +16,7 @@ app = Flask('main ui',
             static_folder = ROOT_PATH + '/static')
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 
 def allowed_file(filename):
     return '.' in filename and \
