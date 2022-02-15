@@ -21,9 +21,11 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route("/config", methods=['GET', 'POST'])
+@app.route('/config', methods=['GET', 'POST'])
 def config():
-    return render_template('config.html')
+    if request.method == 'POST':
+        # show the form, it wasn't submitted
+        return render_template('config.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():

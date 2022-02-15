@@ -36,13 +36,11 @@ function Upload() {
 function RetrieveConfigCheckboxes() {
     const form = document.querySelector('form');
 
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-
-    const values = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
-        .map(item => item.value)
-        .join(',');
-
-    console.log(`test.com/addtocart?${values}`);
-});
+    var inputs = document.getElementsByTagName('input');
+    for(var i=0; i < inputs.length; i++){
+        if(inputs[i].type == 'checkbox' && inputs[i].checked) {
+        //print
+        console.log(inputs[i].value);
+  }
+}
 }
