@@ -56,6 +56,7 @@ def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
     pth = file_path()
     mat = csvToMatrix(pth)
+    os.remove(pth)
     inds, reasons, cols = all_dirty_cells(mat,
                                           parallel = True,
                                           return_cols = True,
