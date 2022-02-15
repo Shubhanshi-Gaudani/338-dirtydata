@@ -54,7 +54,8 @@ def about():
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
-    mat = csvToMatrix(file_path())
+    pth = file_path()
+    mat = csvToMatrix(pth)
     inds, reasons, cols = all_dirty_cells(mat,
                                           parallel = True,
                                           return_cols = True,
@@ -65,8 +66,10 @@ def start_processing():
                               mat, 
                               cols[inds[i, 1]], 
                               reasons[i])
+    for i in range(suggs.shape[0]):
+        mat[tuple(inds[i])] = suggs[i]
+    np.savetxt(pth, mat, fmt = '%s')
     print('Processing complete.', suggs)
-    os.remove(file_path())
 
 def launch_server():
     """Launches the server UI."""
