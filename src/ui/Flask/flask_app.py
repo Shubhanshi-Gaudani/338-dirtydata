@@ -69,6 +69,7 @@ def start_processing():
                               reasons[i])
     for i in range(suggs.shape[0]):
         mat[tuple(inds[i])] = suggs[i]
+    os.remove(pth)
     np.savetxt(pth, mat, fmt = '%s')
     print('Processing complete.', suggs)
 
