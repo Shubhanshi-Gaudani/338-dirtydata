@@ -39,13 +39,13 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             start_processing()
-            return "<h1>Upload Succesful</h1>"#redirect(url_for('download_file', name=filename)) 
+            return redirect(url_for('download_file', name=filename))  #"<h1>Upload Succesful</h1>" #
     return render_template('home.html')
 
 # idk how to get this user download part to work yet
 @app.route('/uploads/<name>')
 def download_file(name):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], name)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], name, as_attachment=True)
 
 @app.route("/about")
 def about():
@@ -56,7 +56,7 @@ def start_processing():
     inds, reasons, cols = all_dirty_cells(csvToMatrix(file_path()),
                                           parallel = True,
                                           return_cols = True)
-    os.remove(file_path())
+    #os.remove(file_path())
 
 def launch_server():
     """Launches the server UI."""
