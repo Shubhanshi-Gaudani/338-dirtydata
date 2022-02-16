@@ -42,5 +42,5 @@ class RuleBaseClass:
         Returns:
             prediction (str) : what the rule predicts should go there
         """
-        raise NotImplementedError
+        return col.generic_clean(inds, sheet)
         

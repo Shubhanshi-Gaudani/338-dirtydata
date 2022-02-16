@@ -25,6 +25,3 @@ class IsIncorrectDataType (RuleBaseClass):
             true_type = 'decimal numbers'
         return (f'The cell {cell_str} was interpreted as {interp_type}, in contrast ' +
                 f"to the column's most common datatype, {true_type}.")
-
-    def clean(self, inds, sheet, col):
-        return col.generic_clean(inds, sheet)

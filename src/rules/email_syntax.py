@@ -20,6 +20,3 @@ class EmailChecker (RuleBaseClass):
         if self._is_email(cell_str):
             return f'{cell_str} was interpreted as an email, which is not consistent with the rest of the column.'
         return f'The column mostly has emails, but {cell_str} was not interpreted as one.'
-
-    def clean(self, inds, sheet, col):
-        return col.generic_clean(inds, sheet)

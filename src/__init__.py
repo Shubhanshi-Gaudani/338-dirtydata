@@ -14,5 +14,5 @@ from .rules import IsIncorrectDataType
 from .rules import MissingData
 from .rules import WrongCategory
 from .rules import HasTypo
-from .ui import launch_server, wait_for_data, data_path
+from .ui import launch_server, file_path
 from .imputation import KNearestNeighbors, tolerant_euc

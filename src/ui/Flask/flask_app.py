@@ -1,16 +1,15 @@
-from flask import Flask,render_template
-from .wait_for_csv import wait_for_data, data_path, file_path
+from flask import Flask, render_template
+from .path_utils import data_path, file_path, allowed_file, ROOT_PATH
 from src import all_dirty_cells, csvToMatrix, clean_cell, has_header
-import multiprocessing as mp
 import os
-from flask import Flask, flash, request, redirect, url_for
+from flask import flash, request, redirect, url_for
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 import numpy as np
 
 UPLOAD_FOLDER = data_path()
-ALLOWED_EXTENSIONS = {'txt', 'csv'}
-ROOT_PATH = 'src/ui/Flask'
+CLEAN_NAME = 'cleaned.csv'
+CLEAN_PATH = data_path() + '/' + CLEAN_NAME
 
 app = Flask('main ui',
             template_folder = ROOT_PATH + '/templates',
@@ -18,10 +17,6 @@ app = Flask('main ui',
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -40,7 +35,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             start_processing()
-            return redirect(url_for('download_file', name=filename))  #"<h1>Upload Succesful</h1>" #
+            return redirect(url_for('download_file', name=CLEAN_NAME))  #"<h1>Upload Succesful</h1>" #
     return render_template('home.html')
 
 # idk how to get this user download part to work yet
@@ -55,6 +50,9 @@ def about():
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
     pth = file_path()
+    if pth == '':
+        flash('No selected file')
+        return redirect(request.url)
     mat = csvToMatrix(pth)
     os.remove(pth)
     inds, reasons, cols = all_dirty_cells(mat,
@@ -67,11 +65,15 @@ def start_processing():
                               mat,
                               cols[inds[i, 1]],
                               reasons[i])
-    for i in range(suggs.shape[0]):
         mat[tuple(inds[i])] = suggs[i]
-    np.savetxt(pth, mat, fmt = '%s', delimiter = ',', newline = '\n')
-    print('Processing complete.', suggs)
+    np.savetxt(CLEAN_PATH, 
+               mat, 
+               fmt = '%s', 
+               delimiter = ',', 
+               encoding = 'utf-8')
+    print('Processing complete.')
 
 def launch_server():
     """Launches the server UI."""
+    if os.path.exists(CLEAN_PATH): os.remove(CLEAN_PATH)
     app.run(debug=True, use_reloader=False)
