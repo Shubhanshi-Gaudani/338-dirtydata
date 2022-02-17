@@ -67,8 +67,14 @@ def start_processing():
                               cols[inds[i, 1]],
                               reasons[i])
         mat[tuple(inds[i])] = suggs[i]
+    # dropping duplicate rows
     drops = duplicate_row(mat)
     mat = np.delete(mat, drops, 0)
+    # dropping duplicate columns
+    drops = duplicate_columns(mat)
+    mat = np.delete(mat, drops, 1)
+    # need to output redundant columns before we can drop 
+
     np.savetxt(CLEAN_PATH, 
                mat, 
                fmt = '%s', 

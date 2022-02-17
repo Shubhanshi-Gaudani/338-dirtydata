@@ -20,8 +20,6 @@ def duplicate_columns(data):
             cols.add(tups[col])
     return dupes
 
-# code from https://www.geeksforgeeks.org/how-to-find-drop-duplicate-columns-in-a-pandas-dataframe/
-
 def redundant_columns(data):
     """Takes a whole dataset, returns which columns if any are redundant.
         Args:
