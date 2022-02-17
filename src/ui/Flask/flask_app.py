@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from .path_utils import data_path, file_path, allowed_file, ROOT_PATH
 from src import all_dirty_cells, csvToMatrix, clean_cell, has_header
+from src import duplicate_row, duplicate_columns
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
@@ -66,6 +67,8 @@ def start_processing():
                               cols[inds[i, 1]],
                               reasons[i])
         mat[tuple(inds[i])] = suggs[i]
+    drops = duplicate_row(mat)
+    mat = np.delete(mat, drops, 0)
     np.savetxt(CLEAN_PATH, 
                mat, 
                fmt = '%s', 
