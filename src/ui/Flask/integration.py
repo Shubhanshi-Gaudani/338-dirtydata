@@ -1,4 +1,4 @@
-from src import all_dirty_cells, has_header, clean_cell
+from src import all_dirty_cells, has_header, clean_cell, duplicate_columns, duplicate_row
 from .path_utils import data_path
 import numpy as np
 
@@ -23,7 +23,7 @@ def get_dirty(mat):
                            return_cols = True,
                            header = has_header(mat))
 
-def save_clean(mat, inds, reasons, cols):
+def save_clean(mat, inds, reasons, cols, clean_row = True, clean_columns = True):
     """Cleans mat and saves it to CLEAN_PATH.
     
     Args:
@@ -44,6 +44,15 @@ def save_clean(mat, inds, reasons, cols):
                               cols[inds[i, 1]],
                               reasons[i])
         mat[tuple(inds[i])] = suggs[i]
+    # duplicate rows 
+    if(clean_row):
+        dupes = duplicate_row(mat)
+        mat = np.delete(mat, dupes, 0)
+    # duplicate columns
+    if(clean_columns):
+        dupes = duplicate_columns(mat)
+        mat = np.delete(mat, dupes, 1)
+
     np.savetxt(CLEAN_PATH, 
                mat, 
                fmt = '%s', 
