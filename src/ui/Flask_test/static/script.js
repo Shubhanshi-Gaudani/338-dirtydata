@@ -44,6 +44,7 @@ function RetrieveConfigCheckboxes() {
     });
 
     //Making a separate folder: 
+    const fs = require('fs')
     const folderName = '/config'
     try {
         if (!fs.existsSync(folderName)) {
