@@ -13,8 +13,8 @@ def get_dirty(mat):
 
     Returns:
         inds (np.array) : a array of [y, x] pairs that can be used to index into 
-            csv_mat
-        reasons (np.array) : an array of functions that the cells in 
+            mat
+        reasons (np.array) : an array of predicates that the cells in 
             dirty failed. reasons[i] is the reason why dirty[i] failed
         cols (list) : a list of Column objects
     """
@@ -29,7 +29,7 @@ def save_clean(mat, inds, reasons, cols):
     Args:
         mat (np.array) : the 2D array of strings to clean
         inds (np.array) : a array of [y, x] pairs that can be used to index into 
-            csv_mat
+            mat
         reasons (np.array) : an array of functions that the cells in 
             dirty failed. reasons[i] is the reason why dirty[i] failed
         cols (list) : a list of Column objects
