@@ -6,10 +6,9 @@ from flask import flash, request, redirect, url_for
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 import numpy as np
+from .integration import CLEAN_PATH, CLEAN_NAME, get_dirty, save_clean
 
 UPLOAD_FOLDER = data_path()
-CLEAN_NAME = 'cleaned.csv'
-CLEAN_PATH = data_path() + '/' + CLEAN_NAME
 
 app = Flask('main ui',
             template_folder = ROOT_PATH + '/templates',
@@ -55,22 +54,8 @@ def start_processing():
         return redirect(request.url)
     mat = csvToMatrix(pth)
     os.remove(pth)
-    inds, reasons, cols = all_dirty_cells(mat,
-                                          parallel = True,
-                                          return_cols = True,
-                                          header = has_header(mat))
-    suggs = np.empty(inds.shape[0], dtype = 'U128')
-    for i in range(suggs.shape[0]):
-        suggs[i] = clean_cell(inds[i],
-                              mat,
-                              cols[inds[i, 1]],
-                              reasons[i])
-        mat[tuple(inds[i])] = suggs[i]
-    np.savetxt(CLEAN_PATH, 
-               mat, 
-               fmt = '%s', 
-               delimiter = ',', 
-               encoding = 'utf-8')
+    inds, reasons, cols = get_dirty(mat)
+    save_clean(mat, inds, reasons, cols)
     print('Processing complete.')
 
 def launch_server():
