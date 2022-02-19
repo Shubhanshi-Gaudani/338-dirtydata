@@ -17,6 +17,7 @@ app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
+app.config['SECRET_KEY'] = '0000'
 
 @app.route('/config', methods=['GET', 'POST'])
 def config():
@@ -41,9 +42,16 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            start_processing()
             return redirect(url_for('download_file', name=CLEAN_NAME))  #"<h1>Upload Succesful</h1>" #
     return render_template('home.html')
+
+@app.route('/config', methods=['GET', 'POST'])
+def config():
+    if request.method == 'POST':
+        # show the form, it wasn't submitted
+        print(request.form.getlist('source'))
+        start_processing()
+        return render_template('config.html')
 
 # idk how to get this user download part to work yet
 @app.route('/uploads/<name>')
