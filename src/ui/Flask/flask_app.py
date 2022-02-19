@@ -13,10 +13,18 @@ UPLOAD_FOLDER = data_path()
 app = Flask('main ui',
             template_folder = ROOT_PATH + '/templates',
             static_folder = ROOT_PATH + '/static')
-
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 app.config['SECRET_KEY'] = '0000'
+
+@app.route('/config', methods=['GET', 'POST'])
+def config():
+    if request.method == 'POST':
+        # show the form, it wasn't submitted
+        print(request.form.getlist('source'))
+        return render_template('config.html')
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
