@@ -14,7 +14,8 @@ ROOT_PATH = 'src/ui/Flask_test'
 app = Flask('main ui', 
             template_folder = ROOT_PATH + '/templates',
             static_folder = ROOT_PATH + '/static')
-
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -25,6 +26,7 @@ def allowed_file(filename):
 def config():
     if request.method == 'POST':
         # show the form, it wasn't submitted
+        print(request.form.getlist('source'))
         return render_template('config.html')
 
 @app.route('/', methods=['GET', 'POST'])
