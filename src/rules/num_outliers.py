@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
-
-from src.utilities import can_be_float
+from src.utilities import can_be_float, float_is_int
 from .rule_base import RuleBaseClass
 
 _QUANT_SCALE = 2
@@ -26,8 +25,13 @@ class NumOutlier (RuleBaseClass):
     def clean(self, inds, sheet, col):
         f = float(sheet[tuple(inds)])
         if not self.is_dirty(str(f * 10), col):
+            if float_is_int(f * 10):
+                return str(round(f * 10))
             return str(f * 10)
         with_dec = f'0.{f}'
         if can_be_float(with_dec) and not self.is_dirty(with_dec, col):
             return with_dec
-        return str(col.quantile(0.5))
+        q = col.quantile(0.5)
+        if float_is_int(q):
+            return str(round(q))
+        return str(q)

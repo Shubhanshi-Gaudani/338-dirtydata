@@ -31,8 +31,10 @@ def save_clean(mat, inds, reasons, cols, clean_row = True, clean_columns = True)
         inds (np.array) : a array of [y, x] pairs that can be used to index into 
             mat
         reasons (np.array) : an array of functions that the cells in 
-            dirty failed. reasons[i] is the reason why dirty[i] failed
+            inds failed. reasons[i] is the reason why inds[i] failed
         cols (list) : a list of Column objects
+        clean_row (bool) : whether to remove duplicate rows. Default is True
+        clean_columns (bool) : whether to remove duplicate columns. Default is True
 
     Returns:
         None

@@ -69,6 +69,7 @@ class MlBase:
         Returns:
             preds (np.array) : a 1D array of string predictions
         """
+        nprocs = min(nprocs, features.shape[0])
         if nprocs > 1:
             return self._predict_par(features, nprocs)
         return self._predict_seq(features)

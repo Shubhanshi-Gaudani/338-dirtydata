@@ -1,7 +1,6 @@
 from flask import Flask, render_template
 from .path_utils import data_path, file_path, allowed_file, ROOT_PATH
 from src import csvToMatrix
-from src import duplicate_row, duplicate_columns
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
