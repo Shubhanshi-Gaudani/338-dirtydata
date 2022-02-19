@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Config Page</title>
+  </head>
+  <body>
+    <form method="post">
+
+      <fieldset>
+        <legend>How do you want to clean ?</legend>
+        <div>
+          <input type="checkbox" id="checkNA" name="source" value="checkNA">
+          <label for="checkNA">Check for NA Cells</label>
+        </div>
+        <div>
+          <input type="checkbox" id="IsIncorrectDataType" name="source" value="IsIncorrectDataType">
+          <label for="IsIncorrectDataType">Check for Incorrect Data Type</label>
+        </div>
+        <div>
+          <input type="checkbox" id="MissingData" name="source" value="MissingData">
+          <label for="MissingData">Check for Missing Data</label>
+        </div>
+        <div>
+          <input type="checkbox" id="NumOutlier" name="source" value="NumOutlier">
+          <label for="NumOutlier">Check for Numerical Outliers</label>
+        </div>
+        <div>
+          <input type="checkbox" id="WrongCategory" name="source" value="WrongCategory">
+          <label for="WrongCategory">Check for the wrong category </label>
+        </div>
+        <div>
+          <input type="checkbox" id="typo" name="source" value="typo">
+          <label for="typo">Check for typos</label>
+        </div>
+        <div>
+          <button type="submit" >Submit form</button>
+        </div>
+        </fieldset>
+
+      
+      </form>
+  </body>
+</html>

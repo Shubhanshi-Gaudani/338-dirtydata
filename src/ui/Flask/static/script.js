@@ -1,5 +1,6 @@
 // Code from https://www.aspsnippets.com/Articles/Import-CSV-File-to-HTML-Table-using-JavaScript.aspx
 
+
 function Upload() {
     var fileUpload = document.getElementById("fileUpload");
     var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
@@ -33,5 +34,31 @@ function Upload() {
     }
 }
 
+function RetrieveConfigCheckboxes() {
+    const form = document.querySelector('form');
+    form.addEventListener('submit', e => {
+        e.preventDefault();
 
+    const values = Array.from(document.querySelectorAll('input[type=checkbox]:checked'))
+        .map(item => item.value)
+        .join(','); 
+    });
 
+    //Making a separate folder: 
+    const fs = require('fs')
+    const folderName = '/config'
+    try {
+        if (!fs.existsSync(folderName)) {
+        fs.mkdirSync(folderName)}
+    }   catch (err) {
+        console.error(err)
+    }
+    //Writing the variable values to a separate file in the folder config
+    fs.writeFile('/config/config.txt', values, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+        //file written successfully
+      })
+}
