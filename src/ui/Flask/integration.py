@@ -1,6 +1,8 @@
 from src import all_dirty_cells, has_header, clean_cell, duplicate_columns, duplicate_row
 from .path_utils import data_path
 import numpy as np
+from src import IsNA, IsIncorrectDataType, MissingData, NumOutlier, WrongCategory, HasTypo
+from src import _ALL_PREDS
 
 CLEAN_NAME = 'cleaned.csv'
 CLEAN_PATH = data_path() + '/' + CLEAN_NAME
@@ -43,7 +45,7 @@ def delete_dupes(mat, del_rows = True, del_cols = True):
         dupes = duplicate_columns(mat)
         mat = np.delete(mat, dupes, 1)
 
-def save_clean(mat, inds, reasons, cols, clean_row = True, clean_columns = True):
+def save_clean(mat, inds, reasons, cols):
     """Cleans mat and saves it to CLEAN_PATH.
     
     Args:
@@ -53,8 +55,6 @@ def save_clean(mat, inds, reasons, cols, clean_row = True, clean_columns = True)
         reasons (np.array) : an array of functions that the cells in 
             inds failed. reasons[i] is the reason why inds[i] failed
         cols (list) : a list of Column objects
-        clean_row (bool) : whether to remove duplicate rows. Default is True
-        clean_columns (bool) : whether to remove duplicate columns. Default is True
 
     Returns:
         None
@@ -72,3 +72,26 @@ def save_clean(mat, inds, reasons, cols, clean_row = True, clean_columns = True)
                fmt = '%s', 
                delimiter = ',', 
                encoding = 'utf-8')
+
+def pred_names_to_objs(names):
+    """Turns a list of predicate names (as returned by config) into the rules to use.
+    
+    Args:
+        names (list) : a list of string names to use
+
+    Returns:
+        preds (list) : a list of rules to use when finding dirty cells
+    """
+    mapping = {IsNA : 'checkNA',
+               IsIncorrectDataType : 'IsIncorrectDataType',
+               MissingData : 'MissingData',
+               NumOutlier : 'NumOutlier',
+               WrongCategory : 'WrongCategory',
+               HasTypo : 'typo'}
+    name_set = set(names)
+    res = []
+    for pred in _ALL_PREDS:
+        if mapping[pred] in name_set:
+            res.append(pred)
+    
+    return res
