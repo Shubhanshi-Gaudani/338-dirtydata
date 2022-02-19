@@ -19,7 +19,3 @@ class WrongCategory (RuleBaseClass):
     def message(self, cell_str, col):
         return ('This row appears to have a small number of categories, but ' +
                 f'{cell_str} is not one of them.')
-
-    def clean(self, inds, sheet, col):
-        return col.generic_clean(inds, sheet)
-

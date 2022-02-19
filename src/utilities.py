@@ -1,3 +1,5 @@
+import numpy as np
+
 def can_be_float(s):
     """Returns whether s can be cast as a float without exception.
     
@@ -38,3 +40,14 @@ def can_be_int(s):
         return True
     except ValueError:
         return False
+
+def float_is_int(f):
+    """Returns whether f is a close enough to the nearest integer.
+    
+    Args:
+        f (float) : the float to look at 
+
+    Returns:
+        is_int (bool) : whether the float is basically an integer
+    """
+    return np.isclose(f, round(f))

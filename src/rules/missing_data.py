@@ -13,6 +13,3 @@ class MissingData (RuleBaseClass):
 
     def message(self, cell_str, col):
         return 'The cell is empty.'
-
-    def clean(self, inds, sheet, col):
-        return col.generic_clean(inds, sheet)

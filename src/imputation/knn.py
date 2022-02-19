@@ -25,7 +25,9 @@ class KNearestNeighbors (MlBase):
         for el in X:
             if el and not self.nan_checker.is_dirty(el, None):
                 counts[el] = counts[el] + 1 if el in counts else 1
-        return max(counts, key = counts.__getitem__)
+        if len(counts):
+            return max(counts, key = counts.__getitem__)
+        return ''
 
     def _pred_one_row(self, row):
         dists = sorted(range(self.features.shape[0]),

@@ -5,12 +5,17 @@ def duplicate_row(data):
     """Takes a whole dataset, returns which rows if any are duplicates.
 
     Args:
-        data (pd) : a panda dataframe
+        data (np.array) : a 2D array of strings
 
     Returns:
-        dup_rows (pd) : dataframe of duplicate rows
+        dup_rows (list) : a list of row indices which are duplicates
     """
-
-    dup_rows = data[data.duplicated()]
-
-    return dup_rows
+    rows = set()
+    dupes = []
+    tups = list(map(tuple, data))
+    for row in range(len(tups)):
+        if tups[row] in rows:
+            dupes.append(row)
+        else:
+            rows.add(tups[row])
+    return dupes

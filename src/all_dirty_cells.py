@@ -33,13 +33,14 @@ def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None, return_c
             Default is zero, meaning no rows are skipped
         parallel (bool) : whether or not to compile the dirty cells
             in parallel. Default is True.
-        preds (list) : a list of functions to call on each cell
+        preds (list) : a list of functions to call on each cell. If None (the default), 
+            it will use all the predicates in _ALL_PREDS.
         return_cols (bool) : whether to return the analyzed columns. Default is False
 
     Returns:
         dirty (np.array) : a array of [y, x] pairs that can be used to index into 
             csv_mat
-        reasons (np.array) : an array of functions that the cells in 
+        reasons (np.array) : an array of predicates that the cells in 
             dirty failed. reasons[i] is the reason why dirty[i] failed
         (if return_cols:) columns (list) : a list of Column objects
     """
