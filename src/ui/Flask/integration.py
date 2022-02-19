@@ -23,6 +23,26 @@ def get_dirty(mat):
                            return_cols = True,
                            header = has_header(mat))
 
+def delete_dupes(mat, del_rows = True, del_cols = True):
+    """Deletes duplicate rows and columns.
+    
+    Args:
+        mat (np.array) : a 2D array of strings
+        del_rows (bool) : whether to delete duplicate rows. Default is True
+        del_cols (bool) : whether to delete duplicate columns. Default is True.
+
+    Returns:
+        None
+    """
+    # duplicate rows 
+    if(del_rows):
+        dupes = duplicate_row(mat)
+        mat = np.delete(mat, dupes, 0)
+    # duplicate columns
+    if(del_cols):
+        dupes = duplicate_columns(mat)
+        mat = np.delete(mat, dupes, 1)
+
 def save_clean(mat, inds, reasons, cols, clean_row = True, clean_columns = True):
     """Cleans mat and saves it to CLEAN_PATH.
     
@@ -46,14 +66,6 @@ def save_clean(mat, inds, reasons, cols, clean_row = True, clean_columns = True)
                               cols[inds[i, 1]],
                               reasons[i])
         mat[tuple(inds[i])] = suggs[i]
-    # duplicate rows 
-    if(clean_row):
-        dupes = duplicate_row(mat)
-        mat = np.delete(mat, dupes, 0)
-    # duplicate columns
-    if(clean_columns):
-        dupes = duplicate_columns(mat)
-        mat = np.delete(mat, dupes, 1)
 
     np.savetxt(CLEAN_PATH, 
                mat, 
