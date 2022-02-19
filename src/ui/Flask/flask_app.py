@@ -34,6 +34,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            start_processing()
             return redirect(url_for('download_file', name=CLEAN_NAME))  #"<h1>Upload Succesful</h1>" #
     return render_template('home.html')
 
@@ -42,7 +43,6 @@ def config():
     if request.method == 'POST':
         # show the form, it wasn't submitted
         print(request.form.getlist('source'))
-        start_processing()
         return render_template('config.html')
 
 # idk how to get this user download part to work yet

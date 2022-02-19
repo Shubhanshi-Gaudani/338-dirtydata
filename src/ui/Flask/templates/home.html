@@ -18,9 +18,13 @@
         <p> Click on the button bellow to upload your dataset and begin cleaning!</p>
         <br>
 
-        <form method=post enctype=multipart/form-data action="/config">
+        <form method=post enctype=multipart/form-data>
             <input type=file name=file>
             <input type=submit value=Upload>
+        </form>
+        
+        <form method="POST" action="/config">
+            <input type="submit"/>
         </form>
     </div>
 
