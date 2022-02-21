@@ -31,7 +31,7 @@ def get_dirty(mat):
                            parallel = True,
                            return_cols = True,
                            header = has_header(mat),
-                           preds = preds)
+                           preds = preds) + (mat,)
 
 def delete_dupes(mat, del_rows = True, del_cols = True):
     """Deletes duplicate rows and columns.
@@ -91,7 +91,7 @@ def pred_names_to_objs(names):
 
     Returns:
         preds (list) : a list of rules to use when finding dirty cells
-        dup_lst (list) : a list of '0' or '1', corresponding to whether the user
+        dup_lst (list) : a list of booleans, corresponding to whether the user
             wants to delete duplicate rows and columns
     """
     mapping = {IsNA : 'checkNA',
@@ -114,4 +114,7 @@ def pred_names_to_objs(names):
 def get_preds():
     """Returns the user's selected predicates."""
     with open(config_file_path(), 'r') as config:
-        return pred_names_to_objs(config.readlines())
+        lines = config.readlines()
+        for line in range(len(lines)):
+            lines[line] = lines[line].replace('\n', '')
+        return pred_names_to_objs(lines)

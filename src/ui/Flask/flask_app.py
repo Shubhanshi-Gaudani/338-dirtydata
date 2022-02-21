@@ -45,7 +45,7 @@ def config():
         configs = request.form.getlist('source')
         with open(data_path() + '/' + custom_config_name(), 'w') as config:
             config.write('\n'.join(configs))
-        print(configs)
+        # print(configs)
         return redirect(url_for('upload_file'))
     return render_template('config.html')
 
@@ -66,8 +66,8 @@ def start_processing():
         return redirect(request.url)
     mat = csvToMatrix(pth)
     os.remove(pth)
-    inds, reasons, cols = get_dirty(mat)
-    save_clean(mat, inds, reasons, cols)
+    inds, reasons, cols, new_mat = get_dirty(mat)
+    save_clean(new_mat, inds, reasons, cols)
     print('Processing complete.')
 
 def launch_server():
