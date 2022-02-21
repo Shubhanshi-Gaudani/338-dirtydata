@@ -45,11 +45,9 @@ def config():
         configs = request.form.getlist('source')
         with open(data_path() + '/' + custom_config_name(), 'w') as config:
             config.write('\n'.join(configs))
-        # print(configs)
         return redirect(url_for('upload_file'))
     return render_template('config.html')
 
-# idk how to get this user download part to work yet
 @app.route('/uploads/<name>')
 def download_file(name):
     return send_from_directory(app.config["UPLOAD_FOLDER"], name, as_attachment=True)
