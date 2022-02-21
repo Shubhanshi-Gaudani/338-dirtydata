@@ -10,6 +10,12 @@
 
     </head>
     <body>
+
+        <div id="config_div">
+            <form method="GET" action="/config">
+                <input type="submit" id="gear" value = ⚙️>
+            </form>
+        </div>
     <div>
         
         <img src="static/drte.png">
@@ -20,12 +26,10 @@
 
         <form method=post enctype=multipart/form-data>
             <input type=file name=file>
-            <input type=submit value=Upload>
+            <input id = "upload_btn"type=submit value=Upload>
         </form>
 
-        <form method="GET" action="/config">
-            <input type="submit" value = Configurations>
-        </form>
+        
     </div>
 
         <div id="dvCSV"></div>

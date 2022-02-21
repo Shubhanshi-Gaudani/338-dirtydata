@@ -15,9 +15,16 @@ input {
    border-radius: 4px;
  }
  
-#upload:hover {
+#upload_btn:hover {
    background-color: #555555;
    color: white;
+ }
+
+ #gear:hover {
+   background-color: #555555;
+   color: white;
+   transform: rotate(360deg);
+
  }
 
 #dvCSV{
@@ -32,4 +39,15 @@ th, td {
  table, th, td{
    border: 1px solid black;
    border-collapse: collapse;
+ }
+
+ #config_div{
+   text-align: right;
+   margin-right: 75px;
+   padding: 0%;
+ }
+
+ #gear{
+    font-size: 50px;
+    
  }
