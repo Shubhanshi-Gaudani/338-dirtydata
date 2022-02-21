@@ -5,3 +5,5 @@ NumOutlier
 WrongCategory
 typo
 EmailChecking
+DuplicateRows
+DuplicateColumns
