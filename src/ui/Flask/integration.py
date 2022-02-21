@@ -24,9 +24,9 @@ def get_dirty(mat):
     """
     preds, dups = get_preds()
     # TODO : this mat is lost when downloading the file
-    # mat = delete_dupes(mat, 
-    #                    del_rows = dups[DUP_ROW_IND],
-    #                    del_cols = dups[DUP_COL_IND])
+    mat = delete_dupes(mat, 
+                       del_rows = dups[DUP_ROW_IND],
+                       del_cols = dups[DUP_COL_IND])
     return all_dirty_cells(mat,
                            parallel = True,
                            return_cols = True,
