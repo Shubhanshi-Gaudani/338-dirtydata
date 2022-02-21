@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .path_utils import data_path, data_file_path, allowed_file, ROOT_PATH
+from .path_utils import data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name
 from src import csvToMatrix
 import os
 from flask import flash, request, redirect, url_for
@@ -43,6 +43,8 @@ def upload_file():
 def config():
     if request.method == 'POST':
         configs = request.form.getlist('source')
+        with open(data_path() + '/' + custom_config_name(), 'w') as config:
+            config.write('\n'.join(configs))
         print(configs)
         return redirect(url_for('upload_file'))
     return render_template('config.html')
