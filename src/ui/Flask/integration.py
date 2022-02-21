@@ -1,7 +1,7 @@
 from src import all_dirty_cells, has_header, clean_cell, duplicate_columns, duplicate_row
-from .path_utils import data_path
+from .path_utils import config_file_path, data_path
 import numpy as np
-from src import IsNA, IsIncorrectDataType, MissingData, NumOutlier, WrongCategory, HasTypo
+from src import IsNA, IsIncorrectDataType, MissingData, NumOutlier, WrongCategory, HasTypo, EmailChecker
 from src import _ALL_PREDS
 
 CLEAN_NAME = 'cleaned.csv'
@@ -23,7 +23,8 @@ def get_dirty(mat):
     return all_dirty_cells(mat,
                            parallel = True,
                            return_cols = True,
-                           header = has_header(mat))
+                           header = has_header(mat),
+                           preds = get_preds())
 
 def delete_dupes(mat, del_rows = True, del_cols = True):
     """Deletes duplicate rows and columns.
@@ -77,7 +78,7 @@ def pred_names_to_objs(names):
     """Turns a list of predicate names (as returned by config) into the rules to use.
     
     Args:
-        names (list) : a list of string names to use
+        names (list) : a list of string names to use. Technically can be any iterable
 
     Returns:
         preds (list) : a list of rules to use when finding dirty cells
@@ -87,7 +88,8 @@ def pred_names_to_objs(names):
                MissingData : 'MissingData',
                NumOutlier : 'NumOutlier',
                WrongCategory : 'WrongCategory',
-               HasTypo : 'typo'}
+               HasTypo : 'typo',
+               EmailChecker : 'EmailChecker'}
     name_set = set(names)
     res = []
     for pred in _ALL_PREDS:
@@ -95,3 +97,8 @@ def pred_names_to_objs(names):
             res.append(pred)
     
     return res
+
+def get_preds():
+    """Returns the user's selected predicates."""
+    with open(config_file_path(), 'r') as config:
+        return pred_names_to_objs(config.readlines())

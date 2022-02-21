@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .path_utils import data_path, file_path, allowed_file, ROOT_PATH
+from .path_utils import data_path, data_file_path, allowed_file, ROOT_PATH
 from src import csvToMatrix
 import os
 from flask import flash, request, redirect, url_for
@@ -42,7 +42,8 @@ def upload_file():
 def config():
     if request.method == 'POST':
         # show the form, it wasn't submitted
-        print(request.form.getlist('source'))
+        lst = request.form.getlist('source')
+        
         return render_template('config.html')
 
 # idk how to get this user download part to work yet
@@ -56,7 +57,7 @@ def about():
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
-    pth = file_path()
+    pth = data_file_path()
     if pth == '':
         flash('No selected file')
         return redirect(request.url)
