@@ -1,4 +1,5 @@
 from os import listdir
+from os.path import exists
 from time import sleep
 
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
@@ -18,15 +19,23 @@ def data_path():
 
 def data_file_path():
     """Returns the path to the user's file or an empty string if it has not been uploaded."""
-    files = listdir(data_path())
+    root_path = data_path()
+    files = listdir(root_path)
+    config_files = [root_path + '/' + def_config_name(),
+                    root_path + '/' + custom_config_name()]
     for f in files:
-        if allowed_file(f):
+        if (allowed_file(f) and 
+            not f in config_files):
             return data_path() + '/' + f
     return ''
 
 def def_config_name():
     """Returns the name of the default config file."""
     return 'def_config.txt'
+
+def custom_config_name():
+    """Returns the name of the user's custom config file."""
+    return 'custom_config.txt'
 
 def config_file_path():
     """Returns the path to the user's file. 
@@ -40,12 +49,10 @@ def config_file_path():
         pth (str) : the path to the config files
     """
     root_path = data_path()
-    files = listdir(root_path)
-    def_config = def_config_name()
-    for f in files:
-        if get_extension(f) == 'txt' and f != def_config:
-            return root_path + '/' + f
-    return root_path + '/' + def_config()
+    custom = root_path + '/' + custom_config_name()
+    if exists(custom):
+        return custom
+    return root_path + '/' + def_config_name()
 
 def wait_for_data():
     """Waits for data to be placed in the data folder by Flask."""
