@@ -21,6 +21,7 @@ def get_dirty(mat):
         reasons (np.array) : an array of predicates that the cells in 
             dirty failed. reasons[i] is the reason why dirty[i] failed
         cols (list) : a list of Column objects
+        mat (np.array) : the possibly changed sheet to clean
     """
     preds, dups = get_preds()
     mat = delete_dupes(mat, 
