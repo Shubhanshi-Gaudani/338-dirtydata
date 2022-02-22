@@ -38,6 +38,12 @@ input {
    margin-left: 400px ;
 }
 
+#logo_button{
+   height: 80px;
+   width: 120px;
+   border-color: white;
+}
+
 th, td {
    padding: 15px;
    text-align: center;

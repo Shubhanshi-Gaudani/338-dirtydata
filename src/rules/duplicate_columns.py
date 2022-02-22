@@ -22,20 +22,28 @@ def duplicate_columns(data):
 
 def redundant_columns(data):
     """Takes a whole dataset, returns which columns if any are redundant.
-        Args:
-            data (pd) : a panda dataframe
 
-        Returns:
-            red_columns (list) : list with pairs of names of redundant columns
-        """
-    redundant_column_names = set()
-    for column2 in data:
-        for column1 in data:
-            if column1 == column2:
-                break
-            a = data.groupby(column1)[column2].transform(len)
-            b = data.groupby(column2)[column1].transform(len)
-            if a.equals(b):
-                redundant_column_names.add((column1, column2))
-    print(list(redundant_column_names))
+    Args:
+        data (np.array) : a 2D array of strings
+
+    Returns:
+        dupe_inds (list) : a list of (col_index1, col_index2) pairs, each of which
+            is a tuple of redundant columns.
+    """
+    dupe_inds = []
+    data = data.T
+    for col1 in range(data.shape[0]):
+        for col2 in range(data.shape[1]):
+            mapping = {}
+            for row in range(data.shape[1]):
+                if (data[col1, row] in mapping and
+                    mapping[data[col1, row]] != data[col2, row]):
+                    break
+                else:
+                    mapping[data[col1, row]] = data[col2, row]
+
+            else:
+                dupe_inds.append((col1, col2))
+    
+    return dupe_inds
 
