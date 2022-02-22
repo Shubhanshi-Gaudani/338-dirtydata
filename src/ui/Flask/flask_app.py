@@ -36,7 +36,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             start_processing()
-            return redirect(url_for('download_file', name=CLEAN_NAME)) 
+            return redirect(url_for('download_page')) 
     return render_template('home.html')
 
 @app.route('/config', methods=['GET', 'POST'])
@@ -48,13 +48,15 @@ def config():
         return redirect(url_for('upload_file'))
     return render_template('config.html')
 
+@app.route('/download', methods=['GET', 'POST'])
+def download_page():
+    if request.method == 'POST':
+        return redirect(url_for('download_file', name=CLEAN_NAME))
+    return render_template('download.html')
+    
 @app.route('/uploads/<name>')
 def download_file(name):
     return send_from_directory(app.config["UPLOAD_FOLDER"], name, as_attachment=True)
-
-@app.route('/downloads/<name>')
-def show_cleaned_file(name):
-    return render_template('download.html', name=name)
 
 @app.route("/about")
 def about():
