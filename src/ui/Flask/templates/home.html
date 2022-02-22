@@ -13,7 +13,7 @@
 
         <div id="config_div">
             <form method="GET" action="/config">
-                <input type="submit" id="gear" value = ⚙️>
+                <input type="image" id="gear" src="../static/gear.png" ><i class="bi bi-gear"></i> </input>
             </form>
         </div>
     <div>
@@ -23,7 +23,7 @@
         <br>
         <p> Click on the button below to upload your dataset and begin cleaning!</p>
         <br>
-
+        
         <form method=post enctype=multipart/form-data>
             <input type=file name=file>
             <input id = "upload_btn" type=submit value=Upload>

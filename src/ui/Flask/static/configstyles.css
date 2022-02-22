@@ -1,0 +1,29 @@
+div{
+    padding: 5px;
+}
+
+body{
+    margin: 20px
+}
+
+#submit_div{
+    margin-top: 10px;
+    
+}
+
+legend{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+input{
+    background-color: white;
+   color: black;
+   border: 2px solid #555555;
+   border-radius: 4px;
+}
+
+input:hover {
+    background-color: #555555;
+    color: white;
+  }
