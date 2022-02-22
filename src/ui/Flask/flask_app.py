@@ -52,6 +52,10 @@ def config():
 def download_file(name):
     return send_from_directory(app.config["UPLOAD_FOLDER"], name, as_attachment=True)
 
+@app.route('/downloads/<name>')
+def show_cleaned_file(name):
+    return render_template('download.html', name=name)
+
 @app.route("/about")
 def about():
     return "<h1>About Page</h1>"
