@@ -4,8 +4,8 @@ div{
 }
 
 img{
-   height: 80px;
-   width: 120px;
+   height: 130px;
+   width: 170px;
 }
 
 input {
@@ -21,10 +21,17 @@ input {
  }
 
  #gear:hover {
-   background-color: #555555;
-   color: white;
+   background-color: #ececec;
+   /* color: white; */
    transform: rotate(360deg);
 
+ }
+
+
+ #gear{
+   border: 2px solid rgb(255, 255, 255);
+   border-radius: 8px;
+   padding: 10px;
  }
 
 #dvCSV{
