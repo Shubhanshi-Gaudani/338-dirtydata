@@ -25,24 +25,23 @@ def test_dirty_cells():
                            [2, 4],
                            [2, 6],
                            [2, 8],
-                           [3, 3],
                            [5, 3],
                            [6, 3],
                            [6, 6],
-                           [8, 1], 
+                           [8, 3],
                            [8, 6]])
-    right_reasons = [MissingData, 
+    right_reasons = [MissingData,
                      NumOutlier,
                      NumOutlier,
                      HasTypo,
                      IsIncorrectDataType,
                      WrongCategory,
-                     NumOutlier,
                      IsNA,
                      MissingData,
                      NumOutlier,
-                     HasTypo,
+                     IsNA,
                      NumOutlier]
+    assert right_inds.shape[0] == len(right_reasons)
     assert np.all(inds == right_inds), (inds.shape[0], right_inds.shape[0])
     for i in range(len(right_reasons)):
         if reasons[i] != right_reasons[i]:

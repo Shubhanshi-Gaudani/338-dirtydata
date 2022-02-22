@@ -3,7 +3,7 @@ import numpy as np
 from src.utilities import can_be_float, float_is_int
 from .rule_base import RuleBaseClass
 
-_QUANT_SCALE = 2
+_QUANT_SCALE = 1.5
 
 def _num_is_outlier(x, perc25, perc75, quant_scale = _QUANT_SCALE):
     """Takes a number and returns if it's an outlier."""
@@ -28,9 +28,11 @@ class NumOutlier (RuleBaseClass):
             if float_is_int(f * 10):
                 return str(round(f * 10))
             return str(f * 10)
+
         with_dec = f'0.{f}'
         if can_be_float(with_dec) and not self.is_dirty(with_dec, col):
             return with_dec
+            
         q = col.quantile(0.5)
         if float_is_int(q):
             return str(round(q))

@@ -71,6 +71,7 @@ def start_processing():
     mat = csvToMatrix(pth)
     os.remove(pth)
     inds, reasons, cols, new_mat = get_dirty(mat)
+    print(inds, reasons)
     save_clean(new_mat, inds, reasons, cols)
     print('Processing complete.')
 

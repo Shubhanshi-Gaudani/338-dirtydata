@@ -17,6 +17,16 @@ def test_outliers():
     assert rule.is_dirty('-10', c)
     assert not rule.is_dirty('-1', c)
 
+    c = Column(np.array(['202500',
+                         '357286',
+                         '500000',
+                         '400000',
+                         'na',
+                         '',
+                         '400000',
+                         '5']))
+    assert rule.is_dirty('5', c), c._quants
+
 def test_na():
     c = _def_col()
     rule = IsNA()

@@ -9,7 +9,8 @@ class HasTypo (RuleBaseClass):
 
     def _typo_word(self, s):
         """Returns whether s is likely to be a typo."""
-        return self._clean_word(s) != s
+        w = ''.join(filter(lambda c: c.isalnum(), s))
+        return self._clean_word(w).lower() != w.lower()
 
     def _clean_word(self, s):
         """Returns the most likely word the user meant based on s."""
