@@ -35,7 +35,6 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            start_processing()
             return redirect(url_for('download_page')) 
     return render_template('home.html')
 
@@ -50,6 +49,7 @@ def config():
 
 @app.route('/download', methods=['GET', 'POST'])
 def download_page():
+    start_processing()
     if request.method == 'POST':
         return redirect(url_for('download_file', name=CLEAN_NAME))
     return render_template('download.html')
