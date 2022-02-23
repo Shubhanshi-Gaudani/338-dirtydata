@@ -1,6 +1,7 @@
-div{
+#config_div{
    text-align: center; 
    margin-top: 100px;
+   margin-bottom:50px;
 }
 
 img{
@@ -26,7 +27,10 @@ input {
    transform: rotate(360deg);
 
  }
+div{
+   text-align: center; 
 
+}
 
  #gear{
    border: 2px solid rgb(255, 255, 255);
@@ -39,9 +43,10 @@ input {
 }
 
 #logo_button{
-   height: 80px;
-   width: 120px;
+   height: 130px;
+   width: 170px;
    border-color: white;
+   margin-top: 250px;
 }
 
 th, td {
@@ -57,10 +62,14 @@ th, td {
  #config_div{
    text-align: right;
    margin-right: 75px;
-   padding: 0%;
  }
 
  #gear{
     font-size: 50px;
     
+ }
+
+ #download_btn:hover{
+   background-color: #555555;
+   color: white;
  }
