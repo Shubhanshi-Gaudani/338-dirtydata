@@ -16,17 +16,33 @@ def csvToMatrix(csv_name, delimiter = ','):
     mat = []
     with open(csv_name, 'r') as sheet:
         for line in sheet:
+            last_quote = -1
             row = []
             cells = line.replace('\n', '').split(delimiter)
-            row.append(cells[0])
-            for cell in range(1, len(cells)):
-                if (len(cells[cell]) and
-                    len(cells[cell - 1]) and
-                    cells[cell][-1] == '"' and 
-                    cells[cell - 1][0] == '"'):
-                    row[-1] += cells[cell]
+            for cell in range(len(cells)):
+                if (last_quote >= 0 and 
+                    len(cells[cell]) and
+                    cells[cell][-1] == '"'):
+                    new_row = row[:last_quote]
+                    new_row.append(delimiter.join(row[last_quote:cell + 1]))
+                    row = new_row
+                    last_quote = -1
                 else:
+                    if (last_quote < 0 and
+                        len(cells[cell]) and
+                        cells[cell][0] == '"'):
+                        last_quote = cell
                     row.append(cells[cell])
+                    
+            # row.append(cells[0])
+            # for cell in range(1, len(cells)):
+            #     if (len(cells[cell]) and
+            #         len(cells[cell - 1]) and
+            #         cells[cell][-1] == '"' and 
+            #         cells[cell - 1][0] == '"'):
+            #         row[-1] += cells[cell]
+            #     else:
+            #         row.append(cells[cell])
             mat.append(row)
             if len(mat[-1]) < len(mat[0]):
                 for _ in range(len(mat[0]) - len(mat[-1])):

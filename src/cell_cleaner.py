@@ -1,6 +1,9 @@
 import numpy as np
 from .csv_to_matrix import has_header
 from .utilities import arr_to_set
+import multiprocessing as mp
+
+_NPROCS = 8
 
 def clean_cell(inds, sheet, col, reason, all_dirty):
     """Uses a dumber but simpler model for imputing cell type.
@@ -36,12 +39,10 @@ def clean_all_cells(mat, inds, reasons, cols):
     skip = has_header(mat)
     mat2 = mat[skip:]
     real_inds = np.array([ [inds[i, 0] - skip, inds[i, 1]] for i in range(inds.shape[0]) ])
-    suggs = np.empty(inds.shape[0], dtype = 'U128')
     s_inds = arr_to_set(inds)
+    nprocs = min(_NPROCS, inds.shape[0])
+    args = []
     for i in range(inds.shape[0]):
-        suggs[i] = clean_cell(real_inds[i], 
-                              mat2, 
-                              cols[real_inds[i, 1]], 
-                              reasons[i],
-                              s_inds)
-    return suggs
+        args.append((real_inds[i], mat2, cols[real_inds[i, 1]], reasons[i], s_inds))
+    with mp.Pool(nprocs) as pool:
+        return np.array(pool.starmap(clean_cell, args), dtype = 'U128')
