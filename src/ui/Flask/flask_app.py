@@ -45,6 +45,8 @@ def config():
         with open(data_path() + '/' + custom_config_name(), 'w') as config:
             config.write('\n'.join(configs))
         return redirect(url_for('upload_file'))
+    if request.method == 'GET':
+        if os.path.exists(CLEAN_PATH): os.remove(CLEAN_PATH)
     return render_template('config.html')
 
 @app.route('/download', methods=['GET', 'POST'])
