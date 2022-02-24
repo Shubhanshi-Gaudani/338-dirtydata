@@ -1,11 +1,9 @@
 from src import all_dirty_cells, has_header, duplicate_columns, duplicate_row, clean_all_cells
-from .path_utils import config_file_path, data_path
+from .path_utils import config_file_path, CLEAN_NAME, CLEAN_PATH
 import numpy as np
 from src import IsNA, IsIncorrectDataType, MissingData, NumOutlier, WrongCategory, HasTypo, EmailChecker
 from src import _ALL_PREDS
 
-CLEAN_NAME = 'cleaned.csv'
-CLEAN_PATH = data_path() + '/' + CLEAN_NAME
 DUP_ROW_IND = 0
 DUP_COL_IND = 1
 
@@ -111,6 +109,6 @@ def get_preds():
     """Returns the user's selected predicates."""
     with open(config_file_path(), 'r') as config:
         lines = config.readlines()
-        for line in range(len(lines)):
-            lines[line] = lines[line].replace('\n', '')
-        return pred_names_to_objs(lines)
+    for line in range(len(lines)):
+        lines[line] = lines[line].replace('\n', '')
+    return pred_names_to_objs(lines)

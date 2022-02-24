@@ -9,18 +9,19 @@ _NPROCS = 8
 # predicates are called in order so order matters
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
-def analyze_cols(csv_mat, parallel = True):
+def analyze_cols(csv_mat, parallel = True, header = 1):
     """Analyzes each column into Column objects.
     
     Args:
         csv_mat (np.array) : a 2D array of strings to analyze
         parallel (bool) : whether to analyze in parallel. Default is True
+        header (int) : how many rows the original matrix in the header. Default is 1
 
     Returns:
         cols (list) : a list of Column objects
     """
     mat_t = csv_mat.T
-    args = [ (mat_t[i], i) for i in range(mat_t.shape[0]) ]
+    args = [ (mat_t[i], i, header) for i in range(mat_t.shape[0]) ]
     if parallel:
         with mp.Pool(min(_NPROCS, mat_t.shape[0])) as pool:
             return pool.starmap(Column, args)

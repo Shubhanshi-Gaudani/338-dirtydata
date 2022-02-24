@@ -54,10 +54,11 @@ def config():
 
 @app.route('/download', methods=['GET', 'POST'])
 def download_page():
-    start_processing()
     if request.method == 'POST':
         return redirect(url_for('download_file', name=CLEAN_NAME))
-    return render_template('download.html')
+    else:
+        start_processing()
+        return render_template('download.html')
     
 @app.route('/uploads/<name>')
 def download_file(name):
@@ -73,8 +74,8 @@ def start_processing():
     if pth == '':
         flash('No selected file')
         return redirect(request.url)
-    print(pth)
     mat = csvToMatrix(pth)
+    print(f'Deleting {pth}')
     os.remove(pth)
     inds, reasons, cols, new_mat = get_dirty(mat)
     save_clean(new_mat, inds, reasons, cols)
