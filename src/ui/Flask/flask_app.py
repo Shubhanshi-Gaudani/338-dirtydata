@@ -86,4 +86,4 @@ def open_browser():
 def launch_server():
     """Launches the server UI."""
     Timer(1, open_browser).start()
-    app.run(debug=True, use_reloader=False, port = 5000)
+    app.run(debug=True, use_reloader=False, port = 5000, threaded=True)
