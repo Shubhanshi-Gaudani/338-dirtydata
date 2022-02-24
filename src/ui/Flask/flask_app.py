@@ -7,6 +7,8 @@ from flask import send_from_directory
 from werkzeug.utils import secure_filename
 import numpy as np
 from .integration import CLEAN_PATH, CLEAN_NAME, get_dirty, save_clean
+import webbrowser
+from threading import Timer
 
 UPLOAD_FOLDER = data_path()
 
@@ -77,6 +79,10 @@ def start_processing():
     save_clean(new_mat, inds, reasons, cols)
     print('Processing complete.')
 
+def open_browser():
+    webbrowser.open_new('http://127.0.0.1:5000/')
+
 def launch_server():
     """Launches the server UI."""
-    app.run(debug=True, use_reloader=False)
+    Timer(1, open_browser).start()
+    app.run(debug=True, use_reloader=False, port = 5000)
