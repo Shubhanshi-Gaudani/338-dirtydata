@@ -2,7 +2,7 @@ from src import clean_cell, csvToMatrix, all_dirty_cells, has_header, arr_to_set
 import numpy as np
 
 def test_dumb_cleaner():
-    mat = csvToMatrix('tests/test_sheet_1.csv')
+    mat = csvToMatrix('test_sheets/test_sheet_1.csv')
     assert has_header(mat) == 1
     inds, reasons, cols = all_dirty_cells(mat, return_cols = True, header = 1)
     s_inds = arr_to_set(inds)

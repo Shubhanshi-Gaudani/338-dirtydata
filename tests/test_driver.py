@@ -5,7 +5,7 @@ import numpy as np
 ENABLE_NFL = False
 
 def test_dirty_cells():
-    mat = csvToMatrix("tests/test_sheet_1.csv")
+    mat = csvToMatrix("test_sheets/test_sheet_1.csv")
     has_zero = False
     for row in mat:
         for col in row:
@@ -57,6 +57,6 @@ def test_dirty_cells():
     
 def test_with_nfl():
     if ENABLE_NFL:
-        mat = csvToMatrix('tests/nfl_data.txt')
+        mat = csvToMatrix('test_sheets/nfl_data.txt')
         inds, reasons = all_dirty_cells(mat, parallel = False)
     

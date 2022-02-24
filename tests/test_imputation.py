@@ -2,7 +2,7 @@ from src import KNearestNeighbors, csvToMatrix
 import numpy as np
 
 def test_knn():
-    mat = csvToMatrix('tests/test_sheet_1.csv')[1:]
+    mat = csvToMatrix('test_sheets/test_sheet_1.csv')[1:]
     posed = mat.T.tolist()
     for col in range(len(posed) - 1):
         feat_list = posed[:col] + posed[col + 1:]

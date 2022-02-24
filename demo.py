@@ -1,7 +1,7 @@
 from src import all_dirty_cells, user_message, csvToMatrix, clean_cell, arr_to_set
 
 if __name__ == '__main__':
-    mat = csvToMatrix('tests/test_sheet_1.csv')
+    mat = csvToMatrix('test_sheets/test_sheet_1.csv')
     inds, reasons, cols = all_dirty_cells(mat, header = 1, parallel = False, return_cols = True)
     s_inds = arr_to_set(inds)
     for i in range(inds.shape[0]):
