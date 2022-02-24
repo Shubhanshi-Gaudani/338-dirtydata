@@ -21,8 +21,8 @@ def data_file_path():
     """Returns the path to the user's file or an empty string if it has not been uploaded."""
     root_path = data_path()
     files = listdir(root_path)
-    config_files = [root_path + '/' + def_config_name(),
-                    root_path + '/' + custom_config_name()]
+    config_files = [def_config_name(),
+                    custom_config_name()]
     for f in files:
         if (allowed_file(f) and 
             not f in config_files):

@@ -24,14 +24,15 @@ def csvToMatrix(csv_name, delimiter = ','):
                     len(cells[cell - 1]) and
                     cells[cell][-1] == '"' and 
                     cells[cell - 1][0] == '"'):
-                    row[cell - 1] += cells[cell]
+                    row[-1] += cells[cell]
                 else:
                     row.append(cells[cell])
             mat.append(row)
-            if len(mat[-1]) != len(mat[0]):
-                raise ValueError(f'row {len(mat)} of the spreadsheet has ' +
-                                 f'length {len(mat[-1])} instead of the correct ' +
-                                 f'length {len(mat[0])}.')
+            if len(mat[-1]) < len(mat[0]):
+                for _ in range(len(mat[0]) - len(mat[-1])):
+                    mat[-1].append('')
+            elif len(mat[-1]) > len(mat[0]):
+                mat[-1] = mat[-1][:len(mat[0])]
     return np.array(mat, dtype = 'U128')
 
 def has_header(mat):
