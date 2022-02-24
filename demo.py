@@ -1,9 +1,9 @@
-from src import all_dirty_cells, user_message, csvToMatrix, clean_cell
+from src import all_dirty_cells, user_message, csvToMatrix, clean_cell, arr_to_set
 
 if __name__ == '__main__':
     mat = csvToMatrix('tests/test_sheet_1.csv')
     inds, reasons, cols = all_dirty_cells(mat, header = 1, parallel = False, return_cols = True)
-    s_inds = set(map(tuple, inds))
+    s_inds = arr_to_set(inds)
     for i in range(inds.shape[0]):
         true_inds = tuple(inds[i])
         print(f'Dirty cell found in cell {true_inds[1] + 1} of row \n{mat[true_inds[0]]}\n' +

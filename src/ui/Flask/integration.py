@@ -1,4 +1,4 @@
-from src import all_dirty_cells, has_header, clean_cell, duplicate_columns, duplicate_row
+from src import all_dirty_cells, has_header, duplicate_columns, duplicate_row, clean_all_cells
 from .path_utils import config_file_path, data_path
 import numpy as np
 from src import IsNA, IsIncorrectDataType, MissingData, NumOutlier, WrongCategory, HasTypo, EmailChecker
@@ -69,14 +69,8 @@ def save_clean(mat, inds, reasons, cols):
     Returns:
         None
     """
-    s_inds = set(map(tuple, inds))
-    suggs = np.empty(inds.shape[0], dtype = 'U128')
+    suggs = clean_all_cells(mat, inds, reasons, cols)
     for i in range(suggs.shape[0]):
-        suggs[i] = clean_cell(inds[i],
-                              mat,
-                              cols[inds[i, 1]],
-                              reasons[i],
-                              s_inds)
         mat[tuple(inds[i])] = suggs[i]
 
     np.savetxt(CLEAN_PATH, 

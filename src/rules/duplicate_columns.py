@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+from src.utilities import arr_to_set
 
 def duplicate_columns(data):
     """Takes a whole dataset, returns which columns if any are redundant.

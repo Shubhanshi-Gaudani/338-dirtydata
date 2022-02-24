@@ -10,11 +10,11 @@ class KNearestNeighbors (MlBase):
         k (int) : how many neighbors to look at per row
         row_ind (int) : what index the target column is in
     """
-    def __init__(self, k, row_ind):
+    def __init__(self, k, col_ind):
         self.k = k
         self.features = None
         self.targets = None
-        self.row_ind = row_ind
+        self.col_ind = col_ind
 
     def fit(self, features, targets):
         self.features = features
@@ -30,7 +30,7 @@ class KNearestNeighbors (MlBase):
         return ''
 
     def _pred_one_row(self, row, all_dirty):
-        inds = filter(lambda i: (i, self.row_ind) not in all_dirty, 
+        inds = filter(lambda i: (i, self.col_ind) not in all_dirty, 
                       range(self.features.shape[0]))
         dists = sorted(inds,
                        key = lambda i: tolerant_euc(row, self.features[i]))

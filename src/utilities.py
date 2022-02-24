@@ -51,3 +51,14 @@ def float_is_int(f):
         is_int (bool) : whether the float is basically an integer
     """
     return np.isclose(f, round(f))
+
+def arr_to_set(arr):
+    """Turns an array into a set.
+    
+    Args:
+        arr (np.array) : the 2D array to convert
+
+    Returns:
+        s (set) : a set of tuples with the same elements as arr.
+    """
+    return set(map(tuple, arr))
