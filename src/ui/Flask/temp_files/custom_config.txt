@@ -1,9 +1,0 @@
-checkNA
-IsIncorrectDataType
-MissingData
-NumOutlier
-WrongCategory
-typo
-EmailChecking
-DuplicateRows
-DuplicateColumns
