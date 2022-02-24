@@ -21,6 +21,7 @@ app.config['SECRET_KEY'] = '0000'
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods =['GET', 'POST'] )
 def upload_file():
+    if os.path.exists(CLEAN_PATH): os.remove(CLEAN_PATH)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -73,11 +74,9 @@ def start_processing():
     mat = csvToMatrix(pth)
     os.remove(pth)
     inds, reasons, cols, new_mat = get_dirty(mat)
-    print(inds, reasons)
     save_clean(new_mat, inds, reasons, cols)
     print('Processing complete.')
 
 def launch_server():
     """Launches the server UI."""
-    if os.path.exists(CLEAN_PATH): os.remove(CLEAN_PATH)
     app.run(debug=True, use_reloader=False)

@@ -34,5 +34,5 @@ class KNearestNeighbors (MlBase):
                       range(self.features.shape[0]))
         dists = sorted(inds,
                        key = lambda i: tolerant_euc(row, self.features[i]))
-        k_targs = dists[1:self.k + 1]
+        k_targs = dists[1:min(self.k + 1, len(dists))]
         return self._mode(self.targets[k_targs])
