@@ -69,12 +69,14 @@ def save_clean(mat, inds, reasons, cols):
     Returns:
         None
     """
+    s_inds = set(map(tuple, inds))
     suggs = np.empty(inds.shape[0], dtype = 'U128')
     for i in range(suggs.shape[0]):
         suggs[i] = clean_cell(inds[i],
                               mat,
                               cols[inds[i, 1]],
-                              reasons[i])
+                              reasons[i],
+                              s_inds)
         mat[tuple(inds[i])] = suggs[i]
 
     np.savetxt(CLEAN_PATH, 

@@ -10,11 +10,12 @@ from .imputation import KNearestNeighbors
 _COUNT_PER_100_LINES = 3
 
 class Column:
-    def __init__(self, col):
+    def __init__(self, col, col_ind):
         """A container class for a bunch of information specific to a column of data.
         
         Args:
             col (np.array) : a numpy array of strings containing the data
+            col_ind (int) : the index of the column in the spreadsheet
         """
         self.length = col.shape[0]
         self.str_els = self.get_str_els(col)
@@ -28,6 +29,7 @@ class Column:
         self.mode = self.get_mode(col)
         self.column_type = self.get_col_type(col)
         self.predictor = None
+        self.col_ind = col_ind
 
     def get_counts_over_thresh(self, col):
         """Returns the number of elements in col with more than _COUNTS_PER_100_LINES occurences per 100 lines.
@@ -215,18 +217,19 @@ class Column:
 
         return res
 
-    def generic_clean(self, inds, sheet):
+    def generic_clean(self, inds, sheet, all_dirty):
         """Returns a reason-independent prediction for what go in the cell at inds.
         
         Args:
             inds (np.array) : a [y, x] pair indicating which cell to clean
             sheet (np.array) : a 2D matrix
+            all_dirty (np.array) : an array of all [y, x] pairs with dirty cells
 
         Returns:
             pred (str) : what should go in that cell
         """
         if self.predictor is None:
-            self.predictor = KNearestNeighbors(5)
+            self.predictor = KNearestNeighbors(5, self.col_ind)
             posed = sheet.T.tolist()
             feats = posed[inds[1]:]
             if inds[1] < sheet.shape[1] - 1:
@@ -235,4 +238,4 @@ class Column:
             targs = np.array(posed[inds[1]], dtype = 'U128')
             self.predictor.fit(feats, targs)
 
-        return str(self.predictor._pred_one_row(sheet[inds[0]]))
+        return str(self.predictor._pred_one_row(sheet[inds[0]], all_dirty))

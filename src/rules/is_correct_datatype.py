@@ -29,7 +29,7 @@ class IsIncorrectDataType (RuleBaseClass):
         return (f'The cell {cell_str} was interpreted as {interp_type}, in contrast ' +
                 f"to the column's most common datatype, {true_type}.")
 
-    def clean(self, inds, sheet, col):
+    def clean(self, inds, sheet, col, all_dirty):
         if (col.column_type == 'int' or 
             col.column_type == 'float'):
             tup_inds = tuple(inds)
@@ -48,4 +48,4 @@ class IsIncorrectDataType (RuleBaseClass):
                 if can_be_float(w):
                     return w
 
-        return col.generic_clean(inds, sheet)
+        return col.generic_clean(inds, sheet, all_dirty)

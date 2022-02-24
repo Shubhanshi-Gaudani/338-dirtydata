@@ -19,10 +19,12 @@ def analyze_cols(csv_mat, parallel = True):
     Returns:
         cols (list) : a list of Column objects
     """
+    mat_t = csv_mat.T
+    args = [ (mat_t[i], i) for i in range(mat_t.shape[0]) ]
     if parallel:
-        with mp.Pool(min(_NPROCS, csv_mat.shape[1])) as pool:
-            return pool.map(Column, csv_mat.T)
-    return list(map(Column, csv_mat.T))
+        with mp.Pool(min(_NPROCS, mat_t.shape[0])) as pool:
+            return pool.starmap(Column, args)
+    return list(starmap(Column, args))
 
 def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None, return_cols = False):
     """Uses each predicate rule to find all dirty cells.

@@ -27,7 +27,7 @@ class HasTypo (RuleBaseClass):
                 return f'{word} appears to be a typo. Did you mean {self._clean_word(word)}?'
         raise ValueError(f'No typo present in {cell_str}.')
 
-    def clean(self, inds, sheet, col):
+    def clean(self, inds, sheet, col, all_dirty):
         words = sheet[tuple(inds)].split(' ')
         for i in range(len(words)):
             if self._typo_word(words[i]):

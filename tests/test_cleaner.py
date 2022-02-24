@@ -6,10 +6,12 @@ def test_dumb_cleaner():
     assert has_header(mat) == 1
     mat = mat[1:]
     inds, reasons, cols = all_dirty_cells(mat, return_cols = True)
+    s_inds = set(map(tuple, inds))
     for pair in range(inds.shape[0]):
         sugg = clean_cell(inds[pair],
                           mat, 
                           cols[inds[pair, 1]], 
-                          reasons[pair])
+                          reasons[pair],
+                          s_inds)
         assert type(sugg) == str
         assert not reasons[pair]().is_dirty(sugg, cols[inds[pair, 1]])

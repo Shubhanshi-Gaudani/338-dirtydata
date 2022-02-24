@@ -22,7 +22,7 @@ class NumOutlier (RuleBaseClass):
         above = 'above' if float(cell_str) > med else 'below'
         return f'This cell was way {above} the median, which was {med}.'
 
-    def clean(self, inds, sheet, col):
+    def clean(self, inds, sheet, col, all_dirty):
         f = float(sheet[tuple(inds)])
         if not self.is_dirty(str(f * 10), col):
             if float_is_int(f * 10):

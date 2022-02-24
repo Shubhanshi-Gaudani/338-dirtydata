@@ -1,8 +1,7 @@
 import numpy as np
-from .rules import HasTypo
 from .csv_to_matrix import has_header
 
-def clean_cell(inds, sheet, col, reason):
+def clean_cell(inds, sheet, col, reason, all_dirty):
     """Uses a dumber but simpler model for imputing cell type.
     
     Args:
@@ -16,6 +15,6 @@ def clean_cell(inds, sheet, col, reason):
     """
     skip = has_header(sheet)
     sheet1 = sheet[skip:]
-    real_inds = np.array([inds[0] - 1, inds[1]])
-    return reason().clean(real_inds, sheet1, col)
+    real_inds = np.array([inds[0] - skip, inds[1]])
+    return reason().clean(real_inds, sheet1, col, all_dirty)
 
