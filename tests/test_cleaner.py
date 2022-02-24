@@ -7,10 +7,11 @@ def test_dumb_cleaner():
     inds, reasons, cols = all_dirty_cells(mat, return_cols = True, header = 1)
     s_inds = arr_to_set(inds)
     suggs = clean_all_cells(mat, inds, reasons, cols)
+    real_inds = np.array([ [inds[i, 0] - 1, inds[i, 1]] for i in range(inds.shape[0]) ])
     for pair in range(inds.shape[0]):
-        sugg = clean_cell(inds[pair],
-                          mat, 
-                          cols[inds[pair, 1]], 
+        sugg = clean_cell(real_inds[pair],
+                          mat[1:], 
+                          cols[real_inds[pair, 1]], 
                           reasons[pair],
                           s_inds)
         assert type(sugg) == str
