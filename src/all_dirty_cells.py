@@ -22,9 +22,10 @@ def analyze_cols(csv_mat, parallel = True, header = 1):
     """
     mat_t = csv_mat.T
     args = [ (mat_t[i], i, header) for i in range(mat_t.shape[0]) ]
+    nprocs = min(_NPROCS, mat_t.shape[0])
     if parallel:
-        with mp.Pool(min(_NPROCS, mat_t.shape[0])) as pool:
-            return pool.starmap(Column, args)
+        with mp.Pool(nprocs) as pool:
+            return pool.starmap(Column, args, chunksize = mat_t.shape[0] // nprocs)
     return list(starmap(Column, args))
 
 def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None, return_cols = False):
@@ -52,10 +53,14 @@ def all_dirty_cells(csv_mat, header = 0, parallel = True, preds = None, return_c
     columns = analyze_cols(csv_mat, parallel = parallel)
 
     args = [ (row, columns, preds) for row in csv_mat ]
+    nprocs = min(_NPROCS, csv_mat.shape[0])
 
     if parallel:
-        with mp.Pool(min(_NPROCS, csv_mat.shape[0])) as pool:
-            is_dirty = np.array(pool.starmap(_dirty_row, args), dtype = object)
+        with mp.Pool(nprocs) as pool:
+            is_dirty = np.array(pool.starmap(_dirty_row, 
+                                             args, 
+                                             chunksize = csv_mat.shape[0] // nprocs), 
+                                dtype = object)
     else:
         is_dirty = np.array(list(starmap(_dirty_row, args)), dtype = object)
 

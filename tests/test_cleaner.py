@@ -6,7 +6,7 @@ def test_dumb_cleaner():
     assert has_header(mat) == 1
     inds, reasons, cols = all_dirty_cells(mat, return_cols = True, header = 1)
     s_inds = arr_to_set(inds)
-    suggs = clean_all_cells(mat, inds, reasons, cols)
+    suggs = clean_all_cells(mat, inds, reasons, cols, num_dots = 0)
     real_inds = np.array([ [inds[i, 0] - 1, inds[i, 1]] for i in range(inds.shape[0]) ])
     for pair in range(inds.shape[0]):
         sugg = clean_cell(real_inds[pair],

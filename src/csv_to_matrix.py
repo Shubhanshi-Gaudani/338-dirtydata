@@ -34,10 +34,9 @@ def csvToMatrix(csv_name, delimiter = ','):
                 cell_ind += 1
                     
             mat.append(row)
-            if len(mat[-1]) < len(mat[0]):
-                for _ in range(len(mat[0]) - len(mat[-1])):
-                    mat[-1].append('')
-            elif len(mat[-1]) > len(mat[0]):
+            while len(mat[-1]) < len(mat[0]):
+                mat[-1].append('')
+            if len(mat[-1]) > len(mat[0]):
                 mat[-1] = mat[-1][:len(mat[0])]
     return np.array(mat, dtype = 'U128')
 

@@ -28,8 +28,8 @@ def data_file_path():
                     custom_config_name()]
     for f in files:
         if (allowed_file(f) and 
-            not f in config_files):
-            return data_path() + '/' + f
+            f not in config_files):
+            return root_path + '/' + f
     return ''
 
 def def_config_name():

@@ -48,8 +48,6 @@ def config():
         with open(data_path() + '/' + custom_config_name(), 'w') as config:
             config.write('\n'.join(configs))
         return redirect(url_for('upload_file'))
-    # if request.method == 'GET':
-    #     if os.path.exists(CLEAN_PATH): os.remove(CLEAN_PATH)
     return render_template('config.html')
 
 @app.route('/download', methods=['GET', 'POST'])
@@ -74,10 +72,12 @@ def start_processing():
     if pth == '':
         flash('No selected file')
         return redirect(request.url)
+    print(f'Reading {pth}')
     mat = csvToMatrix(pth)
-    print(f'Deleting {pth}')
     os.remove(pth)
+    print(f'Finding dirty cells in sheet with shape {mat.shape}')
     inds, reasons, cols, new_mat = get_dirty(mat)
+    print(f'Cleaning {inds.shape[0]} cells')
     save_clean(new_mat, inds, reasons, cols)
     print('Processing complete.')
 
