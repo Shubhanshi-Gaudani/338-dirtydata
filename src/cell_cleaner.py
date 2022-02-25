@@ -56,14 +56,14 @@ def clean_all_cells(mat, inds, reasons, cols, nprocs = 1, num_dots = 20):
                             dtype = 'U128')
 
     res = np.empty(len(args), dtype = 'U128')
-    per_dot = len(args) // num_dots if num_dots else len(args) + 1
+    per_dot = len(args) // num_dots if num_dots else 0
     dot_str = f'|{" " * num_dots}|'
     dot_count = 0
     for i in range(len(args)):
-        if i % per_dot == 0:
+        if per_dot and i % per_dot == 0:
             print(dot_str, end = '\r')
             dot_count += 1
             dot_str = f'|{"." * dot_count}{" " * (num_dots - dot_count)}|'
         res[i] = clean_cell(*args[i])
-    print()
+    if num_dots: print()
     return res

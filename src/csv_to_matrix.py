@@ -9,37 +9,12 @@ def csvToMatrix(csv_name, delimiter = ','):
     Returns:
         result_mat (2d array) : Matrix version of the csv file
     """
-    # df = pd.read_csv(csv_name, dtype = str)
-    # result_mat = df.to_numpy(dtype = str)
-    # return result_mat
-    # unfortunately pandas does not handle empty cells well
-    mat = []
-    with open(csv_name, 'r') as sheet:
-        for line in sheet:
-            row = []
-            cells = line.replace('\n', '').split(delimiter)
-            cell_ind = 0
-            while cell_ind < len(cells):
-                if len(cells[cell_ind]) and cells[cell_ind][0] == '"':
-                    since_quote = []
-                    while (cell_ind < len(cells) - 1 and 
-                           (len(cells[cell_ind]) == 0 or 
-                            cells[cell_ind][-1] != '"')):
-                        since_quote.append(cells[cell_ind])
-                        cell_ind += 1
-                    since_quote.append(cells[cell_ind])
-                    row.append(delimiter.join(since_quote))
-                else:
-                    row.append(cells[cell_ind])
-                cell_ind += 1
-                    
-            mat.append(row)
-            while len(mat[-1]) < len(mat[0]):
-                mat[-1].append('')
-            if len(mat[-1]) > len(mat[0]):
-                mat[-1] = mat[-1][:len(mat[0])]
-    return np.array(mat, dtype = 'U128')
-
+    df = pd.read_csv(csv_name, dtype = str, delimiter = delimiter)
+    res = np.empty((df.shape[0] + 1, df.shape[1]), dtype = 'U128')
+    res[0] = df.columns
+    res[1:] = df.to_numpy(dtype = 'U128', na_value = 'NA')
+    return res
+    
 def has_header(mat):
     """Determines whether the spreadsheet has a header.
     

@@ -6,16 +6,16 @@ ENABLE_NFL = False
 
 def test_dirty_cells():
     mat = csvToMatrix("test_sheets/test_sheet_1.csv")
-    has_zero = False
-    for row in mat:
-        for col in row:
-            if col == '':
-                has_zero = True
-                break
-        else:
-            continue
-        break
-    assert has_zero
+    # has_zero = False
+    # for row in mat:
+    #     for col in row:
+    #         if col == '':
+    #             has_zero = True
+    #             break
+    #     else:
+    #         continue
+    #     break
+    # assert has_zero
 
     inds, reasons = all_dirty_cells(mat, 
                                     header = 1)
@@ -30,14 +30,14 @@ def test_dirty_cells():
                            [6, 6],
                            [8, 3],
                            [8, 6]])
-    right_reasons = [MissingData,
+    right_reasons = [IsNA,
                      NumOutlier,
                      NumOutlier,
                      HasTypo,
                      IsIncorrectDataType,
                      WrongCategory,
                      IsNA,
-                     MissingData,
+                     IsNA,
                      NumOutlier,
                      IsNA,
                      NumOutlier]
