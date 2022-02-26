@@ -39,7 +39,8 @@ class WrongCategory (RuleBaseClass):
         tokens = nlp(words)
 
         for token in tokens:
-            if cur_tok.similarity(token) > max_sim:
-                max_sim = cur_tok.similarity(token)
+            sim = cur_tok.similarity(token)
+            if sim > max_sim:
+                max_sim = sim
                 best_guess = token.text
         return best_guess
