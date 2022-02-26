@@ -70,6 +70,14 @@ def save_clean(mat, inds, reasons, cols):
     suggs = clean_all_cells(mat, inds, reasons, cols)
     for i in range(suggs.shape[0]):
         mat[tuple(inds[i])] = suggs[i]
+    
+    escape_chars = {',', '\n', '"', '\t'}
+    for y in range(mat.shape[0]):
+        for x in range(mat.shape[1]):
+            for char in mat[y, x]:
+                if char in escape_chars:
+                    mat[y, x] = f'"{mat[y, x]}"'
+                    break
 
     np.savetxt(CLEAN_PATH, 
                mat, 
