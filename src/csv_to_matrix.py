@@ -4,8 +4,10 @@ from .utilities import can_be_float
 
 def csvToMatrix(csv_name, delimiter = ','):
     """Takes the name of the csv file and returns the 2D matrix version of the file.
+
     Args:
         csv_name (str) : the name of the csv file
+        
     Returns:
         result_mat (2d array) : Matrix version of the csv file
     """
@@ -14,7 +16,7 @@ def csvToMatrix(csv_name, delimiter = ','):
     res[0] = df.columns
     res[1:] = df.to_numpy(dtype = 'U128', na_value = 'NA')
     return res
-    
+
 def has_header(mat):
     """Determines whether the spreadsheet has a header.
     
