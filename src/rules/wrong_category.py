@@ -31,8 +31,9 @@ class WrongCategory (RuleBaseClass):
         max_sim = 0
         best_guess = word
         words = ""
+
         for i, (j,k) in enumerate(dict.items()):
-            if k >=  _COUNT_PER_100_LINES + 1:
+            if k >=  _COUNT_PER_100_LINES:
                 words = words + " " + j
       
         tokens = nlp(words)
@@ -42,4 +43,3 @@ class WrongCategory (RuleBaseClass):
                 max_sim = cur_tok.similarity(token)
                 best_guess = token.text
         return best_guess
-        # https://www.geeksforgeeks.org/python-word-similarity-using-spacy/
