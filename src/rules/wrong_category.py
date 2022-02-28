@@ -1,7 +1,5 @@
 import numpy as np
-import spacy
 from .rule_base import RuleBaseClass
-  
 import en_core_web_sm
 nlp = en_core_web_sm.load()
 
@@ -12,7 +10,7 @@ class WrongCategory (RuleBaseClass):
     """Checks if a cell is different from the most common categories."""
     def is_dirty(self, cell_str, col):
         counts = col.by_count[cell_str]
-        cats = col.counts_over_thresh
+        cats = col.strs_over_thresh.shape[0]
         if col.length > 100:
             per_100 = lambda n: 100 * n / col.length 
             counts = per_100(counts)
@@ -25,22 +23,7 @@ class WrongCategory (RuleBaseClass):
                 f'{cell_str} is not one of them.')
 
     def clean(self, inds, sheet, col, all_dirty):
-        dict = col.by_count
-        word = sheet[tuple(inds)]
-        cur_tok = nlp(str(word))
-        max_sim = 0
-        best_guess = word
-        words = ""
+        cur_tok = nlp(str(sheet[tuple(inds)]))
+        tokens = nlp(' '.join(col.strs_over_thresh))
 
-        for i, (j,k) in enumerate(dict.items()):
-            if k >=  _COUNT_PER_100_LINES:
-                words = words + " " + j
-      
-        tokens = nlp(words)
-
-        for token in tokens:
-            sim = cur_tok.similarity(token)
-            if sim > max_sim:
-                max_sim = sim
-                best_guess = token.text
-        return best_guess
+        return max(tokens, key = lambda t: cur_tok.similarity(t)).text

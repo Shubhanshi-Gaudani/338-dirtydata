@@ -64,6 +64,7 @@ def clean_all_cells(mat, inds, reasons, cols, nprocs = 1, num_dots = 20):
             print(dot_str, end = '\r')
             dot_count += 1
             dot_str = f'|{"." * dot_count}{" " * (num_dots - dot_count)}|'
+            
         res[i] = clean_cell(*args[i])
     if num_dots: print()
     return res

@@ -7,7 +7,7 @@ from .rules import IsNA, EmailChecker
 from Levenshtein import distance
 from .imputation import KNearestNeighbors
 
-_COUNT_PER_100_LINES = 3
+_COUNT_PER_100_LINES = 2
 
 class Column:
     def __init__(self, col, col_ind, header):
@@ -22,7 +22,7 @@ class Column:
         self.str_els = self.get_str_els(col)
         self.num_els = self.get_num_els(col)
         self.by_count = self.get_by_count(col)
-        self.counts_over_thresh = self.get_counts_over_thresh(col)
+        self.strs_over_thresh = self.get_strs_over_thresh(col)
         self.mean = self.get_mean(col)
         self.stddev = self.get_stddev(col)
         self._quants = self.get_quants(col)
@@ -33,22 +33,16 @@ class Column:
         self.col_ind = col_ind
         self.header = header
 
-    def get_counts_over_thresh(self, col):
-        """Returns the number of elements in col with more than _COUNTS_PER_100_LINES occurences per 100 lines.
+    def get_strs_over_thresh(self, col):
+        """Returns a list of all str elements with more than _COUNTS_PER_100_LINES occurences per 100 lines.
         
         Args:
             col (np.array) : an array of strings
 
         Returns:
-            num_over (int) : the number of categories in col
+            strs_over (np.array) : an array of the common strings in col
         """
-        res = 0
-        for el in self.by_count:
-            count = self.by_count[el]
-            if self.length > 100:
-                count = 100 * count / self.length
-            res += int(count >= _COUNT_PER_100_LINES)
-        return res
+        return np.array([ el for el in self.by_count if self.by_count[el] > _COUNT_PER_100_LINES ])
 
     def get_str_els(self, col):
         """Returns all the non-numerical elements in col.
