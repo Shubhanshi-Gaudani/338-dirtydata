@@ -10,22 +10,10 @@ def _array_args():
               np.array([' ', 'na', '2', 'string', '1', '-100', 'more string'])]
     return [ (arrays[i], 0, 0) for i in range(len(arrays)) ]
 
-def test_col_mean():
-    cols = starmap(Column, _array_args())
-    true_means = [0.25, 3.0, -32.3333333]
-    means = list(map(lambda c: c.mean, cols))
-    assert np.allclose(means, true_means), f'{means} != {true_means}'
-
-def test_col_stddev():
-    cols = starmap(Column, _array_args())
-    true_stds = [0.82915, 1.41421, 47.8493]
-    stds = list(map(lambda c: c.stddev, cols))
-    assert np.allclose(true_stds, stds)
-
 def test_median():
     cols = starmap(Column, _array_args())
     true_medians = [0.5, 3, 1]
-    medians = list(map(lambda c: c.median, cols))
+    medians = list(map(lambda c: c.quantile(0.5), cols))
     assert np.allclose(true_medians, medians)
 
 def test_mode():

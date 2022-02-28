@@ -32,7 +32,6 @@ def test_outliers():
 def test_na():
     c = _def_col()
     rule = IsNA()
-    assert c.mean == 0
     assert rule.is_dirty('na', c)
     assert rule.is_dirty('Na', c)
     assert rule.is_dirty('N/A', c)

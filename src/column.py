@@ -23,10 +23,7 @@ class Column:
         self.num_els = self.get_num_els(col)
         self.by_count = self.get_by_count(col)
         self.strs_over_thresh = self.get_strs_over_thresh(col)
-        self.mean = self.get_mean(col)
-        self.stddev = self.get_stddev(col)
         self._quants = self.get_quants(col)
-        self.median = self.quantile(0.5)
         self.mode = self.get_mode(col)
         self.column_type = self.get_col_type(col)
         self.predictor = None
