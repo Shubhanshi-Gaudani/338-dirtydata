@@ -1,13 +1,9 @@
-from src import all_dirty_cells, user_message, csvToMatrix, clean_cell, arr_to_set
+from src import Driver
 
 if __name__ == '__main__':
-    mat = csvToMatrix('test_sheets/test_sheet_1.csv')
-    inds, reasons, cols = all_dirty_cells(mat, header = 1, parallel = False, return_cols = True)
-    s_inds = arr_to_set(inds)
-    for i in range(inds.shape[0]):
-        true_inds = tuple(inds[i])
-        print(f'Dirty cell found in cell {true_inds[1] + 1} of row \n{mat[true_inds[0]]}\n' +
-              user_message(mat[true_inds], 
-                           cols[true_inds[1]], 
-                           reasons[i]) +
-              f'\nSuggested: {clean_cell(true_inds, mat, cols[true_inds[1]], reasons[i], s_inds)}\n')
+    driver = Driver('test_sheets/test_sheet_1.csv', dupes = [False, False])
+    driver.find_dirty_cells()
+    for i in range(driver.dirty_inds.shape[0]):
+        print(f'Dirty cell found in cell {driver.inds_with_head[i, 1] + 1} of row \n{driver.old_mat[driver.dirty_inds[i, 0]]}\n' +
+              driver.user_message(i) +
+              f'\nSuggested: {driver._clean_cell(driver.dirty_inds[i], driver.reasons[i])}\n')

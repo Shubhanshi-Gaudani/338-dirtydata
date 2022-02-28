@@ -10,12 +10,11 @@ class KNearestNeighbors (MlBase):
         row_ind (int) : what index the target column is in
         header (int) : how many rows the original matrix in the header. Default is 1
     """
-    def __init__(self, k, col_ind, header = 1):
+    def __init__(self, k, col_ind):
         self.k = k
         self.features = None
         self.targets = None
         self.col_ind = col_ind
-        self.header = header
 
     def fit(self, features, targets):
         self.features = features
@@ -31,7 +30,7 @@ class KNearestNeighbors (MlBase):
         return ''
 
     def _pred_one_row(self, row, all_dirty):
-        inds = filter(lambda i: (i + self.header, self.col_ind) not in all_dirty, 
+        inds = filter(lambda i: (i, self.col_ind) not in all_dirty, 
                       range(self.features.shape[0]))
         dists = sorted(inds,
                        key = lambda i: tolerant_euc(row, self.features[i]))

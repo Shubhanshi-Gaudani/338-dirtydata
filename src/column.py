@@ -10,13 +10,12 @@ from .imputation import KNearestNeighbors
 _COUNT_PER_100_LINES = 2
 
 class Column:
-    def __init__(self, col, col_ind, header):
+    def __init__(self, col, col_ind):
         """A container class for a bunch of information specific to a column of data.
         
         Args:
             col (np.array) : a numpy array of strings containing the data
             col_ind (int) : the index of the column in the spreadsheet
-            header (int) : how many rows the original matrix in the header
         """
         self.length = col.shape[0]
         self.str_els = self.get_str_els(col)
@@ -28,7 +27,6 @@ class Column:
         self.column_type = self.get_col_type(col)
         self.predictor = None
         self.col_ind = col_ind
-        self.header = header
 
     def get_strs_over_thresh(self, col):
         """Returns a list of all str elements with more than _COUNTS_PER_100_LINES occurences per 100 lines.
@@ -222,7 +220,7 @@ class Column:
             pred (str) : what should go in that cell
         """
         if self.predictor is None:
-            self.predictor = KNearestNeighbors(5, self.col_ind, header = self.header)
+            self.predictor = KNearestNeighbors(5, self.col_ind)
             posed = sheet.T.tolist()
             feats = posed[inds[1]:]
             if inds[1] < sheet.shape[1] - 1:

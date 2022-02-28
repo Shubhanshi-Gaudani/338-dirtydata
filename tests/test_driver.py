@@ -1,24 +1,13 @@
-from src import all_dirty_cells, csvToMatrix, _ALL_PREDS
-from src import MissingData, IsIncorrectDataType, NumOutlier, IsNA, WrongCategory, HasTypo
+from src import IsIncorrectDataType, NumOutlier, IsNA, WrongCategory, HasTypo
 import numpy as np
+from src import Driver
 
 ENABLE_NFL = False
 
 def test_dirty_cells():
-    mat = csvToMatrix("test_sheets/test_sheet_1.csv")
-    # has_zero = False
-    # for row in mat:
-    #     for col in row:
-    #         if col == '':
-    #             has_zero = True
-    #             break
-    #     else:
-    #         continue
-    #     break
-    # assert has_zero
+    driver = Driver('test_sheets/test_sheet_1.csv', dupes = [False, False])
+    driver.find_dirty_cells()
 
-    inds, reasons = all_dirty_cells(mat, 
-                                    header = 1)
     right_inds = np.array([[1, 1],
                            [1, 2],
                            [1, 7],
@@ -41,22 +30,11 @@ def test_dirty_cells():
                      NumOutlier,
                      IsNA,
                      NumOutlier]
-    assert right_inds.shape[0] == len(right_reasons)
-    assert np.all(inds == right_inds), (inds.shape[0], right_inds.shape[0])
-    for i in range(len(right_reasons)):
-        if reasons[i] != right_reasons[i]:
-            print(i, reasons[i], right_reasons[i])
-    assert np.all(reasons == right_reasons)
 
-    seq_inds, seq_reasons = all_dirty_cells(mat, 
-                                            header = 1, 
-                                            parallel = False,
-                                            preds = _ALL_PREDS)
-    assert np.all(inds == seq_inds)
-    assert np.all(reasons == seq_reasons)
-    
-def test_with_nfl():
-    if ENABLE_NFL:
-        mat = csvToMatrix('test_sheets/nfl_data.txt')
-        inds, reasons = all_dirty_cells(mat, parallel = False)
+    assert right_inds.shape[0] == len(right_reasons)
+    assert np.all(driver.inds_with_head == right_inds), (driver.inds_with_head.shape[0], right_inds.shape[0])
+    for i in range(len(right_reasons)):
+        if driver.reasons[i] != right_reasons[i]:
+            print(i, driver.reasons[i], right_reasons[i])
+    assert np.all(driver.reasons == right_reasons)
     

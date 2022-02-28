@@ -4,7 +4,7 @@ import numpy as np
 ENABLED_STR_OUTLIER = False
 
 def _def_col():
-    return Column(np.array(['0', '1', '-1']), 0, 0)
+    return Column(np.array(['0', '1', '-1']), 0)
 
 def test_outliers():
     c = _def_col()
@@ -25,7 +25,6 @@ def test_outliers():
                          '',
                          '400000',
                          '5']), 
-               0,
                0)
     assert rule.is_dirty('5', c), c._quants
 
@@ -47,12 +46,12 @@ def test_correct_dtype():
     rule = IsIncorrectDataType()
     assert c.column_type == 'int'
     assert rule.is_dirty('string', c)
-    assert rule.is_dirty('1.0', Column(np.array(['string']), 0, 0))
-    assert not rule.is_dirty('s', Column(np.array(['string']), 0, 0))
+    assert rule.is_dirty('1.0', Column(np.array(['string']), 0))
+    assert not rule.is_dirty('s', Column(np.array(['string']), 0))
     assert not rule.is_dirty('1', c)
     assert rule.is_dirty('1.0', c)
     assert rule.is_dirty('-1.0', c)
-    assert not rule.is_dirty('1.0', Column(np.array(['0.0', '1.0']), 0, 0))
+    assert not rule.is_dirty('1.0', Column(np.array(['0.0', '1.0']), 0))
 
 def test_missing():
     c = _def_col()
@@ -64,8 +63,8 @@ def test_missing():
     assert not rule.is_dirty('0', c)
 
 def test_is_email():
-    cols = [Column(np.array(['simran@gmail.com', 'yamini@u.northwestern.edu', 'simg@u.northwestern.edu']), 0, 0),
-            Column(np.array(['email1@gmail.com', 'not an email', 'def not an email']), 0, 0)]
+    cols = [Column(np.array(['simran@gmail.com', 'yamini@u.northwestern.edu', 'simg@u.northwestern.edu']), 0),
+            Column(np.array(['email1@gmail.com', 'not an email', 'def not an email']), 0)]
     for col in range(len(cols)):
         rule = EmailChecker()
         assert col == rule.is_dirty('abc@gmail.com', cols[col])
@@ -78,7 +77,7 @@ def test_is_email():
 def test_whitesp():
     #this is terribly written code, sorry 🙈
     from src.strip_whitespaces import clean_whitespaces
-    col = Column(np.array(['   string', 'hello', '    what da dog doin   ']), 0, 0)
+    col = Column(np.array(['   string', 'hello', '    what da dog doin   ']), 0)
     x = np.array(['   string', 'hello', '    what da dog doin   '])
     y = np.array(['123', '  twentytwo', 'hi my name is  Bob'])
     l = []
@@ -95,7 +94,7 @@ def test_whitesp():
     assert np.array_equal(m, np.array(['123', 'twentytwo', 'hi my name is Bob']))
 
 def test_wrong_cat():
-    col = Column(np.array(['yes', 'no', 'yes', 'yes', 'no', 'no', 'n', 'y', 'yes']), 0, 0)
+    col = Column(np.array(['yes', 'no', 'yes', 'yes', 'no', 'no', 'n', 'y', 'yes']), 0)
     rule = WrongCategory()
     assert rule.is_dirty('y', col)
     assert rule.is_dirty('n', col)

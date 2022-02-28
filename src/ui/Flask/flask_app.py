@@ -1,14 +1,14 @@
 from flask import Flask, render_template
-from .path_utils import data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name
-from src import csvToMatrix
+from .path_utils import data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_NAME, CLEAN_PATH
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
 from werkzeug.utils import secure_filename
 import numpy as np
-from .integration import CLEAN_PATH, CLEAN_NAME, get_dirty, save_clean
+from .integration import get_preds
 import webbrowser
 from threading import Timer
+from src import Driver
 
 UPLOAD_FOLDER = data_path()
 
@@ -73,12 +73,14 @@ def start_processing():
         flash('No selected file')
         return redirect(request.url)
     print(f'Reading {pth}')
-    mat = csvToMatrix(pth)
+    preds, dupes = get_preds()
+    driver = Driver(pth, preds = preds, dupes = dupes)
     os.remove(pth)
-    print(f'Finding dirty cells in sheet with shape {mat.shape}')
-    inds, reasons, cols, new_mat = get_dirty(mat)
-    print(f'Cleaning {inds.shape[0]} cells')
-    save_clean(new_mat, inds, reasons, cols)
+    print(f'Finding dirty cells in sheet with shape {driver.clean_mat.shape}')
+    driver.find_dirty_cells()
+    print(f'Cleaning {driver.dirty_inds.shape[0]} cells')
+    driver.clean_all_cells()
+    driver.save_clean(CLEAN_PATH)
     print('Processing complete.')
 
 def open_browser():
