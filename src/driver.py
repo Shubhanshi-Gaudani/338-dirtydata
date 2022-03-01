@@ -8,10 +8,7 @@ from .column import Column
 from .utilities import arr_to_set, excel_inds
 import pandas as pd
 import xlwings as xw
-from .ui import CLEAN_XL_PATH
-
-
-
+from .path_utils import CLEAN_XL_PATH
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
