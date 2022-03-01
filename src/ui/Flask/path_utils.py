@@ -5,12 +5,14 @@ from time import sleep
 ALLOWED_EXTENSIONS = {'txt', 'csv'}
 ROOT_PATH = 'src/ui/Flask'
 CLEAN_NAME = 'cleaned.csv'
+CLEAN_XL = 'cleaned.xlsx'
 
 def data_path():
     """Returns the folder at which the user's database should be saved."""
     return ROOT_PATH + '/temp_files'
 
 CLEAN_PATH = data_path() + '/' + CLEAN_NAME
+CLEAN_XL_PATH  = data_path() + '/' + CLEAN_XL
 
 def get_extension(filename):
     """Returns the extension of the file (e.g. txt or csv)."""
