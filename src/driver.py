@@ -205,5 +205,4 @@ class Driver:
         #Name of sheet hardcoded 
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
-            cell_str = excel_inds(self.inds_with_head[i])
-            xl_sheet.range(excel_range(cell_str)).color = color_dict[self.reasons[i]]
+            xl_sheet.range(excel_range(self.inds_with_head[i])).color = color_dict[self.reasons[i]]

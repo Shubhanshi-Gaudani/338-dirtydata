@@ -6,4 +6,3 @@ typo
 EmailChecking
 DuplicateRows
 DuplicateColumns
-RedundantColumns

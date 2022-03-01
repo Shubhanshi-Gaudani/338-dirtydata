@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from ...path_utils import data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_NAME, CLEAN_PATH
+from ...path_utils import CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_NAME, CLEAN_PATH
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
@@ -24,6 +24,7 @@ app.config['SECRET_KEY'] = '0000'
 @app.route('/home', methods =['GET', 'POST'] )
 def upload_file():
     if os.path.exists(CLEAN_PATH): os.remove(CLEAN_PATH)
+    if os.path.exists(CLEAN_XL_PATH): os.remove(CLEAN_XL_PATH)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
