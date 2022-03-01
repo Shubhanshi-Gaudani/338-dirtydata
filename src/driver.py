@@ -5,11 +5,9 @@ from itertools import starmap
 from .rules import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory
 from .rules import HasTypo, EmailChecker, duplicate_row, duplicate_columns, user_message, redundant_columns
 from .column import Column
-from .utilities import arr_to_set, excel_inds, excel_range
+from .utilities import arr_to_set, excel_range
 import pandas as pd
 import xlwings as xw
-from .path_utils import CLEAN_XL_PATH
-import os
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
@@ -177,11 +175,26 @@ class Driver:
                    delimiter = ',', 
                    encoding = 'utf-8')
 
-    def save_excel(self):
-        """Saves clean_mat to an excel file."""
-        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, sheet_name='Sheet1', index = False)
+    def save_excel(self, pth):
+        """Saves clean_mat to an excel file at pth.
+        
+        Args:
+            pth (str) : the path to save the file to
 
-    def highlight_excel(self):
+        Returns:
+            None
+        """
+        pd.DataFrame(self.clean_mat).to_excel(pth, sheet_name='Sheet1', index = False)
+
+    def highlight_excel(self, pth):
+        """Highlights the cells of the excel sheet at pth.
+        
+        Args:
+            pth (str) : where to find the Excel sheet
+
+        Returns:
+            None
+        """
         color_dict = {}
         #Define the colours that we want in the highlighted cells:
         #Light Salmon Pink 
@@ -199,11 +212,11 @@ class Driver:
         #Tea Green
         color_dict[EmailChecker] = (208, 246, 210)
 
-        file_name = CLEAN_XL_PATH
-        wb = xw.Book(file_name)
+        wb = xw.Book(pth)
         #Name of sheet hardcoded 
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
+            # TODO : inds_with_head is off because it's adding an index row at the top of the sheet
             xl_sheet.range(excel_range(self.inds_with_head[i])).color = color_dict[self.reasons[i]]
         wb.save()
         wb.close()

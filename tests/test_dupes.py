@@ -1,19 +1,17 @@
 from src import duplicate_row, duplicate_columns, csvToMatrix, redundant_columns
 
-_SHEET_NAME = 'test_sheets/test_sheet_1.csv'
+_SHEET = csvToMatrix('test_sheets/test_sheet_1.csv')
 
 def test_dupe_rows():
-    mat = csvToMatrix(_SHEET_NAME)
-    dupes = duplicate_row(mat)
+    dupes = duplicate_row(_SHEET)
     assert dupes == [7]
 
 def test_dupe_cols():
-    mat = csvToMatrix(_SHEET_NAME)
-    dupes = duplicate_columns(mat)
+    dupes = duplicate_columns(_SHEET)
     assert dupes == [7]
 
 def test_red_cols():
-    mat = csvToMatrix(_SHEET_NAME)
+    mat = csvToMatrix('test_sheets/test_sheet_1_redundant.csv')
     reds = redundant_columns(mat)
     real_reds = [(0, 1),
                  (0, 4),

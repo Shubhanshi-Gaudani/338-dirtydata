@@ -2,10 +2,8 @@ from src import IsIncorrectDataType, NumOutlier, IsNA, WrongCategory, HasTypo
 import numpy as np
 from src import Driver
 
-ENABLE_NFL = False
-
 def test_dirty_cells():
-    driver = Driver('test_sheets/test_sheet_1.csv', dupes = [False, False])
+    driver = Driver('test_sheets/test_sheet_1.csv', dupes = [False, False, False])
     driver.find_dirty_cells()
 
     right_inds = np.array([[1, 1],

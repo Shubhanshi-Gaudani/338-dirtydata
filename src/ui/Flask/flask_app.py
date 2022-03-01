@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from ...path_utils import CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_NAME, CLEAN_PATH
+from .path_utils import CLEAN_XL, CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_PATH
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
@@ -54,7 +54,7 @@ def config():
 @app.route('/download', methods=['GET', 'POST'])
 def download_page():
     if request.method == 'POST':
-        return redirect(url_for('download_file', name=CLEAN_NAME))
+        return redirect(url_for('download_file', name=CLEAN_XL))
     else:
         start_processing()
         return render_template('download.html')
@@ -82,8 +82,8 @@ def start_processing():
     print(f'Cleaning {driver.dirty_inds.shape[0]} cells')
     driver.clean_all_cells()
     driver.save_clean(CLEAN_PATH)
-    # driver.save_excel()
-    # driver.highlight_excel()
+    driver.save_excel(CLEAN_XL_PATH)
+    driver.highlight_excel(CLEAN_XL_PATH)
     print('Processing complete.')
 
 def open_browser():
