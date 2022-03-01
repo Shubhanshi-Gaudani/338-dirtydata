@@ -9,6 +9,7 @@ from .utilities import arr_to_set, excel_inds, excel_range
 import pandas as pd
 import xlwings as xw
 from .path_utils import CLEAN_XL_PATH
+import os
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
@@ -178,7 +179,8 @@ class Driver:
 
     def save_excel(self):
         """Saves clean_mat to an excel file."""
-        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, index = False)
+        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, sheet_name='Sheet1')
+
 
     def highlight_excel(self):
         color_dict = {}
@@ -200,6 +202,7 @@ class Driver:
 
         file_name = CLEAN_XL_PATH
         wb = xw.Book(file_name)
+        #Name of sheet hardcoded 
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
             cell_str = excel_inds(self.inds_with_head[i])
