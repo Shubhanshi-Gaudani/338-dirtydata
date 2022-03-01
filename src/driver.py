@@ -2,7 +2,8 @@ import numpy as np
 from .csv_to_matrix import csvToMatrix, has_header
 import multiprocessing as mp
 from itertools import starmap
-from .rules import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory, HasTypo, EmailChecker, duplicate_row, duplicate_columns, user_message
+from .rules import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory
+from .rules import HasTypo, EmailChecker, duplicate_row, duplicate_columns, user_message
 from .column import Column
 from .utilities import arr_to_set
 
@@ -19,7 +20,7 @@ class Driver:
 
     Fields:
         old_mat (np.array) : the user's uploaded spreadsheet, WITHOUT the header if one is present.
-            After the header is removed, this is read-only
+            After the header and duplicates are removed, this is read-only
         header (int) : how many rows to skip at the top of the spreadsheet. Typically either 0 or 1
         clean_mat (np.array) : the cleaned version of the user's spreadsheet, WITH the header if one
             is present. Make sure to call clean_all_cells() before using this
@@ -73,7 +74,8 @@ class Driver:
         if nprocs > 1:
             with mp.Pool(nprocs) as pool:
                 self.cols = pool.starmap(Column, args, chunksize = mat_t.shape[0] // nprocs)
-        self.cols = list(starmap(Column, args))
+        else:
+            self.cols = list(starmap(Column, args))
 
     def _dirty_row(self, row):
         """Worker function for all_dirty_cells"""
