@@ -1,5 +1,7 @@
 import numpy as np
 
+_ALCHARS = 26
+
 def can_be_float(s):
     """Returns whether s can be cast as a float without exception.
     
@@ -70,5 +72,13 @@ def excel_inds(inds):
         inds (np.array) : a [y, x] pair
     
     Returns:
-        
+        letter_inds (str) : a string that can be used to reference an .xslx cell
     """
+    row = inds[0] + 1
+    col_chars = []
+    col_n = inds[1] + 1
+    while col_n > 0:
+        col_n, remainder = divmod(col_n - 1, 26)
+        col_chars.append(chr(65 + remainder))
+    col = ''.join(reversed(col_chars))
+    return col + str(row)

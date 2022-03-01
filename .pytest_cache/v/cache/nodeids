@@ -27,5 +27,6 @@
   "tests/test_rules.py::test_whitesp",
   "tests/test_rules.py::test_wrong_cat",
   "tests/test_utils.py::test_can_be_float",
-  "tests/test_utils.py::test_can_be_int"
+  "tests/test_utils.py::test_can_be_int",
+  "tests/test_utils.py::test_excel_inds"
 ]
