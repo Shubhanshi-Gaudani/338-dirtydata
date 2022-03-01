@@ -5,7 +5,7 @@ from itertools import starmap
 from .rules import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory
 from .rules import HasTypo, EmailChecker, duplicate_row, duplicate_columns, user_message
 from .column import Column
-from .utilities import arr_to_set, excel_inds
+from .utilities import arr_to_set, excel_inds, excel_range
 import pandas as pd
 import xlwings as xw
 from .path_utils import CLEAN_XL_PATH
@@ -192,4 +192,4 @@ class Driver:
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
             cell_str = excel_inds(self.inds_with_head[i])
-            xl_sheet.range(cell_str).color = color_dict[self.reasons[i]]
+            xl_sheet.range(excel_range(cell_str)).color = color_dict[self.reasons[i]]
