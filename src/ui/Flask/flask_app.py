@@ -82,8 +82,8 @@ def start_processing():
     print(f'Cleaning {driver.dirty_inds.shape[0]} cells')
     driver.clean_all_cells()
     driver.save_clean(CLEAN_PATH)
-    driver.save_excel()
-    driver.highlight_excel()
+    # driver.save_excel()
+    # driver.highlight_excel()
     print('Processing complete.')
 
 def open_browser():

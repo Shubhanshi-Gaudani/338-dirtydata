@@ -1,7 +1,7 @@
 from .column import Column
 from .utilities import can_be_float, is_float_char, can_be_int, float_is_int, arr_to_set, excel_inds
 from .csv_to_matrix import csvToMatrix, has_header
-from .rules import duplicate_columns
+from .rules import duplicate_columns, redundant_columns
 from .rules import duplicate_row
 from .rules import str_outlier
 from .rules import user_message

@@ -32,19 +32,23 @@ def redundant_columns(data):
     """
     dupe_inds = []
     data = data.T
+    used_inds = set()
     for col1 in range(data.shape[0]):
         for col2 in range(col1 + 1, data.shape[0]):
-            red = True
-            mapping = {}
-            for row in range(data.shape[1]):
-                if (data[col1, row] in mapping and mapping[data[col1, row]] != data[col2, row]):
-                    red = False
-                    break
-                else:
-                    mapping[data[col1, row]] = data[col2, row]
+            if col2 not in used_inds:
+                map1 = {}
+                map2 = {}
+                for row in range(data.shape[1]):
+                    if ((data[col1, row] in map1 and map1[data[col1, row]] != data[col2, row]) or
+                        (data[col2, row] in map2 and map2[data[col2, row]] != data[col1, row])):
+                        break
+                    else:
+                        map1[data[col1, row]] = data[col2, row]
+                        map2[data[col2, row]] = data[col1, row]
 
-            if(red):
-                dupe_inds.append((col1, col2))
+                else:
+                    dupe_inds.append((col1, col2))
+                    used_inds.add(col1)
+                    used_inds.add(col2)
     
     return dupe_inds
-

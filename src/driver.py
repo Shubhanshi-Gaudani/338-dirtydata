@@ -48,7 +48,7 @@ class Driver:
         self.old_mat = self.old_mat[self.header:]
         self.cols = None
         self._col_list()
-
+    
         if preds is None:
             self.all_preds = _ALL_PREDS
         else:
@@ -179,8 +179,7 @@ class Driver:
 
     def save_excel(self):
         """Saves clean_mat to an excel file."""
-        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, sheet_name='Sheet1')
-
+        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, sheet_name='Sheet1', index = False)
 
     def highlight_excel(self):
         color_dict = {}
