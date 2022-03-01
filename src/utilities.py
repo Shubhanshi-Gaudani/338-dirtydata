@@ -82,3 +82,8 @@ def excel_inds(inds):
         col_chars.append(chr(65 + remainder))
     col = ''.join(reversed(col_chars))
     return col + str(row)
+
+def excel_range(inds):
+    """Returns a range as used in Excel from one cell to the same cell."""
+    cell_str = excel_inds(inds)
+    return f'{cell_str}:{cell_str}'

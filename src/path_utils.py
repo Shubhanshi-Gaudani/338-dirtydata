@@ -8,7 +8,7 @@ CLEAN_NAME = 'cleaned.csv'
 CLEAN_XL = 'cleaned.xlsx'
 
 def data_path():
-    """Returns the folder at which the user's database should be saved."""
+    """Returns the folder at which the user's files should be saved."""
     return ROOT_PATH + '/temp_files'
 
 CLEAN_PATH = data_path() + '/' + CLEAN_NAME

@@ -5,7 +5,10 @@ from itertools import starmap
 from .rules import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory
 from .rules import HasTypo, EmailChecker, duplicate_row, duplicate_columns, user_message, redundant_columns
 from .column import Column
-from .utilities import arr_to_set
+from .utilities import arr_to_set, excel_inds, excel_range
+import pandas as pd
+import xlwings as xw
+from .path_utils import CLEAN_XL_PATH
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
@@ -172,3 +175,28 @@ class Driver:
                    fmt = '%s', 
                    delimiter = ',', 
                    encoding = 'utf-8')
+
+    def highlight_excel(self):
+        color_dict = {}
+        #Define the colours that we want in the highlighted cells:
+        #Light Salmon Pink 
+        color_dict[MissingData] = (255, 154, 162)
+        #Crayola's Periwinkle
+        color_dict[IsNA] = (199, 206, 234)
+        #Dirty White
+        color_dict[NumOutlier] = (226, 240, 203)
+        #Phillipine Silver 
+        color_dict[HasTypo] = (177, 177, 177)
+        #Columbia Blue 
+        color_dict[IsIncorrectDataType] = (192, 228, 241)
+        #Cookies and Cream
+        color_dict[WrongCategory] = (232, 215, 173)
+        #Tea Green
+        color_dict[EmailChecker] = (208, 246, 210)
+
+        file_name = CLEAN_XL_PATH
+        wb = xw.Book(file_name)
+        xl_sheet = wb.sheets['Sheet1']
+        for i in range(len(self.reasons)):
+            cell_str = excel_inds(self.inds_with_head[i])
+            xl_sheet.range(excel_range(cell_str)).color = color_dict[self.reasons[i]]

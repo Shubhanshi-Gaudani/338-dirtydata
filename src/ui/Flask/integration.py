@@ -1,4 +1,4 @@
-from .path_utils import config_file_path
+from ...path_utils import config_file_path
 import numpy as np
 from src import IsNA, IsIncorrectDataType, MissingData, NumOutlier, WrongCategory, HasTypo, EmailChecker, _ALL_PREDS
 

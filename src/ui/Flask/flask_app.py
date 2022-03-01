@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .path_utils import data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_NAME, CLEAN_PATH
+from ...path_utils import data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_NAME, CLEAN_PATH
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
@@ -82,6 +82,8 @@ def start_processing():
     driver.clean_all_cells()
     driver.save_clean(CLEAN_PATH)
     print('Processing complete.')
+
+
 
 def open_browser():
     webbrowser.open_new('http://127.0.0.1:5000/')
