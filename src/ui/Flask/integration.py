@@ -26,7 +26,7 @@ def pred_names_to_objs(names):
         if mapping[pred] in name_set:
             res.append(pred)
 
-    dupes = ['DuplicateRows', 'DuplicateColumns']
+    dupes = ['DuplicateRows', 'DuplicateColumns', 'RedundantColumns']
     dup_lst = [ el in name_set for el in dupes ]
     return res, dup_lst
 
