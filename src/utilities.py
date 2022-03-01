@@ -62,3 +62,13 @@ def arr_to_set(arr):
         s (set) : a set of tuples with the same elements as arr.
     """
     return set(map(tuple, arr))
+
+def excel_inds(inds):
+    """Converts integer indices to an Excel cell.
+    
+    Args:
+        inds (np.array) : a [y, x] pair
+    
+    Returns:
+        
+    """
