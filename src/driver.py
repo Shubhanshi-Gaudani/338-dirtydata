@@ -3,9 +3,9 @@ from .csv_to_matrix import csvToMatrix, has_header
 import multiprocessing as mp
 from itertools import starmap
 from .rules import NumOutlier, IsNA, IsIncorrectDataType, MissingData, WrongCategory
-from .rules import HasTypo, EmailChecker, duplicate_row, duplicate_columns, user_message
+from .rules import HasTypo, EmailChecker, duplicate_row, duplicate_columns, user_message, redundant_columns
 from .column import Column
-from .utilities import arr_to_set, excel_inds
+from .utilities import arr_to_set, excel_inds, excel_range
 import pandas as pd
 import xlwings as xw
 from .path_utils import CLEAN_XL_PATH
@@ -18,8 +18,9 @@ class Driver:
     Args:
         sheet_path (str) : a path to the matrix to read
         preds (list | None) : a list of predicates to use. If None (the default), it will use all of them
-        dupes (list) : a list of Booleans, with the first corresponding to whether to remvoe duplicate
-            rows, and the second for duplicate columns. The default is True for both
+        dupes (list) : a list of Booleans, with the first corresponding to whether to remove duplicate
+            rows, the second for duplicate columns, the third for redundant columns. The default is True for 
+            first two and false for the last.
 
     Fields:
         old_mat (np.array) : the user's uploaded spreadsheet, WITHOUT the header if one is present.
@@ -38,10 +39,10 @@ class Driver:
         reasons (np.array) : an array of types derived from RuleBase. reasons[i] is the reason why the cell at
             dirty_inds[i] is dirty
     """
-    def __init__(self, path, preds = None, dupes = [True, True]):
+    def __init__(self, path, preds = None, dupes = [True, True, False]):
         self.old_mat = csvToMatrix(path)
         self.header = has_header(self.old_mat)
-        self._del_dupes(dupes[0], dupes[1])
+        self._del_dupes(dupes[0], dupes[1], dupes[2])
         self.clean_mat = self.old_mat.copy()
         self.old_mat = self.old_mat[self.header:]
         self.cols = None
@@ -58,7 +59,7 @@ class Driver:
         self.inds_with_head = None
         self.reasons = None
 
-    def _del_dupes(self, del_rows, del_cols):
+    def _del_dupes(self, del_rows, del_cols, red_cols):
         """Deletes duplicate rows if del_rows and duplicate columns if del_cols. Saves res to self.old_mat."""
         # duplicate rows 
         if(del_rows):
@@ -68,6 +69,12 @@ class Driver:
         if(del_cols):
             dupes = duplicate_columns(self.old_mat)
             self.old_mat = np.delete(self.old_mat, dupes, 1)
+        
+        # redundant columns
+        if(red_cols):
+            red_pairs = redundant_columns(self.old_mat)
+            red = [a[1] for a in red_pairs]
+            self.old_mat = np.delete(self.old_mat, red, 1)
 
     def _col_list(self, nprocs = 8):
         """Analyzes each column into Column objects and sets self.cols."""
@@ -192,4 +199,4 @@ class Driver:
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
             cell_str = excel_inds(self.inds_with_head[i])
-            xl_sheet.range(cell_str).color = color_dict[self.reasons[i]]
+            xl_sheet.range(excel_range(cell_str)).color = color_dict[self.reasons[i]]
