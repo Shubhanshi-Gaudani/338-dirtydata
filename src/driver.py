@@ -176,6 +176,10 @@ class Driver:
                    delimiter = ',', 
                    encoding = 'utf-8')
 
+    def save_excel(self):
+        """Saves clean_mat to an excel file."""
+        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, index = False)
+
     def highlight_excel(self):
         color_dict = {}
         #Define the colours that we want in the highlighted cells:
