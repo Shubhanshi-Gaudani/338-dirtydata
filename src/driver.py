@@ -179,7 +179,7 @@ class Driver:
 
     def save_excel(self):
         """Saves clean_mat to an excel file."""
-        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, sheet_name='Sheet1')
+        pd.DataFrame(self.clean_mat).to_excel(CLEAN_XL_PATH, sheet_name='Sheet1', index = False)
 
 
     def highlight_excel(self):
@@ -206,3 +206,5 @@ class Driver:
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
             xl_sheet.range(excel_range(self.inds_with_head[i])).color = color_dict[self.reasons[i]]
+        wb.save()
+        wb.close()
