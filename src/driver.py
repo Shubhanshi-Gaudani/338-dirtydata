@@ -48,7 +48,7 @@ class Driver:
         self.old_mat = self.old_mat[self.header:]
         self.cols = None
         self._col_list()
-    
+
         if preds is None:
             self.all_preds = _ALL_PREDS
         else:
@@ -205,3 +205,5 @@ class Driver:
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
             xl_sheet.range(excel_range(self.inds_with_head[i])).color = color_dict[self.reasons[i]]
+        wb.save()
+        wb.close()
