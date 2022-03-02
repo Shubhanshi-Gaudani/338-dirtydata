@@ -16,6 +16,7 @@ class HasTypo (RuleBaseClass):
 
     def _clean_word(self, s):
         """Returns the most likely word the user meant based on s."""
+        if s == '': return s
         return self.checker.correction(s)
 
     def is_dirty(self, cell_str, col):

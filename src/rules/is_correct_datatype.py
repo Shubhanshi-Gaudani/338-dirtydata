@@ -1,6 +1,4 @@
 from ..utilities import can_be_float, can_be_int
-from .missing_data import MissingData
-from .num_outliers import NumOutlier
 from .rule_base import RuleBaseClass
 
 class IsIncorrectDataType (RuleBaseClass):
@@ -11,6 +9,7 @@ class IsIncorrectDataType (RuleBaseClass):
         self.color = (192, 228, 241)
 
     def is_dirty(self, cell_str, col):
+        if cell_str == '': return False
         if can_be_int(cell_str):
             return col.column_type != 'int' and col.column_type != 'float'
         if can_be_float(cell_str):

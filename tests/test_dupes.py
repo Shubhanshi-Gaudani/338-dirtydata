@@ -14,6 +14,7 @@ def test_red_cols():
     mat = csvToMatrix('test_sheets/test_sheet_1_redundant.csv')
     reds = redundant_columns(mat)
     real_reds = [(0, 1),
+                 (0, 3),
                  (0, 4),
                  (0, 6),
                  (2, 7),

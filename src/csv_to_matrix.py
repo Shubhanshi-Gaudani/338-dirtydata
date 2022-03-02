@@ -11,10 +11,10 @@ def csvToMatrix(csv_name, delimiter = ','):
     Returns:
         result_mat (2d array) : Matrix version of the csv file
     """
-    df = pd.read_csv(csv_name, dtype = str, delimiter = delimiter)
+    df = pd.read_csv(csv_name, dtype = str, delimiter = delimiter, na_filter = False)
     res = np.empty((df.shape[0] + 1, df.shape[1]), dtype = 'U128')
     res[0] = df.columns
-    res[1:] = df.to_numpy(dtype = 'U128', na_value = 'NA')
+    res[1:] = df.to_numpy(dtype = 'U128')
     return res
 
 def has_header(mat):
