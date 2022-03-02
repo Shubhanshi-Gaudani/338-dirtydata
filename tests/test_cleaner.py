@@ -10,7 +10,7 @@ def test_cleaner():
         sugg = driver._clean_cell(driver.dirty_inds[i],
                                   driver.reasons[i])
         assert type(sugg) == str
-        assert not driver.reasons[i]().is_dirty(sugg, driver.cols[driver.dirty_inds[i, 1]])
+        assert not driver.reasons[i].is_dirty(sugg, driver.cols[driver.dirty_inds[i, 1]])
         assert sugg == driver.clean_mat[tuple(driver.inds_with_head[i])]
     
 

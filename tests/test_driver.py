@@ -1,3 +1,4 @@
+from turtle import right
 from src import IsIncorrectDataType, NumOutlier, IsNA, WrongCategory, HasTypo
 import numpy as np
 from src import Driver
@@ -5,6 +6,7 @@ from src import Driver
 def test_dirty_cells():
     driver = Driver('test_sheets/test_sheet_1.csv', dupes = [False, False, False])
     driver.find_dirty_cells()
+    assert IsNA() != HasTypo()
 
     right_inds = np.array([[1, 1],
                            [1, 2],
@@ -28,6 +30,7 @@ def test_dirty_cells():
                      NumOutlier,
                      IsNA,
                      NumOutlier]
+    right_reasons = [ r() for r in right_reasons ]
 
     assert right_inds.shape[0] == len(right_reasons)
     assert np.all(driver.inds_with_head == right_inds), (driver.inds_with_head.shape[0], right_inds.shape[0])

@@ -28,14 +28,14 @@ class Driver:
         clean_mat (np.array) : the cleaned version of the user's spreadsheet, WITH the header if one
             is present. Make sure to call clean_all_cells() before using this
         cols (list) : a list of Column objects, one for each column in the user's spreadsheet
-        all_preds (list) : a list of types derived from RuleBase which indicate what to use when finding
+        all_preds (list) : a list of objects derived from RuleBase which indicate what to use when finding
             dirty cells
         dirty_inds (np.array) : an array of [y, x] pairs to be used to index into old_mat. As such, they will
             not include the header
         s_inds (set) : a set of tuples with the same indices as inds_with_head
         inds_with_head (np.array) : an array of [y, x] pairs to be used to index into clean_mat. They do include
             the header
-        reasons (np.array) : an array of types derived from RuleBase. reasons[i] is the reason why the cell at
+        reasons (np.array) : an array of objects derived from RuleBase. reasons[i] is the reason why the cell at
             dirty_inds[i] is dirty
     """
     def __init__(self, path, preds = None, dupes = [True, True, False]):
@@ -51,7 +51,7 @@ class Driver:
             self.all_preds = _ALL_PREDS
         else:
             self.all_preds = preds
-        self.preds_inited = [ p() for p in self.all_preds ]
+        self.all_preds = [ p() for p in self.all_preds ]
 
         self.dirty_inds = None
         self.s_inds = None
@@ -90,8 +90,8 @@ class Driver:
         """Worker function for all_dirty_cells"""
         new_row = [None] * len(row)
         for col in range(len(row)):
-            for pred in range(len(self.preds_inited)):
-                if self.preds_inited[pred].is_dirty(row[col], self.cols[col]):
+            for pred in range(len(self.all_preds)):
+                if self.all_preds[pred].is_dirty(row[col], self.cols[col]):
                     new_row[col] = self.all_preds[pred]
                     break
         return new_row
@@ -117,7 +117,7 @@ class Driver:
 
     def _clean_cell(self, inds, reason):
         """Returns the suggested change to the cell in self.old_mat at inds based on reason."""
-        return reason().clean(inds, self.old_mat, self.cols[inds[1]], self.s_inds)
+        return reason.clean(inds, self.old_mat, self.cols[inds[1]], self.s_inds)
 
     def _get_suggs(self, nprocs = 1, num_dots = 20):
         """Returns the suggested changes to old_mat."""
@@ -201,6 +201,6 @@ class Driver:
         #Name of sheet hardcoded 
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
-            xl_sheet.range(excel_range(self.inds_with_head[i])).color = self.reasons[i]().color
+            xl_sheet.range(excel_range(self.inds_with_head[i])).color = self.reasons[i].color
         wb.save()
         wb.close()

@@ -46,3 +46,6 @@ class RuleBaseClass:
         """
         return col.generic_clean(inds, sheet, all_dirty)
         
+    def __eq__(self, other):
+        """Returns whether the two rules are the same type."""
+        return type(self) == type(other)
