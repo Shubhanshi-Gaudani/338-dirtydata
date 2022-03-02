@@ -184,7 +184,9 @@ class Driver:
         Returns:
             None
         """
-        pd.DataFrame(self.clean_mat).to_excel(pth, sheet_name='Sheet1', index = False)
+        df = pd.DataFrame(self.clean_mat)
+        with pd.ExcelWriter(pth, engine = 'xlsxwriter', engine_kwargs = {'options' : {'strings_to_numbers' : True}}) as writer:
+            df.to_excel(writer, index_label = None, header = False, index = False)
 
     def highlight_excel(self, pth):
         """Highlights the cells of the excel sheet at pth.
