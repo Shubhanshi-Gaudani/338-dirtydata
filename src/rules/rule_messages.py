@@ -9,5 +9,5 @@ def user_message(cell_str, col, reason):
     Returns:
         message (str) : a readable string for why the cell is dirty
     """
-    return reason().message(cell_str, col)
+    return reason.message(cell_str, col)
     

@@ -153,11 +153,11 @@ class Driver:
         for i in range(suggs.shape[0]):
             self.clean_mat[tuple(self.inds_with_head[i])] = suggs[i]
  
-    def user_message(self, ind_inds):
-        """Returns a user-readable message for the dirty cell at self.old_mat[self.dirty_inds[ind_inds]]."""
-        return user_message(self.old_mat[tuple(self.dirty_inds[ind_inds])],
-                            self.cols[self.dirty_inds[ind_inds, 1]],
-                            self.reasons[ind_inds])
+    def user_message(self, inds_ind):
+        """Returns a user-readable message for the dirty cell at self.old_mat[self.dirty_inds[inds_ind]]."""
+        return user_message(self.old_mat[tuple(self.dirty_inds[inds_ind])],
+                            self.cols[self.dirty_inds[inds_ind, 1]],
+                            self.reasons[inds_ind])
 
     def save_clean(self, new_pth):
         """Saves self.clean_mat to new_pth."""
