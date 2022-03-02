@@ -3,8 +3,9 @@ from .rule_base import RuleBaseClass
 import en_core_web_sm
 nlp = en_core_web_sm.load()
 
-_COUNT_PER_100_LINES = 2
-_NUM_CATS_PER_100 = 2
+COUNT_PER_100_LINES = 3
+_MIN_CATS = 2
+_MAX_CATS = 5
 
 class WrongCategory (RuleBaseClass):
     """Checks if a cell is different from the most common categories."""
@@ -13,6 +14,7 @@ class WrongCategory (RuleBaseClass):
         self.color = (232, 215, 173)
         
     def is_dirty(self, cell_str, col):
+        if col.column_type == 'float': return False
         counts = col.by_count[cell_str]
         cats = col.strs_over_thresh.shape[0]
         if col.length > 100:
@@ -20,7 +22,9 @@ class WrongCategory (RuleBaseClass):
             counts = per_100(counts)
             cats = per_100(cats)
 
-        return counts <= _COUNT_PER_100_LINES and cats >= _NUM_CATS_PER_100
+        return (counts <= COUNT_PER_100_LINES and 
+                cats >= _MIN_CATS and
+                cats <= _MAX_CATS)
 
     def message(self, cell_str, col):
         return ('This row appears to have a small number of categories, but ' +

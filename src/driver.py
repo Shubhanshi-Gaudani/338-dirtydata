@@ -23,6 +23,7 @@ class Driver:
             first two and false for the last.
 
     Fields:
+        progress (int) : how much progress (out of 100) this has made
         old_mat (np.array) : the user's uploaded spreadsheet, WITHOUT the header if one is present.
             After the header and duplicates are removed, this is read-only
         header (int) : how many rows to skip at the top of the spreadsheet. Typically either 0 or 1
@@ -40,7 +41,9 @@ class Driver:
             dirty_inds[i] is dirty
     """
     def __init__(self, path, preds = None, dupes = [True, True, False]):
+        self.progress = 0
         self.old_mat = csvToMatrix(path)
+        self.progress = 10
         self.header = has_header(self.old_mat)
         self._del_dupes(dupes[0], dupes[1], dupes[2])
         self.clean_mat = self.old_mat.copy()
@@ -58,6 +61,7 @@ class Driver:
         self.s_inds = None
         self.inds_with_head = None
         self.reasons = None
+        self.progress = 20
 
     def _del_dupes(self, del_rows, del_cols, red_cols):
         """Deletes duplicate rows if del_rows and duplicate columns if del_cols. Saves res to self.old_mat."""
@@ -115,6 +119,7 @@ class Driver:
         for i in range(self.dirty_inds.shape[0]):
             self.inds_with_head[i, 0] += self.header
         self.s_inds = arr_to_set(self.dirty_inds)
+        self.progress = 50
 
     def _clean_cell(self, inds, reason):
         """Returns the suggested change to the cell in self.old_mat at inds based on reason."""
@@ -138,14 +143,17 @@ class Driver:
         per_dot = len(args) // num_dots if num_dots else 0
         dot_str = f'|{" " * num_dots}|'
         dot_count = 0
+        per_prog = 10 * len(args) // (100 - self.progress)
         for i in range(len(args)):
             if per_dot and i % per_dot == 0:
                 print(dot_str, end = '\r')
                 dot_count += 1
                 dot_str = f'|{"." * dot_count}{" " * (num_dots - dot_count)}|'
+            if (i + 1) % per_prog == 0:
+                self.progress += 10
                 
             res[i] = self._clean_cell(*args[i])
-        if num_dots: print()
+        if per_dot: print()
         return res
 
     def clean_all_cells(self, nprocs = 1, num_dots = 20):
@@ -210,3 +218,4 @@ class Driver:
             xl_sheet.range(excel_range(self.inds_with_head[i])).color = self.reasons[i].color
         wb.save()
         wb.close()
+        self.progress = 100

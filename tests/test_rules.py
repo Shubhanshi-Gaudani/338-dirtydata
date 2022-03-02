@@ -94,7 +94,7 @@ def test_whitesp():
     assert np.array_equal(m, np.array(['123', 'twentytwo', 'hi my name is Bob']))
 
 def test_wrong_cat():
-    col = Column(np.array(['yes', 'no', 'yes', 'yes', 'no', 'no', 'n', 'y', 'yes']), 0)
+    col = Column(np.array(['yes', 'no', 'yes', 'yes', 'no', 'no', 'n', 'y', 'yes', 'no']), 0)
     rule = WrongCategory()
     assert rule.is_dirty('y', col)
     assert rule.is_dirty('n', col)
