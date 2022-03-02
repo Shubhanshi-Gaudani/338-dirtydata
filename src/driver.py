@@ -8,6 +8,7 @@ from .column import Column
 from .utilities import arr_to_set, excel_range
 import pandas as pd
 import xlwings as xw
+import warnings
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 
@@ -113,7 +114,7 @@ class Driver:
         self.inds_with_head = self.dirty_inds.copy()
         for i in range(self.dirty_inds.shape[0]):
             self.inds_with_head[i, 0] += self.header
-        self.s_inds = arr_to_set(self.inds_with_head)
+        self.s_inds = arr_to_set(self.dirty_inds)
 
     def _clean_cell(self, inds, reason):
         """Returns the suggested change to the cell in self.old_mat at inds based on reason."""
@@ -193,11 +194,16 @@ class Driver:
         
         Args:
             pth (str) : where to find the Excel sheet
-
+ 
         Returns:
             None
         """
-        wb = xw.Book(pth)
+        try:
+            wb = xw.Book(pth)
+        except ValueError:
+            warnings.warn('WARNING: could not highlight spreadsheet because user still has old "cleaned.xlsx" file open.')
+            return
+
         #Name of sheet hardcoded 
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
