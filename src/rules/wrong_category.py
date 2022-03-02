@@ -14,7 +14,7 @@ class WrongCategory (RuleBaseClass):
         self.color = (232, 215, 173)
         
     def is_dirty(self, cell_str, col):
-        if col.column_type == 'float': return False
+        if col.column_type != 'alpha': return False
         counts = col.by_count[cell_str]
         cats = col.strs_over_thresh.shape[0]
         if col.length > 100:
