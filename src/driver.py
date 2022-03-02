@@ -218,7 +218,6 @@ class Driver:
         #Name of sheet hardcoded 
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
-            # TODO : inds_with_head is off because it's adding an index row at the top of the sheet
             xl_sheet.range(excel_range(self.inds_with_head[i])).color = color_dict[self.reasons[i]]
         wb.save()
         wb.close()
