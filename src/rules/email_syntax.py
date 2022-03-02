@@ -6,6 +6,8 @@ class EmailChecker (RuleBaseClass):
     """Checks if a cell is an email when it should/shouldn't be"""
     def __init__(self):
         self.regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        #Tea Green
+        self.color = (208, 246, 210)
 
     def _is_email(self, cell_str):
         """Returns whether cell_str is an email."""

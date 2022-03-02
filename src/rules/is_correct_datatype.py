@@ -7,6 +7,8 @@ class IsIncorrectDataType (RuleBaseClass):
     """Checks if cells are the wrong datatype."""
     def __init__(self):
         self.num_chars = {'-', '.'} | { str(i) for i in range(10) }
+        #Columbia Blue 
+        self.color = (192, 228, 241)
 
     def is_dirty(self, cell_str, col):
         if can_be_int(cell_str):

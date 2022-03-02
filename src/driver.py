@@ -197,27 +197,10 @@ class Driver:
         Returns:
             None
         """
-        color_dict = {}
-        #Define the colours that we want in the highlighted cells:
-        #Light Salmon Pink 
-        color_dict[MissingData] = (255, 154, 162)
-        #Crayola's Periwinkle
-        color_dict[IsNA] = (199, 206, 234)
-        #Dirty White
-        color_dict[NumOutlier] = (226, 240, 203)
-        #Phillipine Silver 
-        color_dict[HasTypo] = (177, 177, 177)
-        #Columbia Blue 
-        color_dict[IsIncorrectDataType] = (192, 228, 241)
-        #Cookies and Cream
-        color_dict[WrongCategory] = (232, 215, 173)
-        #Tea Green
-        color_dict[EmailChecker] = (208, 246, 210)
-
         wb = xw.Book(pth)
         #Name of sheet hardcoded 
         xl_sheet = wb.sheets['Sheet1']
         for i in range(len(self.reasons)):
-            xl_sheet.range(excel_range(self.inds_with_head[i])).color = color_dict[self.reasons[i]]
+            xl_sheet.range(excel_range(self.inds_with_head[i])).color = self.reasons[i]().color
         wb.save()
         wb.close()

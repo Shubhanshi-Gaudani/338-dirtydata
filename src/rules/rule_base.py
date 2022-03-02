@@ -5,7 +5,8 @@ class RuleBaseClass:
         None
     """
     def __init__(self):
-        pass
+        self.color = (-1, -1, -1)
+        raise NotImplementedError
 
     def is_dirty(self, cell_str, col):
         """Returns whether the string is dirty.

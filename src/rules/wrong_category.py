@@ -8,6 +8,10 @@ _NUM_CATS_PER_100 = 2
 
 class WrongCategory (RuleBaseClass):
     """Checks if a cell is different from the most common categories."""
+    def __init__(self):
+        #Cookies and Cream
+        self.color = (232, 215, 173)
+        
     def is_dirty(self, cell_str, col):
         counts = col.by_count[cell_str]
         cats = col.strs_over_thresh.shape[0]

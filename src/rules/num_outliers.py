@@ -13,6 +13,10 @@ def _num_is_outlier(x, perc25, perc75, quant_scale = _QUANT_SCALE):
 
 class NumOutlier (RuleBaseClass):
     """Checks if cells are numeric outliers."""
+    def __init__(self):
+        #Dirty White
+        self.color = (226, 240, 203)
+
     def is_dirty(self, cell_str, col):
         if not can_be_float(cell_str): return False
         return _num_is_outlier(float(cell_str), col.quantile(0.25), col.quantile(0.75))

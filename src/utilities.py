@@ -1,7 +1,5 @@
 import numpy as np
 
-_ALCHARS = 26
-
 def can_be_float(s):
     """Returns whether s can be cast as a float without exception.
     

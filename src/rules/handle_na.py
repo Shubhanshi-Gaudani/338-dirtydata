@@ -4,6 +4,8 @@ class IsNA (RuleBaseClass):
     """Checks is cells are 'na'."""
     def __init__(self):
         self.nas = {"n/a", "na", "--", "-", "nan", "NaN", "not applicable"}
+        #Crayola's Periwinkle
+        self.color = (199, 206, 234)
 
     def is_dirty(self, cell_str, col):
         if cell_str.lower() in self.nas and cell_str != 'NA': 

@@ -6,6 +6,8 @@ class HasTypo (RuleBaseClass):
     """Checks if a cell has a typo in it."""
     def __init__(self):
         self.checker = SpellChecker()
+        #Phillipine Silver 
+        self.color = (177, 177, 177)
 
     def _typo_word(self, s):
         """Returns whether s is likely to be a typo."""
