@@ -11,6 +11,7 @@ import xlwings as xw
 import warnings
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
+_ESCAPE_CHARS = {',', '\n', '"', '\t'}
 
 class Driver:
     """The class responsible for finding dirty cells and cleaning them.
@@ -202,11 +203,10 @@ class Driver:
         Returns:
             None
         """
-        escape_chars = {',', '\n', '"', '\t'}
         for y in range(self.clean_mat.shape[0]):
             for x in range(self.clean_mat.shape[1]):
                 for char in self.clean_mat[y, x]:
-                    if char in escape_chars:
+                    if char in _ESCAPE_CHARS:
                         self.clean_mat[y, x] = f'"{self.clean_mat[y, x]}"'
                         break
 
@@ -225,6 +225,13 @@ class Driver:
         Returns:
             None
         """
+        for y in range(self.clean_mat.shape[0]):
+            for x in range(self.clean_mat.shape[1]):
+                if (len(self.clean_mat[y, x]) > 1 and
+                    self.clean_mat[y, x][0] == '"' and
+                    self.clean_mat[y, x][-1] == '"'):
+                    self.clean_mat[y, x] = self.clean_mat[y, x][1:-1]
+
         df = pd.DataFrame(self.clean_mat)
         with pd.ExcelWriter(pth, engine = 'xlsxwriter', engine_kwargs = {'options' : {'strings_to_numbers' : True}}) as writer:
             df.to_excel(writer, index_label = None, header = False, index = False)
