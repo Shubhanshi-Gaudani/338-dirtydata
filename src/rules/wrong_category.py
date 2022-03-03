@@ -3,7 +3,7 @@ from .rule_base import RuleBaseClass
 import en_core_web_sm
 nlp = en_core_web_sm.load()
 
-COUNT_PER_100_LINES = 3
+COUNT_PER_100_LINES = 2
 _MIN_CATS = 2
 _MAX_CATS = 5
 

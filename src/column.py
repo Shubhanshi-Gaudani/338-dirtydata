@@ -1,7 +1,4 @@
 import numpy as np
-import pandas as pd
-import scipy.stats as sp
-import math as math
 from .utilities import can_be_float, can_be_int
 from .rules import IsNA, EmailChecker, COUNT_PER_100_LINES
 from Levenshtein import distance

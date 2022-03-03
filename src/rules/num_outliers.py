@@ -38,6 +38,6 @@ class NumOutlier (RuleBaseClass):
             return with_dec
             
         q = col.quantile(0.5)
-        if float_is_int(q):
+        if float_is_int(q) or col.column_type == 'int':
             return str(round(q))
         return str(q)

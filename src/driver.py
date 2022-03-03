@@ -151,7 +151,7 @@ class Driver:
         per_dot = len(args) // num_dots if num_dots else 0
         dot_str = f'|{" " * num_dots}|'
         dot_count = 0
-        per_prog = 10 * len(args) // (100 - self.progress)
+        per_prog = max(1, 10 * len(args) // (100 - self.progress))
         for i in range(len(args)):
             if per_dot and i % per_dot == 0:
                 print(dot_str, end = '\r')
