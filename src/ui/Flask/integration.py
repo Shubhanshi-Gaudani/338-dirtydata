@@ -31,7 +31,16 @@ def pred_names_to_objs(names):
     return res, dup_lst
 
 def get_preds():
-    """Returns the user's selected predicates."""
+    """Returns the user's selected predicates.
+    
+    Args:
+        None
+
+    Returns:
+        preds (list) : a list of rules to use when finding dirty cells
+        dup_lst (list) : a list of booleans, corresponding to whether the user
+            wants to delete duplicate rows and columns
+    """
     with open(config_file_path(), 'r') as config:
         lines = config.readlines()
     for line in range(len(lines)):

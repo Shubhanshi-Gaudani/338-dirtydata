@@ -102,7 +102,15 @@ class Driver:
         return new_row
 
     def find_dirty_cells(self, nprocs = 8):
-        """Finds the indices and reasons for every dirty cell and sets self.inds and self.reasons."""
+        """Finds the indices and reasons for every dirty cell and sets self.inds and self.reasons.
+        
+        Args:
+            nprocs (int) : how many processes to use. Default is 8. If 1, it will not create any
+                new processes.
+
+        Returns:
+            None
+        """
         nprocs = min(nprocs, self.old_mat.shape[0])
 
         if nprocs > 1:
@@ -157,19 +165,43 @@ class Driver:
         return res
 
     def clean_all_cells(self, nprocs = 1, num_dots = 20):
-        """Cleans all the cells and saves the changes to self.clean_mat."""
+        """Cleans all the cells and saves the changes to self.clean_mat.
+        
+        Args:
+            nprocs (int) : how many processes to use. If 1 (the default), it will not create any
+                new processes
+            num_dots (int) : how many dots to print to the terminal. Default is 20. Set to 0 to silence
+                all printing
+
+        Returns:
+            None
+        """
         suggs = self._get_suggs(nprocs = nprocs, num_dots = num_dots)
         for i in range(suggs.shape[0]):
             self.clean_mat[tuple(self.inds_with_head[i])] = suggs[i]
  
     def user_message(self, inds_ind):
-        """Returns a user-readable message for the dirty cell at self.old_mat[self.dirty_inds[inds_ind]]."""
+        """Returns a user-readable message for the dirty cell at self.old_mat[self.dirty_inds[inds_ind]].
+        
+        Args:
+            inds_ind (int) : the index within self.dirty_inds where the indices of the dirty cell can be found
+
+        Returns:
+            message (str) : the user-readable message
+        """
         return user_message(self.old_mat[tuple(self.dirty_inds[inds_ind])],
                             self.cols[self.dirty_inds[inds_ind, 1]],
                             self.reasons[inds_ind])
 
     def save_clean(self, new_pth):
-        """Saves self.clean_mat to new_pth."""
+        """Saves self.clean_mat to new_pth. Use save_excel to save excel sheets.
+        
+        Args:
+            new_pth (str) : the path to save the csv to 
+
+        Returns:
+            None
+        """
         escape_chars = {',', '\n', '"', '\t'}
         for y in range(self.clean_mat.shape[0]):
             for x in range(self.clean_mat.shape[1]):
