@@ -257,4 +257,4 @@ class Driver:
             xl_sheet.range(excel_range(self.inds_with_head[i])).color = self.reasons[i].color
         wb.save()
         wb.close()
-        self.progress = 100
+        self.progress = 150

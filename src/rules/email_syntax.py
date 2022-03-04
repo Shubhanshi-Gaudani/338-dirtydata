@@ -3,7 +3,7 @@ from .rule_base import RuleBaseClass
 
 #Code from : https://www.geeksforgeeks.org/check-if-email-address-valid-or-not-in-python/
 class EmailChecker (RuleBaseClass):
-    """Checks if a cell is an email when it should/shouldn't be"""
+    """Checks if a cell is an email when it should/shouldn't be."""
     def __init__(self):
         self.regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         #Tea Green

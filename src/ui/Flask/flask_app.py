@@ -7,14 +7,16 @@ from werkzeug.utils import secure_filename
 import numpy as np
 from .integration import get_preds
 import webbrowser
-from threading import Timer
+from threading import Timer, Thread
 from src import Driver
+from time import sleep
 
 UPLOAD_FOLDER = data_path()
 
 app = Flask('main ui',
             template_folder = ROOT_PATH + '/templates',
             static_folder = ROOT_PATH + '/static')
+driver = None
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
@@ -39,6 +41,12 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            t = Thread(target = start_processing)
+            t.start()
+            while driver is None or driver.progress < 150:
+                sleep(1)
+                # update progress
+            t.join()
             return redirect(url_for('download_page')) 
     return render_template('home.html')
 
@@ -56,7 +64,6 @@ def download_page():
     if request.method == 'POST':
         return redirect(url_for('download_file', name=CLEAN_XL))
     else:
-        start_processing()
         return render_template('download.html')
     
 @app.route('/uploads/<name>')
@@ -69,6 +76,7 @@ def about():
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
+    global driver
     pth = data_file_path()
     if pth == '':
         flash('No selected file')
