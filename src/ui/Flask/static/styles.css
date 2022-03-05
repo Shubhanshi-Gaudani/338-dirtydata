@@ -4,7 +4,6 @@
    margin-bottom:50px;
 }
 
-
 img{
    height: 130px;
    width: 170px;
@@ -16,28 +15,63 @@ input {
    border: 2px solid #555555;
    border-radius: 4px;
  }
+
+ #upload_btn, #download_btn{
+   color: #bc65ff;
+   background: #fff;
+   border: 1px solid #bc65ff;
+   font-size: 17px;
+   padding: 7px 12px;
+   font-weight: normal;
+   margin: 6px 0;
+   margin-right: 12px;
+   display: inline-block;
+   text-decoration: none;
+   font-family: 'Open Sans', sans-serif;
+   min-width: 120px;
+ }
+
+ #search{
+   color: #bc65ff;
+   background: #fff;
+   border: 1px solid #bc65ff;
+   font-size: 17px;
+   padding: 4px 10px;
+   font-weight: normal;
+   margin: 6px 0;
+   margin-right: 12px;
+   display: inline-block;
+   text-decoration: none;
+   font-family: 'Open Sans', sans-serif;
+   min-width: 120px;
+ }
  
 #upload_btn:hover {
-   background-color: #555555;
-   color: white;
+   color:#fff;
+   background:#bc65ff;
  }
 
  #gear:hover {
-   background-color: #ececec;
+   background-color: #bc65ff40; /*ececec;*/
    /* color: white; */
    transform: rotate(360deg);
-
  }
+
+ #download_btn:hover{
+   color:#fff;
+   background:#bc65ff;
+ }
+
 div{
    text-align: center; 
-
 }
 
- #gear{
+#gear{
    border: 2px solid rgb(255, 255, 255);
    border-radius: 8px;
    padding: 10px;
- }
+   font-size: 40px;
+}
 
 #dvCSV{
    margin-left: 400px ;
@@ -65,12 +99,4 @@ th, td {
    margin-right: 75px;
  }
 
- #gear{
-    font-size: 50px;
-    
- }
 
- #download_btn:hover{
-   background-color: #555555;
-   color: white;
- }
