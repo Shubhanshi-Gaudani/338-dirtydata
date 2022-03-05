@@ -27,3 +27,44 @@ input:hover {
     background-color: #555555;
     color: white;
   }
+.square1 {
+   height: 50px;
+   width: 50px;
+   background-color: rgb(199,206,234);
+ }
+
+.square2{
+   height: 50px;
+   width: 50px;
+   background-color: rgb(192,228,241);
+ }
+
+.square3{
+   height: 50px;
+   width: 50px;
+   background-color: rgb(255,154,162);
+ }
+
+.square4 {
+   height: 50px;
+   width: 50px;
+   background-color: rgb(226,240,203);
+ }
+
+.square5 {
+   height: 50px;
+   width: 50px;
+   background-color: rgb(232,215,173);
+ }
+
+.square6 {
+   height: 50px;
+   width: 50px;
+   background-color: rgb(177,177,177);
+ }
+
+.square7 {
+   height: 50px;
+   width: 50px;
+   background-color: rgb(208,246,210);
+ }
