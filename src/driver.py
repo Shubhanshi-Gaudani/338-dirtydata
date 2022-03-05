@@ -218,7 +218,6 @@ class Driver:
 
     def save_excel(self, pth):
         """Saves clean_mat to an excel file at pth.
-        
         Args:
             pth (str) : the path to save the file to
 
@@ -246,6 +245,7 @@ class Driver:
             None
         """
         try:
+            app = xw.App(visible=False)
             wb = xw.Book(pth)
         except ValueError:
             warnings.warn('WARNING: could not highlight spreadsheet because user still has old "cleaned.xlsx" file open.')
@@ -257,4 +257,5 @@ class Driver:
             xl_sheet.range(excel_range(self.inds_with_head[i])).color = self.reasons[i].color
         wb.save()
         wb.close()
+        app.quit()
         self.progress = 150
