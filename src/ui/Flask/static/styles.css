@@ -54,7 +54,7 @@ img{
    background:#bc65ff;
  }
  #gear:hover {
-   background-color: #bc65ff40; /*ececec;*/
+   background-color: #c8addd40; /*ececec;*/
    /* color: white; */
    transform: rotate(360deg);
  }
@@ -70,7 +70,7 @@ div{
 
 #gear{
    border: 2px solid rgb(255, 255, 255);
-   border-radius: 8px;
+   border-radius: 70px;
    padding: 10px;
    font-size: 40px;
 }
