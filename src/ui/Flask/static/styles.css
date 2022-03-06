@@ -9,48 +9,50 @@ img{
    width: 170px;
 }
 
-input {
+/* input {
    background-color: white;
    color: black;
    border: 2px solid #555555;
    border-radius: 4px;
- }
+   display: inline-block;
 
- #upload_btn, #download_btn{
+ } */
+ /* ::file-selector-button {
+   display: none;
+ } */
+
+ #search {
+   display: block;
+   visibility: hidden;
+   width: 0;
+   height: 0;
+ }
+ #upload_btn, #download_btn, #up_btn{
    color: #bc65ff;
    background: #fff;
    border: 1px solid #bc65ff;
    font-size: 17px;
    padding: 7px 12px;
    font-weight: normal;
-   margin: 6px 0;
-   margin-right: 12px;
+   margin-right: 17px;
    display: inline-block;
    text-decoration: none;
    font-family: 'Open Sans', sans-serif;
    min-width: 120px;
+   margin-left: 15px;
+
  }
 
- #search{
-   color: #bc65ff;
-   background: #fff;
-   border: 1px solid #bc65ff;
-   font-size: 17px;
-   padding: 4px 10px;
-   font-weight: normal;
-   margin: 6px 0;
-   margin-right: 12px;
-   display: inline-block;
-   text-decoration: none;
-   font-family: 'Open Sans', sans-serif;
-   min-width: 120px;
- }
+
  
 #upload_btn:hover {
    color:#fff;
    background:#bc65ff;
  }
-
+ #up_btn:hover {
+   color:#fff;
+   background:#bc65ff;
+ }
  #gear:hover {
    background-color: #bc65ff40; /*ececec;*/
    /* color: white; */
@@ -73,9 +75,7 @@ div{
    font-size: 40px;
 }
 
-#dvCSV{
-   margin-left: 400px ;
-}
+
 
 #logo_button{
    height: 130px;
@@ -100,3 +100,6 @@ th, td {
  }
 
 
+#btn_div{
+   justify-content: center;
+}
