@@ -22,7 +22,7 @@
 
         <div id="config_div">
             <form method="GET" action="/config">
-                <input type="image" id="gear" src="../static/gear_prple.png" ><i class="bi bi-gear"></i> </input>
+                <input type="image" id="gear" src="../static/gear_prple.png" ></input>
             </form>
         </div>
     <div>
@@ -34,7 +34,7 @@
         <div id="btn_div">
             <form method=post enctype=multipart/form-data>
                 <input id = "search" type=file name=file > 
-                <button id="up_btn" onclick="document.getElementById('search').click()">Upload File</button>
+                <input type="button" value="Upload File" id="up_btn" onclick="document.getElementById('search').click()">
                 <input id = "upload_btn" type=submit value="Start cleaning">
             </form>
         </div>
