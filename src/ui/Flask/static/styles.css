@@ -27,7 +27,7 @@ img{
    width: 0;
    height: 0;
  }
- #upload_btn, #download_btn, #up_btn{
+ #upload_btn, #download_btn_1, #download_btn_2, #up_btn{
    color: #bc65ff;
    background: #fff;
    border: 1px solid #bc65ff;
@@ -43,6 +43,9 @@ img{
 
  }
 
+ #download_btn_2{
+  margin-top: 10px;
+ }
 
  
 #upload_btn:hover {
@@ -74,7 +77,6 @@ div{
    padding: 10px;
    font-size: 40px;
 }
-
 
 
 #logo_button{
