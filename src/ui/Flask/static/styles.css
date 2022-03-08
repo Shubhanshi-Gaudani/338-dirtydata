@@ -1,7 +1,18 @@
+@font-face {
+  font-family: akkurat;
+  src: url(AkkuratPro-Regular.otf);
+}
+
+@font-face {
+  font-family: akkurat;
+  src: url(AkkuratPro-Bold.otf);
+  font-weight: bold;
+}
 #config_div{
    text-align: center; 
    margin-top: 100px;
    margin-bottom:50px;
+   font-family: akkurat;
 }
 
 img{
@@ -26,6 +37,7 @@ img{
    visibility: hidden;
    width: 0;
    height: 0;
+   font-family: akkurat;
  }
  #upload_btn, #download_btn_1, #download_btn_2, #up_btn{
    color: #bc65ff;
@@ -40,7 +52,7 @@ img{
    font-family: 'Open Sans', sans-serif;
    min-width: 120px;
    margin-left: 15px;
-
+   font-family: akkurat;
  }
 
  #download_btn_2{

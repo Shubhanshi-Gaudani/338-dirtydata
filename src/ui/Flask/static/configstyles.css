@@ -1,5 +1,17 @@
+@font-face {
+  font-family: akkurat;
+  src: url(AkkuratPro-Regular.otf);
+}
+
+@font-face {
+  font-family: akkurat;
+  src: url(AkkuratPro-Bold.otf);
+  font-weight: bold;
+}
+
 div{
     padding: 5px;
+    font-family: akkurat;
 }
 
 body{
@@ -12,8 +24,16 @@ body{
 }
 
 legend{
-    margin-top: 10px;
-    margin-bottom: 20px;
+  color: #bc65ff;
+  font-family: akkurat;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+h6{
+  /* color: #3eb489; */
+  font-weight: 500;
+  font-family: akkurat;
 }
 
 /* input{
@@ -23,7 +43,12 @@ legend{
    border-radius: 4px;
 } */
 
+label{
+   font-family: akkurat; 
+}
+
 input{
+  font-family: akkurat;
   color: #bc65ff;
    background: #fff;
    border: 1px solid #bc65ff;
@@ -41,6 +66,7 @@ input:hover {
     background-color: #bc65ff;
     color: white;
   }
+
 .square1 {
    height: 30px;
    width: 30px;
@@ -99,6 +125,6 @@ input:hover {
  }
 
  td{
-padding: 15px;
+padding: 10px;
  }
 
