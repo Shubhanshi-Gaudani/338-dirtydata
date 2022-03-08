@@ -48,23 +48,15 @@ img{
  }
 
  
-#upload_btn:hover {
+ #download_btn_1:hover, #download_btn_2:hover, #upload_btn:hover, #up_btn:hover {
    color:#fff;
    background:#bc65ff;
  }
- #up_btn:hover {
-   color:#fff;
-   background:#bc65ff;
- }
+ 
  #gear:hover {
    background-color: #c8addd40; /*ececec;*/
    /* color: white; */
    transform: rotate(360deg);
- }
-
- #download_btn:hover{
-   color:#fff;
-   background:#bc65ff;
  }
 
 div{
