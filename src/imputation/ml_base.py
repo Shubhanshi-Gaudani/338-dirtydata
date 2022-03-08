@@ -7,15 +7,15 @@ class MlBase:
     
     Children need to define __init__, fit, and _pred_one_row functions.
     """
-    def __init__(self):
+    def __init__(self, col_ind):
         raise NotImplementedError
 
-    def fit(self, features, targets):
+    def fit(self, sheet):
         """Trains the model based on features and targets.
         
         Args:
-            features (np.array) : a 2D array of string features
-            targets (np.array) : a 1D array of string targets
+            sheet (np.array) : a 2D array of strings representing
+                the entire matrix
 
         Returns:
             None
@@ -44,7 +44,7 @@ class MlBase:
         Returns:
             preds (np.array) : a 1D array of string predictions
         """
-        args = [ (features[i], all_dirty) for i in range(self.features.shape[0]) ]
+        args = [ (features[i], all_dirty) for i in range(features.shape[0]) ]
         return np.fromiter(starmap(self._pred_one_row, args),
                            dtype = 'U128',
                            count = features.shape[0])

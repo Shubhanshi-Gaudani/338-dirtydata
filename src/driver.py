@@ -165,12 +165,12 @@ class Driver:
         if per_dot: print()
         return res
 
-    def clean_all_cells(self, nprocs = 1, num_dots = 20):
+    def clean_all_cells(self, nprocs = 8, num_dots = 20):
         """Cleans all the cells and saves the changes to self.clean_mat.
         
         Args:
-            nprocs (int) : how many processes to use. If 1 (the default), it will not create any
-                new processes
+            nprocs (int) : how many processes to use. If 1 , it will not create any
+                new processes. Default is 8
             num_dots (int) : how many dots to print to the terminal. Default is 20. Set to 0 to silence
                 all printing
 

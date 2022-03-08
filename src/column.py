@@ -220,12 +220,6 @@ class Column:
         """
         if self.predictor is None:
             self.predictor = KNearestNeighbors(5, self.col_ind)
-            posed = sheet.T.tolist()
-            feats = posed[inds[1]:]
-            if inds[1] < sheet.shape[1] - 1:
-                feats += posed[:inds[1] + 1]
-            feats = np.array(feats, dtype = 'U128').T
-            targs = np.array(posed[inds[1]], dtype = 'U128')
-            self.predictor.fit(feats, targs)
+            self.predictor.fit(sheet)
 
         return str(self.predictor._pred_one_row(sheet[inds[0]], all_dirty))

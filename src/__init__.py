@@ -14,4 +14,4 @@ from .rules import WrongCategory
 from .rules import HasTypo
 from .driver import Driver, _ALL_PREDS
 from .ui import launch_server, data_file_path
-from .imputation import KNearestNeighbors, tolerant_euc
+from .imputation import KNearestNeighbors
