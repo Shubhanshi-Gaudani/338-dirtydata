@@ -16,15 +16,29 @@ legend{
     margin-bottom: 20px;
 }
 
-input{
+/* input{
     background-color: white;
    color: black;
-   border: 2px solid #555555;
+   border: 1px solid #555555;
    border-radius: 4px;
-}
+} */
 
+input{
+  color: #bc65ff;
+   background: #fff;
+   border: 1px solid #bc65ff;
+   font-size: 17px;
+   padding: 7px 12px;
+   font-weight: normal;
+   margin-right: 17px;
+   display: inline-block;
+   text-decoration: none;
+   font-family: 'Open Sans', sans-serif;
+   min-width: 120px;
+   /* margin-left: 15px; */
+}
 input:hover {
-    background-color: #555555;
+    background-color: #bc65ff;
     color: white;
   }
 .square1 {
@@ -87,3 +101,4 @@ input:hover {
  td{
 padding: 15px;
  }
+
