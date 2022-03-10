@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .path_utils import CLEAN_XL, CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_PATH, CLEAN_NAME
+from src import CLEAN_XL, CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_PATH, CLEAN_NAME
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory

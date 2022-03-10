@@ -9,6 +9,7 @@ from .utilities import arr_to_set, excel_range
 import pandas as pd
 import xlwings as xw
 import warnings
+from .path_utils import get_extension, ALLOWED_EXTENSIONS
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 _ESCAPE_CHARS = {',', '\n', '"', '\t'}
@@ -35,7 +36,7 @@ class Driver:
             dirty cells
         dirty_inds (np.array) : an array of [y, x] pairs to be used to index into old_mat. As such, they will
             not include the header
-        s_inds (set) : a set of tuples with the same indices as inds_with_head
+        s_inds (set) : a set of tuples with the same indices as dirty_inds
         inds_with_head (np.array) : an array of [y, x] pairs to be used to index into clean_mat. They do include
             the header
         reasons (np.array) : an array of objects derived from RuleBase. reasons[i] is the reason why the cell at
@@ -259,3 +260,35 @@ class Driver:
         wb.close()
         app.quit()
         self.progress = 150
+
+def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, False]):
+    """Cleans the sheet at dirty_path and saves the cleaned version to clean_path.
+    
+    Args:
+        dirty_path (str) : the path to the dirty spreadsheet
+        clean_path (str) : the path to save the cleaned sheet to
+        preds (list) : a list of types derived from RuleBase. If None (the default),
+            it will use all the predicates.
+        dupes (list) : a list of Booleans, with the first corresponding to whether to remove duplicate
+            rows, the second for duplicate columns, the third for redundant columns. The default is True for 
+            first two and false for the last.
+
+    Returns:
+        None
+    """
+    dirty_extns = ALLOWED_EXTENSIONS
+    clean_extns = dirty_extns | {'xlsx'}
+    clean_extn = get_extension(clean_path)
+    if get_extension(dirty_path) not in dirty_extns:
+        raise ValueError(f'Invalid file type to read: {dirty_path}')
+    if clean_extn not in clean_extns:
+        raise ValueError(f'Invalid file type to write to: {clean_path}')
+
+    driver = Driver(dirty_path, preds = preds, dupes = dupes)
+    driver.find_dirty_cells()
+    driver.clean_all_cells(num_dots = 0)
+
+    if clean_extn in dirty_extns:
+        driver.save_clean(clean_path)
+    else:
+        driver.save_excel(clean_path)

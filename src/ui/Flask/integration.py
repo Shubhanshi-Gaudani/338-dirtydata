@@ -1,6 +1,6 @@
-from .path_utils import config_file_path
 import numpy as np
 from src import IsNA, IsIncorrectDataType, MissingData, NumOutlier, WrongCategory, HasTypo, EmailChecker, _ALL_PREDS
+from src import config_file_path
 
 def pred_names_to_objs(names):
     """Turns a list of predicate names (as returned by config) into the rules to use.
