@@ -39,7 +39,7 @@ img{
    height: 0;
    font-family: akkurat;
  }
- #upload_btn, #download_btn_1, #download_btn_2, #up_btn{
+ #download_btn_1, #download_btn_2, #up_btn{
    color: #bc65ff;
    background: #fff;
    border: 1px solid #bc65ff;
@@ -55,12 +55,30 @@ img{
    font-family: akkurat;
  }
 
+ #upload_btn{
+  color: #c88cf581;
+  background: #fff;
+  border: 1px solid #c88cf581;
+  font-size: 17px;
+  padding: 7px 12px;
+  font-weight: normal;
+  margin-right: 17px;
+  display: inline-block;
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+  min-width: 120px;
+  margin-left: 15px;
+  font-family: akkurat;
+ }
+
+
+
  #download_btn_2{
   margin-top: 10px;
  }
 
  
- #download_btn_1:hover, #download_btn_2:hover, #upload_btn:hover, #up_btn:hover {
+ #download_btn_1:hover, #download_btn_2:hover, #up_btn:hover {
    color:#fff;
    background:#bc65ff;
  }
@@ -108,4 +126,9 @@ th, td {
 
 #btn_div{
    justify-content: center;
+}
+
+#t{
+  color: #bc65ff;
+  
 }

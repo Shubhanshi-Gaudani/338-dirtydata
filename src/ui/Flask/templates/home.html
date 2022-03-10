@@ -16,6 +16,30 @@
 });
 </script> -->
 
+<script>
+    $(document).ready(
+    function(){
+        $('input:file').change(
+            function(){
+                if ($(this).val()) {
+                    $('input:submit').attr('disabled',false); 
+                    $('input:submit').css("border", "1px solid #bc65ff");
+                    $('input:submit').css("color", "#bc65ff");
+                    $('input:submit').mouseover(function(){
+                        $(this).css("background-color", "#bc65ff");
+                        $(this).css("color", "white");
+                        
+                    }).mouseout(function(){
+                        $(this).css("background-color", "white");
+                        $(this).css("color", "#bc65ff");
+                    });
+                    // $("#t").html("File Upload Complete!");
+                } 
+            }
+            );
+    });
+</script>
+
     </head>
     <body>
         
@@ -33,9 +57,9 @@
         <br>
         <div id="btn_div">
             <form method=post enctype=multipart/form-data>
-                <input id = "search" type=file name=file > 
-                <input type="button" value="Upload File" id="up_btn" onclick="document.getElementById('search').click()">
-                <input id = "upload_btn" type=submit value="Start cleaning">
+                <input id = "search" type=file name=file /> 
+                <input type="button" value="Upload File" id="up_btn" onclick="document.getElementById('search').click()"/>
+                <input id = "upload_btn" type=submit value="Start cleaning" disabled/>
             </form>
         </div>
         
@@ -43,6 +67,8 @@
         
     </div>
 
-        <div id="dvCSV"></div>
+        <div id="t" style="margin-top:20px; ">
+
+        </div>
     </body>
 </html>
