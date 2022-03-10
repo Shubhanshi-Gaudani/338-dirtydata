@@ -11,6 +11,7 @@
   "tests/test_columns.py::test_quants",
   "tests/test_columns.py::test_str_cols",
   "tests/test_distance.py::test_euc",
+  "tests/test_driver.py::test_clean_and_save",
   "tests/test_driver.py::test_dirty_cells",
   "tests/test_driver.py::test_with_nfl",
   "tests/test_dupes.py::test_dupe_cols",

@@ -1,6 +1,7 @@
 from src import IsIncorrectDataType, NumOutlier, IsNA, WrongCategory, HasTypo, MissingData
 import numpy as np
-from src import Driver
+from src import Driver, clean_and_save
+import os
 
 def test_dirty_cells():
     driver = Driver('test_sheets/test_sheet_1.csv', dupes = [False, False, False])
@@ -39,3 +40,11 @@ def test_dirty_cells():
             print(i, driver.reasons[i], right_reasons[i])
     assert np.all(driver.reasons == right_reasons)
     
+def test_clean_and_save():
+    old_pth = 'test_sheets/test_sheet_1.csv'
+    new_pth = 'test_sheets/cleaned'
+    for extn in ['.csv', '.xlsx']:
+        clean_and_save(old_pth, new_pth + extn)
+        assert os.path.exists(new_pth + extn)
+        assert os.path.exists(old_pth)
+        os.remove(new_pth + extn)

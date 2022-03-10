@@ -22,7 +22,7 @@ class Driver:
         preds (list | None) : a list of predicates to use. If None (the default), it will use all of them
         dupes (list) : a list of Booleans, with the first corresponding to whether to remove duplicate
             rows, the second for duplicate columns, the third for redundant columns. The default is True for 
-            first two and false for the last.
+            first two and False for the last.
 
     Fields:
         progress (int) : how much progress (out of 100) this has made
@@ -271,7 +271,7 @@ def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, Fa
             it will use all the predicates.
         dupes (list) : a list of Booleans, with the first corresponding to whether to remove duplicate
             rows, the second for duplicate columns, the third for redundant columns. The default is True for 
-            first two and false for the last.
+            first two and False for the last.
 
     Returns:
         None
