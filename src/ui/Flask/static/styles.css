@@ -89,7 +89,7 @@ img{
    transform: rotate(360deg);
  }
 
-div{
+#main{
    text-align: center; 
 }
 
@@ -132,3 +132,5 @@ th, td {
   color: #bc65ff;
   
 }
+
+
