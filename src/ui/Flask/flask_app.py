@@ -80,7 +80,9 @@ def about():
 
 @app.route("/summary")
 def summary():
-    return render_template('summary.html')
+    animal = 'dog'
+    animal2 = 'panda'
+    return render_template('summary.html', value = animal, value2 = animal2)
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
