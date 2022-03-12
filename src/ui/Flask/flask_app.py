@@ -79,7 +79,9 @@ def about():
 
 @app.route("/summary")
 def summary():
-    return render_template('summary.html')
+    animal = 'dog'
+    animal2 = 'panda'
+    return render_template('summary.html', value = animal, value2 = animal2)
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
@@ -107,4 +109,4 @@ def open_browser():
 def launch_server():
     """Launches the server UI."""
     Timer(1, open_browser).start()
-    app.run(debug=True, use_reloader=True, port = 5000, threaded=True)
+    app.run(debug=True, use_reloader=False, port = 5000, threaded=True)
