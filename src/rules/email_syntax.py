@@ -8,6 +8,7 @@ class EmailChecker (RuleBaseClass):
         self.regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
         #Tea Green
         self.color = (208, 246, 210)
+        self.name = 'Email Inconsistency'
 
     def _is_email(self, cell_str):
         """Returns whether cell_str is an email."""

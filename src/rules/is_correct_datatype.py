@@ -7,6 +7,7 @@ class IsIncorrectDataType (RuleBaseClass):
         self.num_chars = {'-', '.'} | { str(i) for i in range(10) }
         #Columbia Blue 
         self.color = (192, 228, 241)
+        self.name = 'Datatype Inconsistency'
 
     def is_dirty(self, cell_str, col):
         if cell_str == '': return False

@@ -7,7 +7,7 @@ class MlBase:
     
     Children need to define __init__, fit, and _pred_one_row functions.
     """
-    def __init__(self, col_ind):
+    def __init__(self):
         raise NotImplementedError
 
     def fit(self, sheet):

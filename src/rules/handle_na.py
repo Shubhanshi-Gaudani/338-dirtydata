@@ -6,6 +6,7 @@ class IsNA (RuleBaseClass):
         self.nas = {"n/a", "na", "--", "-", "nan", "NaN", "not applicable"}
         #Crayola's Periwinkle
         self.color = (199, 206, 234)
+        self.name = 'NA'
 
     def is_dirty(self, cell_str, col):
         if cell_str.lower() in self.nas and cell_str != 'NA': 

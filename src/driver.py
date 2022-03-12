@@ -1,4 +1,5 @@
 import numpy as np
+from pyparsing import col
 from .csv_to_matrix import csvToMatrix, has_header
 import multiprocessing as mp
 from itertools import starmap
@@ -10,6 +11,7 @@ import pandas as pd
 import xlwings as xw
 import warnings
 from .path_utils import get_extension, ALLOWED_EXTENSIONS
+from matplotlib.figure import Figure
 
 _ALL_PREDS = [MissingData, IsNA, EmailChecker, IsIncorrectDataType, NumOutlier, HasTypo, WrongCategory]
 _ESCAPE_CHARS = {',', '\n', '"', '\t'}
@@ -263,11 +265,21 @@ class Driver:
 
     def reason_counts(self):
         """Returns a mapping from each predicate type to how many cells are dirty based on that predicate."""
-        mapping = {}
+        mapping = { p : 0 for p in self.all_preds }
         for r in self.reasons:
-            typ = type(r)
-            mapping[typ] = mapping[typ] + 1 if typ in mapping else 1
+            mapping[r] += 1
         return mapping
+
+    def save_pie_chart(self, path):
+        """Saves a pie chart to path based on reason_counts."""
+        counts = self.reason_counts()
+        fig = Figure()
+        ax = fig.subplots()
+        sizes = [ counts[p] for p in self.all_preds ] # order matters so shouldn't use counts.values
+        labels = [ p.name for p in self.all_preds ]
+        colors = [ (p.color[0] / 255, p.color[1] / 255, p.color[2] / 255) for p in self.all_preds ]
+        ax.pie(sizes, labels = labels, colors = colors)
+        fig.savefig(path)
 
 def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, False]):
     """Cleans the sheet at dirty_path and saves the cleaned version to clean_path.

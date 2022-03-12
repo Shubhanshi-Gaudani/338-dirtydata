@@ -12,6 +12,7 @@ class WrongCategory (RuleBaseClass):
     def __init__(self):
         #Cookies and Cream
         self.color = (232, 215, 173)
+        self.name = 'Category Mismatch'
         
     def is_dirty(self, cell_str, col):
         if col.column_type != 'alpha': return False

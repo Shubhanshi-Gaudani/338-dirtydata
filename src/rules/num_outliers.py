@@ -16,6 +16,7 @@ class NumOutlier (RuleBaseClass):
     def __init__(self):
         #Dirty White
         self.color = (226, 240, 203)
+        self.name = 'Outliers'
 
     def is_dirty(self, cell_str, col):
         if not can_be_float(cell_str): return False

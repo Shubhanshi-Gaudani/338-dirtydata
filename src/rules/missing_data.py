@@ -8,6 +8,7 @@ class MissingData (RuleBaseClass):
     def __init__(self):
         #Light Salmon Pink 
         self.color = (255, 154, 162)
+        self.name = 'Missing'
 
     def is_dirty(self, cell_str, col):
         if (cell_str.strip() == ""): 

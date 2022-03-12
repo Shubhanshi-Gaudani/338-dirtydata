@@ -6,6 +6,7 @@ class RuleBaseClass:
     """
     def __init__(self):
         self.color = (-1, -1, -1)
+        self.name = ''
         raise NotImplementedError
 
     def is_dirty(self, cell_str, col):
@@ -49,3 +50,7 @@ class RuleBaseClass:
     def __eq__(self, other):
         """Returns whether the two rules are the same type."""
         return type(self) == type(other)
+
+    def __hash__(self):
+        """Allows for using RuleBase objects as keys in a dictionary."""
+        return hash(type(self))

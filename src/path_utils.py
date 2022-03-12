@@ -6,6 +6,7 @@ ALLOWED_EXTENSIONS = {'txt', 'csv'}
 ROOT_PATH = 'src/ui/Flask'
 CLEAN_NAME = 'cleaned.csv'
 CLEAN_XL = 'cleaned.xlsx'
+PIE_NAME = 'pie_chart.png'
 
 def data_path():
     """Returns the folder at which the user's files should be saved."""
@@ -13,6 +14,7 @@ def data_path():
 
 CLEAN_PATH = data_path() + '/' + CLEAN_NAME
 CLEAN_XL_PATH  = data_path() + '/' + CLEAN_XL
+PIE_PATH = data_path() + '/' + PIE_NAME
 
 def get_extension(filename):
     """Returns the extension of the file (e.g. txt or csv)."""

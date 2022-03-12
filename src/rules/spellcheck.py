@@ -8,6 +8,7 @@ class HasTypo (RuleBaseClass):
         self.checker = SpellChecker()
         #Phillipine Silver 
         self.color = (177, 177, 177)
+        self.name = 'Typos'
 
     def _typo_word(self, s):
         """Returns whether s is likely to be a typo."""

@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from src import CLEAN_XL, CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_PATH, CLEAN_NAME
+from src import CLEAN_XL, CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_PATH, CLEAN_NAME, PIE_PATH
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
@@ -25,8 +25,8 @@ app.config['SECRET_KEY'] = '0000'
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods =['GET', 'POST'] )
 def upload_file():
-    if os.path.exists(CLEAN_PATH): os.remove(CLEAN_PATH)
-    if os.path.exists(CLEAN_XL_PATH): os.remove(CLEAN_XL_PATH)
+    for pth in [CLEAN_PATH, CLEAN_XL_PATH, PIE_PATH]:
+        if os.path.exists(pth): os.remove(pth)
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -100,6 +100,7 @@ def start_processing():
     driver.save_clean(CLEAN_PATH)
     driver.save_excel(CLEAN_XL_PATH)
     driver.highlight_excel(CLEAN_XL_PATH)
+    driver.save_pie_chart(PIE_PATH)
     print('Processing complete.')
 
 def open_browser():
@@ -108,4 +109,4 @@ def open_browser():
 def launch_server():
     """Launches the server UI."""
     Timer(1, open_browser).start()
-    app.run(debug=True, use_reloader=True, port = 5000, threaded=True)
+    app.run(debug=True, use_reloader=False, port = 5000, threaded=True)
