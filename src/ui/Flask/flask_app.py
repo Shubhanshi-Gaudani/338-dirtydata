@@ -41,12 +41,13 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            t = Thread(target = start_processing)
-            t.start()
-            while driver is None or driver.progress < 150:
-                sleep(1)
-                # update progress
-            t.join()
+            # t = Thread(target = start_processing)
+            # t.start()
+            # while driver is None or driver.progress < 150:
+            #     sleep(1)
+            #     # update progress
+            # t.join()
+            start_processing()
             return redirect(url_for('download_page')) 
     return render_template('home.html')
 
