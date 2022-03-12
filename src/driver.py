@@ -261,6 +261,14 @@ class Driver:
         app.quit()
         self.progress = 150
 
+    def reason_counts(self):
+        """Returns a mapping from each predicate type to how many cells are dirty based on that predicate."""
+        mapping = {}
+        for r in self.reasons:
+            typ = type(r)
+            mapping[typ] = mapping[typ] + 1 if typ in mapping else 1
+        return mapping
+
 def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, False]):
     """Cleans the sheet at dirty_path and saves the cleaned version to clean_path.
     
@@ -274,7 +282,8 @@ def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, Fa
             first two and False for the last.
 
     Returns:
-        None
+        driver (Driver) : the driver that did all the processing, in case the client
+            wants it to do a bit more
     """
     dirty_extns = ALLOWED_EXTENSIONS
     clean_extns = dirty_extns | {'xlsx'}
@@ -292,3 +301,4 @@ def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, Fa
         driver.save_clean(clean_path)
     else:
         driver.save_excel(clean_path)
+    return driver

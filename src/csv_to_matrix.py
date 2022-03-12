@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
 from .utilities import can_be_float
+import csv
 
-def csvToMatrix(csv_name, delimiter = ','):
+def csvToMatrix(csv_name):
     """Takes the name of the csv file and returns the 2D matrix version of the file.
 
     Args:
@@ -11,6 +12,8 @@ def csvToMatrix(csv_name, delimiter = ','):
     Returns:
         result_mat (2d array) : Matrix version of the csv file
     """
+    with open(csv_name, 'r') as sheet:
+        delimiter = csv.Sniffer().sniff(sheet.read()).delimiter
     df = pd.read_csv(csv_name, dtype = str, delimiter = delimiter, na_filter = False)
     res = np.empty((df.shape[0] + 1, df.shape[1]), dtype = 'U128')
     res[0] = df.columns
