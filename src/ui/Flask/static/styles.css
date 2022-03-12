@@ -20,6 +20,15 @@ img{
    width: 200px;
 }
 
+h5, h4{
+  font-weight: 500;
+  font-family: akkurat;
+}
+
+h4{
+  color: #bc65ff; 
+}
+
 /* input {
    background-color: white;
    color: black;
@@ -39,6 +48,7 @@ img{
    height: 0;
    font-family: akkurat;
  }
+
  #download_btn_1, #download_btn_2, #up_btn{
    color: #bc65ff;
    background: #fff;
@@ -71,8 +81,6 @@ img{
   font-family: akkurat;
  }
 
-
-
  #download_btn_2{
   margin-top: 10px;
  }
@@ -100,12 +108,18 @@ div{
    font-size: 40px;
 }
 
-
 #logo_button{
    height: 165px;
    width: 200px;
    border-color: white;
-   margin-top: 250px;
+   margin-top: 150px;
+}
+
+#logo_button_2{
+  height: 165px;
+   width: 200px;
+   border-color: white;
+   margin-top: 100px;
 }
 
 th, td {
@@ -123,12 +137,10 @@ th, td {
    margin-right: 75px;
  }
 
-
 #btn_div{
    justify-content: center;
 }
 
 #t{
   color: #bc65ff;
-  
 }

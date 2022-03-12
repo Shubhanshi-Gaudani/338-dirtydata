@@ -76,7 +76,11 @@ def download_file(name):
 
 @app.route("/about")
 def about():
-    return "<h1>About Page</h1>"
+    return render_template('about.html')
+
+@app.route("/summary")
+def summary():
+    return render_template('summary.html')
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
@@ -104,4 +108,4 @@ def open_browser():
 def launch_server():
     """Launches the server UI."""
     Timer(1, open_browser).start()
-    app.run(debug=True, use_reloader=False, port = 5000, threaded=True)
+    app.run(debug=True, use_reloader=True, port = 5000, threaded=True)
