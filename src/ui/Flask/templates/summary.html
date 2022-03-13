@@ -5,6 +5,22 @@
         <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+        <style>
+            #picture_div{
+                margin:auto;
+                margin-top: 30px;
+               
+            }
+
+            #picture{
+                width: 550px;
+                height:450px;
+                box-shadow: 10px 10px 20px rgba(134, 63, 182, 0.4);
+                
+            }
+
+        </style>
     </head>
 
     <body>
@@ -12,9 +28,13 @@
         <form method=get action="/download">
             <input type = "image" src="../static/drte2.png" id = "logo_button_2"/>
         </form>
-        <h3>Summary: {{ value }} {{value2}}</h3>
         
     </div>
-        <div id="dvCSV"></div>
+        <div id="picture_div">
+            <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
+
+        </div>
+
+
     </body>
 </html>

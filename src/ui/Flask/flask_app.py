@@ -10,6 +10,9 @@ import webbrowser
 from threading import Timer, Thread
 from src import Driver
 from time import sleep
+from PIL import Image
+import base64
+import io
 
 UPLOAD_FOLDER = data_path()
 
@@ -80,9 +83,17 @@ def about():
 
 @app.route("/summary")
 def summary():
-    animal = 'dog'
-    animal2 = 'panda'
-    return render_template('summary.html', value = animal, value2 = animal2)
+    f_path = "/Users/simrangadkari/Documents/GitHub/338-dirtydata/src/ui/Flask/temp_files/pie_chart.png"
+    if (os.path.exists(f_path)):
+        im = Image.open(f_path)
+        data = io.BytesIO()
+        im.save(data,"PNG")
+        encoded_img_data = base64.b64encode(data.getvalue())
+
+        return render_template('summary.html', img_data=encoded_img_data.decode('utf-8'))
+
+    else:
+        return render_template('summary.html')
 
 def start_processing():
     """Starts the backend code to process the data after it is saved by Flask."""
