@@ -7,14 +7,12 @@ ROOT_PATH = 'src/ui/Flask'
 CLEAN_NAME = 'cleaned.csv'
 CLEAN_XL = 'cleaned.xlsx'
 PIE_NAME = 'pie_chart.png'
-
-def data_path():
-    """Returns the folder at which the user's files should be saved."""
-    return ROOT_PATH + '/temp_files'
-
-CLEAN_PATH = data_path() + '/' + CLEAN_NAME
-CLEAN_XL_PATH  = data_path() + '/' + CLEAN_XL
-PIE_PATH = data_path() + '/' + PIE_NAME
+DATA_PATH = ROOT_PATH + '/temp_files'
+CLEAN_PATH = DATA_PATH + '/' + CLEAN_NAME
+CLEAN_XL_PATH  = DATA_PATH + '/' + CLEAN_XL
+PIE_PATH = DATA_PATH + '/' + PIE_NAME
+DEF_CONFIG_NAME = 'def_config.txt'
+CUSTOM_CONFIG_NAME = 'custom_config.txt'
 
 def get_extension(filename):
     """Returns the extension of the file (e.g. txt or csv)."""
@@ -26,23 +24,15 @@ def allowed_file(filename):
 
 def data_file_path():
     """Returns the path to the user's file or an empty string if it has not been uploaded."""
-    root_path = data_path()
+    root_path = DATA_PATH
     files = listdir(root_path)
-    config_files = [def_config_name(),
-                    custom_config_name()]
+    config_files = [DEF_CONFIG_NAME,
+                    CUSTOM_CONFIG_NAME]
     for f in files:
         if (allowed_file(f) and 
             f not in config_files):
             return root_path + '/' + f
     return ''
-
-def def_config_name():
-    """Returns the name of the default config file."""
-    return 'def_config.txt'
-
-def custom_config_name():
-    """Returns the name of the user's custom config file."""
-    return 'custom_config.txt'
 
 def config_file_path():
     """Returns the path to the user's file. 
@@ -55,11 +45,11 @@ def config_file_path():
     Returns:
         pth (str) : the path to the config files
     """
-    root_path = data_path()
-    custom = root_path + '/' + custom_config_name()
+    root_path = DATA_PATH
+    custom = root_path + '/' + CUSTOM_CONFIG_NAME
     if exists(custom):
         return custom
-    return root_path + '/' + def_config_name()
+    return root_path + '/' + DEF_CONFIG_NAME
 
 def wait_for_data():
     """Waits for data to be placed in the data folder by Flask."""

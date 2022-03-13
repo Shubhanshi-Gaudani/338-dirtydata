@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from src import CLEAN_XL, CLEAN_XL_PATH, data_path, data_file_path, allowed_file, ROOT_PATH, custom_config_name, CLEAN_PATH, CLEAN_NAME, PIE_PATH
+from src import CLEAN_XL, CLEAN_XL_PATH, DATA_PATH, data_file_path, allowed_file, ROOT_PATH, config_file_path, CLEAN_PATH, CLEAN_NAME, PIE_PATH
 import os
 from flask import flash, request, redirect, url_for
 from flask import send_from_directory
@@ -14,7 +14,7 @@ from PIL import Image
 import base64
 import io
 
-UPLOAD_FOLDER = data_path()
+UPLOAD_FOLDER = DATA_PATH
 
 app = Flask('main ui',
             template_folder = ROOT_PATH + '/templates',
@@ -58,7 +58,7 @@ def upload_file():
 def config():
     if request.method == 'POST':
         configs = request.form.getlist('source')
-        with open(data_path() + '/' + custom_config_name(), 'w') as config:
+        with open(config_file_path(), 'w') as config:
             config.write('\n'.join(configs))
         return redirect(url_for('upload_file'))
     return render_template('config.html')
@@ -83,7 +83,7 @@ def about():
 
 @app.route("/summary")
 def summary():
-    f_path = "/Users/simrangadkari/Documents/GitHub/338-dirtydata/src/ui/Flask/temp_files/pie_chart.png"
+    f_path = PIE_PATH
     if (os.path.exists(f_path)):
         im = Image.open(f_path)
         data = io.BytesIO()
