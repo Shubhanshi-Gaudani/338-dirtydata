@@ -58,12 +58,13 @@
             <form method=post enctype=multipart/form-data>
                 <input id = "search" type=file name=file /> 
                 <input type="button" value="Upload File" id="up_btn" onclick="document.getElementById('search').click()"/>
-                <input id = "upload_btn" type=submit value="Start cleaning" disabled/>
+                <input id = "upload_btn" onclick='showPostDetail()' type=submit value="Start cleaning" disabled/>
+                <div id="modal-container">
+                    
+                </div>
             </form>
         </div>
-        
 
-        
     </div>
 
         <div id="t" style="margin-top:20px; ">

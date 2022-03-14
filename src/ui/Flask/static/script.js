@@ -62,3 +62,19 @@ function RetrieveConfigCheckboxes() {
         //file written successfully
       })
 }
+
+const showPostDetail = ev => {
+    const html = `
+            <div class ="modal-bg">
+                <div class ="modal">
+                    We are cleaning your data!
+                </div>    
+            </div>`;
+    document.querySelector('#modal-container').innerHTML = html;
+    console.log('This function was called')
+};
+
+const CloseModal = ev => {
+    const html = '';
+    document.querySelector('#modal-container').innerHTML = html;
+};
