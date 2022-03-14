@@ -280,9 +280,9 @@ class Driver:
         counts = self.reason_counts()
         fig = Figure()
         ax = fig.subplots()
-        sizes = [ counts[p] for p in self.all_preds ] # order matters so shouldn't use counts.values
-        labels = [ p.name for p in self.all_preds ]
-        colors = [ (p.color[0] / 255, p.color[1] / 255, p.color[2] / 255) for p in self.all_preds ]
+        sizes = [ counts[p] for p in self.all_preds if counts[p] ] # order matters so shouldn't use counts.values
+        labels = [ p.name for p in self.all_preds if counts[p] ]
+        colors = [ (p.color[0] / 255, p.color[1] / 255, p.color[2] / 255) for p in self.all_preds if counts[p] ]
         ax.pie(sizes, labels = labels, colors = colors)
         fig.savefig(path)
     
