@@ -7,13 +7,10 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
         <style>
-            #picture_div{
-                padding-left: 100px;
-            }
-
+           
             #picture{
-                width: 550px;
-                height:450px;
+                width: 605px;
+                height:495px;
                 box-shadow: 10px 10px 20px rgba(134, 63, 182, 0.4);
                 float: left;
             }
@@ -27,9 +24,23 @@
                 float: left;
                 padding: 10px;
             }     
+            #picture_div{
+                padding-left: 8%;
+            }
+
+            #text_div{
+                padding-right: 10%;
+            }
             
             #table{
-                padding-left: 90px;
+                padding-left: 25%;
+                padding-bottom: 20px;
+                padding-top: 10px;
+            }
+
+            h5, h4{
+                text-align: center;
+                color: #bc65ff; 
             }
 
         </style>
@@ -49,9 +60,8 @@
             <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
         </div>
         
-        <div class="float-child">
-            <h3>Your dataset has a total of {{total}} cells, <br>out of which {{dirty}} cells are dirty.</h3>
-            <h4>We also removed {{dupes[0]}} duplicate rows,<br> {{dupes[1]}} duplicate columns, and {{dupes[2]}} redundant columns.</h4>
+        <div class="float-child" id="text_div">
+            <h4>Your dataset has a total of {{total}} cells, <br>out of which {{dirty}} cells are dirty.</h4>
             <div id="table">
                 <table>
                     <tr>
@@ -67,6 +77,7 @@
                     {%endfor%}
                 </table>
             </div>
+            <h5>We also removed {{dupes[0]}} duplicate rows, {{dupes[1]}} duplicate <br>columns, and {{dupes[2]}} redundant columns.</h5>
         </div>
         
     </div>
