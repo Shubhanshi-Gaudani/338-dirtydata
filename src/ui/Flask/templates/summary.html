@@ -17,7 +17,11 @@
                 width: 550px;
                 height:450px;
                 box-shadow: 10px 10px 20px rgba(134, 63, 182, 0.4);
-                
+                float: left;
+            }
+
+            table{
+
             }
 
         </style>
@@ -32,9 +36,21 @@
     </div>
         <div id="picture_div">
             <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
-
+            <h3>Your dataset has a total of {{total}} cells, <br>out of which {{dirty}} cells are dirty.</h3>
+            <table>
+                <tr>
+                  <th>Category</th>
+                  <th>Count</th>
+                </tr>
+                {%for row in table%}
+                <tr>
+                    {%for col in row%}
+                    <td>{{col}}</td>
+                    {%endfor%}
+                </tr>
+                {%endfor%}
+            </table>
         </div>
-
 
     </body>
 </html>

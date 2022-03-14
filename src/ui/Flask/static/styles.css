@@ -20,8 +20,13 @@ img{
    width: 200px;
 }
 
-h5, h4, h3{
+h5, h4, h3, td{
   font-weight: 500;
+  font-family: akkurat;
+}
+
+th{
+  font-weight: 800;
   font-family: akkurat;
 }
 

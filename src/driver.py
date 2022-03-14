@@ -280,6 +280,12 @@ class Driver:
         colors = [ (p.color[0] / 255, p.color[1] / 255, p.color[2] / 255) for p in self.all_preds ]
         ax.pie(sizes, labels = labels, colors = colors)
         fig.savefig(path)
+    
+    def summary_stats(self):
+        counts = self.reason_counts()
+        sizes = [ counts[p] for p in self.all_preds ] # order matters so shouldn't use counts.values
+        labels = [ p.name for p in self.all_preds ]
+        return sizes, labels
 
 def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, False]):
     """Cleans the sheet at dirty_path and saves the cleaned version to clean_path.
