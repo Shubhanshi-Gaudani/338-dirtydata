@@ -67,7 +67,7 @@ const showPostDetail = ev => {
     const html = `
             <div class ="modal-bg">
                 <div class ="modal">
-                    The data is getting cleaned
+                    We are cleaning your data!
                 </div>    
             </div>`;
     document.querySelector('#modal-container').innerHTML = html;
