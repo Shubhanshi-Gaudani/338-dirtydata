@@ -1,6 +1,5 @@
 checkNA
 IsIncorrectDataType
-MissingData
 NumOutlier
 WrongCategory
 typo

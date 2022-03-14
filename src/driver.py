@@ -295,8 +295,8 @@ class Driver:
         counts = self.reason_counts()
         sizes = [ counts[p] for p in self.all_preds ] # order matters so shouldn't use counts.values
         labels = [ p.name for p in self.all_preds ]
+        missing = 0
         if MissingData() not in self.all_preds:
-            missing = 0
             m = MissingData()
             for row in self.clean_mat:
                 for j in row :
