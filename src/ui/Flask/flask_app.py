@@ -90,14 +90,14 @@ def summary():
         im.save(data,"PNG")
         encoded_img_data = base64.b64encode(data.getvalue())
         global driver
-        sizes, labels = driver.summary_stats()
+        sizes, labels, dupes = driver.summary_stats()
         table  = [[0 for i in range(2)] for j in range(len(labels))]
         for x in range(len(labels)):
             table[x][0] = labels[x]
             table[x][1] = sizes[x]
         dirty = driver.dirty_inds.shape[0]
         total = driver.clean_mat.shape[0] * driver.clean_mat.shape[1]
-        return render_template('summary.html', img_data=encoded_img_data.decode('utf-8'), table=table, dirty = dirty, total = total)
+        return render_template('summary.html', img_data=encoded_img_data.decode('utf-8'), table=table, dirty = dirty, total = total, dupes = dupes)
 
     else:
         return render_template('summary.html')

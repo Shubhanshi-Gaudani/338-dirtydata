@@ -49,6 +49,7 @@ class Driver:
         self.old_mat = csvToMatrix(path)
         self.progress = 10
         self.header = has_header(self.old_mat)
+        self.duplicates = [0,0,0]
         self._del_dupes(dupes[0], dupes[1], dupes[2])
         self.clean_mat = self.old_mat.copy()
         self.old_mat = self.old_mat[self.header:]
@@ -66,22 +67,26 @@ class Driver:
         self.inds_with_head = None
         self.reasons = None
         self.progress = 20
+        
 
     def _del_dupes(self, del_rows, del_cols, red_cols):
         """Deletes duplicate rows if del_rows and duplicate columns if del_cols. Saves res to self.old_mat."""
         # duplicate rows 
         if(del_rows):
             dupes = duplicate_row(self.old_mat)
+            self.duplicates[0] = len(dupes)
             self.old_mat = np.delete(self.old_mat, dupes, 0)
         # duplicate columns
         if(del_cols):
             dupes = duplicate_columns(self.old_mat)
+            self.duplicates[1] = len(dupes)
             self.old_mat = np.delete(self.old_mat, dupes, 1)
         
         # redundant columns
         if(red_cols):
             red_pairs = redundant_columns(self.old_mat)
             red = [a[1] for a in red_pairs]
+            self.duplicates[2] = len(red)
             self.old_mat = np.delete(self.old_mat, red, 1)
 
     def _col_list(self, nprocs = 8):
@@ -285,7 +290,8 @@ class Driver:
         counts = self.reason_counts()
         sizes = [ counts[p] for p in self.all_preds ] # order matters so shouldn't use counts.values
         labels = [ p.name for p in self.all_preds ]
-        return sizes, labels
+        dupes = self.duplicates
+        return sizes, labels, dupes
 
 def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, False]):
     """Cleans the sheet at dirty_path and saves the cleaned version to clean_path.
