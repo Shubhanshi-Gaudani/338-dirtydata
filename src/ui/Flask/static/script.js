@@ -62,3 +62,19 @@ function RetrieveConfigCheckboxes() {
         //file written successfully
       })
 }
+
+const showPostDetail = ev => {
+    const html = `
+            <div class ="modal-bg">
+                <div class ="modal">
+                    The data is getting cleaned
+                </div>    
+            </div>`;
+    document.getElementById('upload_btn').innerHTML = html;
+    console.log('This function was called')
+};
+
+const CloseModal = ev => {
+    const html = '';
+    document.querySelector('#upload_btn').innerHTML = html;
+};

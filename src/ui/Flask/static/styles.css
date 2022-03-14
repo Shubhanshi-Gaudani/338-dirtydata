@@ -149,3 +149,28 @@ th, td {
 #t{
   color: #bc65ff;
 }
+
+.modal-bg {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(50, 50, 50, 0.8);
+  width :100vw;
+  height: 100vh;
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  width : 80vw;
+  height: 80vh;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  padding: 0px;
+}
+
