@@ -8,9 +8,7 @@
 
         <style>
             #picture_div{
-                margin:auto;
-                margin-top: 30px;
-               
+                padding-left: 100px;
             }
 
             #picture{
@@ -20,8 +18,18 @@
                 float: left;
             }
 
-            table{
+            .float-container {
+            border: 3px solid #fff;
+            }
 
+            .float-child {
+                width: 50%;
+                float: left;
+                padding: 10px;
+            }     
+            
+            #table{
+                padding-left: 90px;
             }
 
         </style>
@@ -34,23 +42,33 @@
         </form>
         
     </div>
-        <div id="picture_div">
+
+    <div class="float-container">
+
+        <div class="float-child" id="picture_div">
             <img id="picture" src="data:image/jpeg;base64,{{ img_data }}">
-            <h3>Your dataset has a total of {{total}} cells, <br>out of which {{dirty}} cells are dirty.</h3>
-            <table>
-                <tr>
-                  <th>Category</th>
-                  <th>Count</th>
-                </tr>
-                {%for row in table%}
-                <tr>
-                    {%for col in row%}
-                    <td>{{col}}</td>
-                    {%endfor%}
-                </tr>
-                {%endfor%}
-            </table>
         </div>
+        
+        <div class="float-child">
+            <h3>Your dataset has a total of {{total}} cells, <br>out of which {{dirty}} cells are dirty.</h3>
+            <div id="table">
+                <table>
+                    <tr>
+                        <th>Category</th>
+                        <th>Count</th>
+                    </tr>
+                    {%for row in table%}
+                    <tr>
+                        {%for col in row%}
+                        <td>{{col}}</td>
+                        {%endfor%}
+                    </tr>
+                    {%endfor%}
+                </table>
+            </div>
+        </div>
+        
+    </div>
 
     </body>
 </html>
