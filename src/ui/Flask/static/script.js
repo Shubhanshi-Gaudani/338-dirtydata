@@ -70,11 +70,11 @@ const showPostDetail = ev => {
                     The data is getting cleaned
                 </div>    
             </div>`;
-    document.getElementById('upload_btn').innerHTML = html;
+    document.querySelector('#modal-container').innerHTML = html;
     console.log('This function was called')
 };
 
 const CloseModal = ev => {
     const html = '';
-    document.querySelector('#upload_btn').innerHTML = html;
+    document.querySelector('#modal-container').innerHTML = html;
 };
