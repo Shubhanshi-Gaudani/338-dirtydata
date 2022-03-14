@@ -50,6 +50,7 @@ class Driver:
         self.progress = 10
         self.header = has_header(self.old_mat)
         self.duplicates = [0,0,0]
+        self.missing = 0
         self._del_dupes(dupes[0], dupes[1], dupes[2])
         self.clean_mat = self.old_mat.copy()
         self.old_mat = self.old_mat[self.header:]
@@ -281,17 +282,28 @@ class Driver:
         fig = Figure()
         ax = fig.subplots()
         sizes = [ counts[p] for p in self.all_preds if counts[p] ] # order matters so shouldn't use counts.values
+        # sizes.append(self.missing)
         labels = [ p.name for p in self.all_preds if counts[p] ]
+        # labels.append("Missing")
         colors = [ (p.color[0] / 255, p.color[1] / 255, p.color[2] / 255) for p in self.all_preds if counts[p] ]
+        # colors.append(((255/255, 154/255, 162/255)))
         ax.pie(sizes, labels = labels, colors = colors)
         fig.savefig(path)
     
     def summary_stats(self):
+        """Returns the reason_counts for reporting."""
         counts = self.reason_counts()
         sizes = [ counts[p] for p in self.all_preds ] # order matters so shouldn't use counts.values
         labels = [ p.name for p in self.all_preds ]
+        if MissingData() not in self.all_preds:
+            missing = 0
+            m = MissingData()
+            for row in self.clean_mat:
+                for j in row :
+                    if m.is_dirty(j, None):
+                        missing += 1
         dupes = self.duplicates
-        return sizes, labels, dupes
+        return sizes, labels, dupes, missing
 
 def clean_and_save(dirty_path, clean_path, preds = None, dupes = [True, True, False]):
     """Cleans the sheet at dirty_path and saves the cleaned version to clean_path.

@@ -20,16 +20,19 @@
             }
 
             .float-child {
-                width: 50%;
+                width: 45%;
                 float: left;
                 padding: 10px;
             }     
             #picture_div{
-                padding-left: 8%;
+                padding-left: 10%;
+                padding-top: 40px;
             }
 
             #text_div{
-                padding-right: 10%;
+                padding-right: 5%;
+                padding-left: 5%;
+                margin-left: 5%;
             }
             
             #table{
@@ -77,7 +80,8 @@
                     {%endfor%}
                 </table>
             </div>
-            <h5>We also removed {{dupes[0]}} duplicate rows, {{dupes[1]}} duplicate <br>columns, and {{dupes[2]}} redundant columns.</h5>
+            <h5>We also removed {{dupes[0]}} duplicate rows, {{dupes[1]}} duplicate 
+                columns, and {{dupes[2]}} redundant columns. The cleaned dataset has {{missing}} missing values.</h5>
         </div>
         
     </div>
